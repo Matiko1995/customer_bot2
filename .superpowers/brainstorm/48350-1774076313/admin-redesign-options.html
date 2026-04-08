@@ -1,0 +1,89 @@
+<h2>管理后台改版方向</h2>
+<p class="subtitle">目标：从“长页面滚动录入”改成真正适合代运营的运营指挥台</p>
+
+<div class="cards">
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">A. 指挥台 + 工作区</div>
+        <div class="mockup-body">
+          <div class="mock-nav">总览 | 租户 | 聊天 | 内容命中 | 账单</div>
+          <div style="display:flex; gap:12px; margin-top:12px;">
+            <div class="mock-sidebar" style="width:26%;">租户列表<br>筛选器<br>状态分组</div>
+            <div class="mock-content" style="width:74%;">
+              <div class="placeholder" style="height:72px; margin-bottom:10px;">顶部 KPI 条</div>
+              <div class="placeholder" style="height:110px; margin-bottom:10px;">最近异常 / 最新聊天 / 命中排行</div>
+              <div class="placeholder" style="height:160px;">单租户分栏工作区</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>方案 A</h3>
+      <p>左侧租户导航，右侧是运营总览和当前租户工作区。最像真正的运营后台。</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>优点</h4><ul><li>不再纵向堆叠</li><li>切租户效率高</li><li>总览和操作在同屏</li></ul></div>
+        <div class="cons"><h4>代价</h4><ul><li>改版范围较大</li><li>需要重组 admin 信息架构</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">B. 标签页工作台</div>
+        <div class="mockup-body">
+          <div class="mock-nav">租户详情 / 内容配置 / 聊天命中 / 账单 / 安装</div>
+          <div class="placeholder" style="height:66px; margin-top:12px;">租户头部摘要</div>
+          <div style="display:flex; gap:12px; margin-top:12px;">
+            <div class="placeholder" style="width:100%; height:240px;">当前标签页内容区</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>方案 B</h3>
+      <p>单租户页改成顶部标签页，所有模块分块切换，不再整页往下滚。</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>优点</h4><ul><li>对现有结构改动最小</li><li>用户容易理解</li><li>很适合单租户深度操作</li></ul></div>
+        <div class="cons"><h4>代价</h4><ul><li>全局运营视角偏弱</li><li>仍然偏“详情页”而不是“指挥台”</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">C. 双栏看板</div>
+        <div class="mockup-body">
+          <div class="mock-nav">全局趋势 | 内容运营 | 商业化</div>
+          <div style="display:grid; grid-template-columns:1.2fr 0.8fr; gap:12px; margin-top:12px;">
+            <div>
+              <div class="placeholder" style="height:72px; margin-bottom:10px;">大盘指标</div>
+              <div class="placeholder" style="height:210px;">会话流 / 命中流 / 留资流</div>
+            </div>
+            <div>
+              <div class="placeholder" style="height:110px; margin-bottom:10px;">热门租户</div>
+              <div class="placeholder" style="height:110px; margin-bottom:10px;">热门资料</div>
+              <div class="placeholder" style="height:52px;">进入租户工作区</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>方案 C</h3>
+      <p>更像运营 BI 中台，先看整体，再进入租户。适合租户量起来后的管控。</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>优点</h4><ul><li>大盘感强</li><li>适合多租户并行运营</li><li>更有 SaaS 气质</li></ul></div>
+        <div class="cons"><h4>代价</h4><ul><li>现在数据层还不够厚</li><li>对单租户配置路径不如 A/B 直观</li></ul></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <p class="label">我的建议</p>
+  <p>推荐优先做 <strong>方案 A</strong>。它最符合你刚才选的“运营指挥台”，也最能解决你不想要“页面一直往下滚”的核心问题。</p>
+</div>

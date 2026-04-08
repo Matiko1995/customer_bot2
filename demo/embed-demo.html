@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customer Bot Embed Demo</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(180deg, #f5fbff, #eef4f8);
+        color: #17324a;
+      }
+      main {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 48px 20px 120px;
+      }
+      h1 {
+        margin: 0 0 16px;
+        font-size: 42px;
+      }
+      p {
+        line-height: 1.7;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Customer Bot Demo</h1>
+      <p>这个页面用于验证 `script + CustomerBot.init()` 的嵌入方式。</p>
+    </main>
+
+    <script src="../dist/customer-bot.js"></script>
+    <script>
+      CustomerBot.init({
+        siteName: 'AIFactory',
+        themeColor: '#118ab2',
+        soulProfile: {
+          role: '制造业解决方案顾问',
+          tone: '专业、直接、可信、有销售推进意识',
+          goals: ['快速判断用户意图', '推动咨询或留资', '保持品牌人格']
+        },
+        contact: {
+          phone: '13800000000',
+          email: 'hello@example.com',
+          address: 'Shanghai'
+        }
+      })
+    </script>
+  </body>
+</html>

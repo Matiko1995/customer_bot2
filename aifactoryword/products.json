@@ -1,0 +1,602 @@
+[
+  {
+    "id": "product-ai-copywriter-employee",
+    "name": "AI 文案员工",
+    "category": "数字员工/文案",
+    "summary": "面向广告投放、落地页搭建、社交媒体内容生产和热点借势场景的内容型 AI 数字员工。",
+    "priceText": "面议",
+    "parameters": [
+      {
+        "label": "核心定位",
+        "value": "内容生成与营销表达数字员工"
+      },
+      {
+        "label": "主要能力",
+        "value": "广告文案生成、着陆页文案构建、社交媒体文案、热点文案、效果复盘"
+      },
+      {
+        "label": "适用对象",
+        "value": "市场团队、投放团队、品牌团队、内容运营团队"
+      },
+      {
+        "label": "支持方式",
+        "value": "滚动交互展示、右侧说明面板、场景化文案生成"
+      }
+    ]
+  },
+  {
+    "id": "product-copywriter-ads-generator",
+    "name": "多平台广告文案生成模块",
+    "category": "数字员工/文案能力",
+    "summary": "根据不同平台规则自动生成广告文案版本，并输出差异化变体和 A/B 测试建议。",
+    "priceText": "面议",
+    "parameters": [
+      {
+        "label": "能力类型",
+        "value": "多平台广告文案生成"
+      },
+      {
+        "label": "支持平台",
+        "value": "Google、TikTok 等广告平台"
+      },
+      {
+        "label": "输出内容",
+        "value": "差异化文案版本、平台适配文案、A/B 测试建议"
+      },
+      {
+        "label": "适用场景",
+        "value": "广告投放准备、跨平台投放、文案测试"
+      }
+    ]
+  },
+  {
+    "id": "product-copywriter-landing-builder",
+    "name": "着陆页文案智能构建模块",
+    "category": "数字员工/文案能力",
+    "summary": "基于 AIDA、PAS、BAB 等框架自动生成着陆页文案模块，并支持不同框架切换预览。",
+    "priceText": "面议",
+    "parameters": [
+      {
+        "label": "能力类型",
+        "value": "着陆页文案自动构建"
+      },
+      {
+        "label": "支持框架",
+        "value": "AIDA、PAS、BAB"
+      },
+      {
+        "label": "输出内容",
+        "value": "页面文案结构、卖点高亮、框架对比预览"
+      },
+      {
+        "label": "适用场景",
+        "value": "活动页、专题页、投放落地页"
+      }
+    ]
+  },
+  {
+    "id": "product-copywriter-social-generator",
+    "name": "社交媒体文案场景化生成模块",
+    "category": "数字员工/文案能力",
+    "summary": "基于企业知识库和客户画像生成适配不同社交平台的内容，并附带发布时间建议。",
+    "priceText": "面议",
+    "parameters": [
+      {
+        "label": "能力类型",
+        "value": "社交媒体文案生成"
+      },
+      {
+        "label": "支持平台",
+        "value": "朋友圈、小红书、微博等"
+      },
+      {
+        "label": "输入信息",
+        "value": "客户画像、产品、场景标签"
+      },
+      {
+        "label": "输出内容",
+        "value": "多平台差异化文案、发布时间建议"
+      }
+    ]
+  },
+  {
+    "id": "product-copywriter-hot-topics",
+    "name": "热点文案快速响应模块",
+    "category": "数字员工/文案能力",
+    "summary": "抓取热点趋势并结合产品关键词生成借势文案，同时提示热点生命周期。",
+    "priceText": "面议",
+    "parameters": [
+      {
+        "label": "能力类型",
+        "value": "热点借势文案生成"
+      },
+      {
+        "label": "数据来源",
+        "value": "微博热搜、抖音热搜等趋势信息"
+      },
+      {
+        "label": "输出内容",
+        "value": "热点结合文案、生命周期预测、借势建议"
+      },
+      {
+        "label": "适用场景",
+        "value": "节日营销、品牌借势、热点传播"
+      }
+    ]
+  },
+  {
+    "id": "product-copywriter-review-engine",
+    "name": "文案效果智能复盘模块",
+    "category": "数字员工/文案能力",
+    "summary": "追踪文案表现数据，提取高转化特征并自动生成优化版本。",
+    "priceText": "面议",
+    "parameters": [
+      {
+        "label": "能力类型",
+        "value": "文案效果复盘与优化"
+      },
+      {
+        "label": "分析指标",
+        "value": "阅读率、互动率、转化率"
+      },
+      {
+        "label": "输出内容",
+        "value": "高转化特征分析、优化版本文案"
+      },
+      {
+        "label": "适用场景",
+        "value": "广告复盘、内容运营优化、转化提升"
+      }
+    ]
+  },
+  {
+    "id": "product-ai-legal-employee",
+    "name": "AI 法务员工",
+    "category": "数字员工/法务",
+    "summary": "面向合同审查、条款识别、条款冲突预警、法规校验和审查报告生成的法务型 AI 数字员工。",
+    "priceText": "面议",
+    "parameters": [
+      {
+        "label": "核心定位",
+        "value": "合同与法律文档风控数字员工"
+      },
+      {
+        "label": "主要能力",
+        "value": "条款提取、冲突检测、缺失条款补全、法规校验、审查报告生成"
+      },
+      {
+        "label": "适用对象",
+        "value": "法务团队、合同管理团队、业务审查团队"
+      },
+      {
+        "label": "技术特点",
+        "value": "OCR + 术语识别 + 条款比对 + 风险预警"
+      }
+    ]
+  },
+  {
+    "id": "product-legal-clause-extractor",
+    "name": "智能条款提取模块",
+    "category": "数字员工/法务能力",
+    "summary": "处理手写批注、多列排版等复杂合同文本，提取条款并做结构化识别。",
+    "priceText": "面议",
+    "parameters": [
+      {
+        "label": "能力类型",
+        "value": "法律文档 OCR 与条款提取"
+      },
+      {
+        "label": "适配文档",
+        "value": "合同、协议、法律文本"
+      },
+      {
+        "label": "复杂处理",
+        "value": "手写批注、多列排版、复杂版式"
+      },
+      {
+        "label": "输出内容",
+        "value": "结构化条款与关键字段"
+      }
+    ]
+  },
+  {
+    "id": "product-legal-conflict-detector",
+    "name": "条款冲突智能检测模块",
+    "category": "数字员工/法务能力",
+    "summary": "识别合同中逻辑冲突或表达矛盾的条款，并展示冲突关系和风险链。",
+    "priceText": "面议",
+    "parameters": [
+      {
+        "label": "能力类型",
+        "value": "合同冲突检测"
+      },
+      {
+        "label": "识别对象",
+        "value": "付款、交付、终止、责任等关键条款"
+      },
+      {
+        "label": "输出内容",
+        "value": "冲突标注、冲突逻辑链、风险说明"
+      },
+      {
+        "label": "适用场景",
+        "value": "合同审查、商务协议风控"
+      }
+    ]
+  },
+  {
+    "id": "product-legal-clause-completion",
+    "name": "缺失条款自动补全模块",
+    "category": "数字员工/法务能力",
+    "summary": "识别合同中应有但缺失的标准条款，并给出行业最佳实践文本。",
+    "priceText": "面议",
+    "parameters": [
+      {
+        "label": "能力类型",
+        "value": "缺失条款识别与补全"
+      },
+      {
+        "label": "典型条款",
+        "value": "知识产权归属、责任界定、标准补充条款"
+      },
+      {
+        "label": "输出内容",
+        "value": "缺失提示、补全文本、行业实践建议"
+      },
+      {
+        "label": "适用场景",
+        "value": "技术服务合同、合作协议、采购合同"
+      }
+    ]
+  },
+  {
+    "id": "product-legal-regulation-checker",
+    "name": "法规时效性校验模块",
+    "category": "数字员工/法务能力",
+    "summary": "识别合同中引用的旧法条并展示新旧法规差异。",
+    "priceText": "面议",
+    "parameters": [
+      {
+        "label": "能力类型",
+        "value": "法规引用时效校验"
+      },
+      {
+        "label": "识别对象",
+        "value": "法条引用、法规依据、模板条款"
+      },
+      {
+        "label": "输出内容",
+        "value": "更新提醒、新旧法条对比、影响说明"
+      },
+      {
+        "label": "适用场景",
+        "value": "合同模板复审、法规更新核查"
+      }
+    ]
+  },
+  {
+    "id": "product-legal-report-generator",
+    "name": "审查报告一键生成模块",
+    "category": "数字员工/法务能力",
+    "summary": "自动汇总法务风险点，生成结构化 PDF 审查报告。",
+    "priceText": "面议",
+    "parameters": [
+      {
+        "label": "能力类型",
+        "value": "法务审查报告生成"
+      },
+      {
+        "label": "报告内容",
+        "value": "风险等级分布、整改建议、法规依据索引"
+      },
+      {
+        "label": "输出形式",
+        "value": "结构化 PDF 报告"
+      },
+      {
+        "label": "适用场景",
+        "value": "法务汇报、团队协作、风险归档"
+      }
+    ]
+  },
+  {
+    "id": "product-ai-finance-employee",
+    "name": "AI 财务员工",
+    "category": "数字员工/财务",
+    "summary": "面向票据识别、报销审核、对账匹配、税务填报和风险预警的财务型 AI 数字员工。",
+    "priceText": "面议",
+    "parameters": [
+      {
+        "label": "核心定位",
+        "value": "财务流程自动化数字员工"
+      },
+      {
+        "label": "主要能力",
+        "value": "发票校验、报销合规、对账匹配、税务填报、财务风险预警"
+      },
+      {
+        "label": "适用对象",
+        "value": "财务团队、审计团队、报销与税务管理团队"
+      },
+      {
+        "label": "技术特点",
+        "value": "OCR + 规则校验 + 流程自动化 + 风险看板"
+      }
+    ]
+  },
+  {
+    "id": "product-finance-invoice-checker",
+    "name": "智能发票校验中心",
+    "category": "数字员工/财务能力",
+    "summary": "自动识别发票关键信息并定位异常项，支持单张和批量验真。",
+    "priceText": "面议",
+    "parameters": [
+      {
+        "label": "能力类型",
+        "value": "发票识别与验真"
+      },
+      {
+        "label": "识别对象",
+        "value": "发票关键字段与异常项"
+      },
+      {
+        "label": "支持方式",
+        "value": "单张验真、批量验真"
+      },
+      {
+        "label": "适用场景",
+        "value": "入账校验、票据审核、财务核验"
+      }
+    ]
+  },
+  {
+    "id": "product-finance-expense-compliance",
+    "name": "费用报销合规检测模块",
+    "category": "数字员工/财务能力",
+    "summary": "自动识别报销单中的超标费用项，并给出合规整改建议。",
+    "priceText": "面议",
+    "parameters": [
+      {
+        "label": "能力类型",
+        "value": "报销合规检测"
+      },
+      {
+        "label": "识别对象",
+        "value": "超标费用项、制度不合规项目"
+      },
+      {
+        "label": "输出内容",
+        "value": "制度依据、整改建议、调整方案"
+      },
+      {
+        "label": "适用场景",
+        "value": "差旅报销、费用审批、合规检查"
+      }
+    ]
+  },
+  {
+    "id": "product-finance-reconciliation-engine",
+    "name": "智能对账匹配引擎",
+    "category": "数字员工/财务能力",
+    "summary": "自动比对银行流水与财务系统记录，并识别可疑交易和风险等级。",
+    "priceText": "面议",
+    "parameters": [
+      {
+        "label": "能力类型",
+        "value": "自动对账与异常识别"
+      },
+      {
+        "label": "数据对象",
+        "value": "银行流水、财务系统交易记录"
+      },
+      {
+        "label": "输出内容",
+        "value": "匹配结果、可疑交易提示、风险分析"
+      },
+      {
+        "label": "适用场景",
+        "value": "月度对账、审计准备、异常交易核查"
+      }
+    ]
+  },
+  {
+    "id": "product-finance-tax-filing",
+    "name": "税务申报自动填报模块",
+    "category": "数字员工/财务能力",
+    "summary": "将财务报表数据自动转换为税务口径并填入申报栏目。",
+    "priceText": "面议",
+    "parameters": [
+      {
+        "label": "能力类型",
+        "value": "税务申报自动填报"
+      },
+      {
+        "label": "处理过程",
+        "value": "报表提取、口径转换、栏目填报"
+      },
+      {
+        "label": "输出内容",
+        "value": "填报进度、关键税种逻辑、自动申报数据"
+      },
+      {
+        "label": "适用场景",
+        "value": "月度申报、财税自动化、填报提效"
+      }
+    ]
+  },
+  {
+    "id": "product-finance-risk-board",
+    "name": "财务风险实时预警看板",
+    "category": "数字员工/财务能力",
+    "summary": "汇总财务流程中的风险点，形成动态看板并支持导出合规审计报告。",
+    "priceText": "面议",
+    "parameters": [
+      {
+        "label": "能力类型",
+        "value": "财务风险汇总与预警"
+      },
+      {
+        "label": "覆盖环节",
+        "value": "发票、报销、对账、税务"
+      },
+      {
+        "label": "输出内容",
+        "value": "风险等级、下钻分析、整改路径、审计报告"
+      },
+      {
+        "label": "适用场景",
+        "value": "财务风控、审计准备、合规巡检"
+      }
+    ]
+  },
+  {
+    "id": "product-ai-operations-employee",
+    "name": "AI 运营员工",
+    "category": "数字员工/运营",
+    "summary": "面向用户分层、营销优化、供应链预测、客服体验和全链路风险监控的运营型 AI 数字员工。",
+    "priceText": "面议",
+    "parameters": [
+      {
+        "label": "核心定位",
+        "value": "增长与运营优化数字员工"
+      },
+      {
+        "label": "主要能力",
+        "value": "用户分层、营销自动化、供应链预测、客服体验优化、风险监控"
+      },
+      {
+        "label": "适用对象",
+        "value": "运营团队、增长团队、客服管理团队、供应链协同团队"
+      },
+      {
+        "label": "技术特点",
+        "value": "行为分析 + 预测分析 + 风险分级 + 策略建议"
+      }
+    ]
+  },
+  {
+    "id": "product-operations-segmentation",
+    "name": "智能用户分层运营模块",
+    "category": "数字员工/运营能力",
+    "summary": "基于 RFM 模型自动识别高价值、沉睡和潜在用户，并输出对应运营策略。",
+    "priceText": "面议",
+    "parameters": [
+      {
+        "label": "能力类型",
+        "value": "用户分层与精细化运营"
+      },
+      {
+        "label": "核心模型",
+        "value": "RFM"
+      },
+      {
+        "label": "输出内容",
+        "value": "人群分类、运营建议、唤醒策略"
+      },
+      {
+        "label": "适用场景",
+        "value": "用户运营、会员运营、留存提升"
+      }
+    ]
+  },
+  {
+    "id": "product-operations-marketing-automation",
+    "name": "实时营销自动化模块",
+    "category": "数字员工/运营能力",
+    "summary": "根据营销活动数据实时优化广告投放策略，并输出优化建议。",
+    "priceText": "面议",
+    "parameters": [
+      {
+        "label": "能力类型",
+        "value": "营销自动化优化"
+      },
+      {
+        "label": "监控对象",
+        "value": "投放数据、异常数据、活动表现"
+      },
+      {
+        "label": "输出内容",
+        "value": "优化建议、实时调整提示、异常提醒"
+      },
+      {
+        "label": "适用场景",
+        "value": "广告投放、营销活动运营、ROI 优化"
+      }
+    ]
+  },
+  {
+    "id": "product-operations-supply-forecast",
+    "name": "供应链智能预测模块",
+    "category": "数字员工/运营能力",
+    "summary": "结合历史销售与外部因素生成销量预测、补货方案和库存健康度评分。",
+    "priceText": "面议",
+    "parameters": [
+      {
+        "label": "能力类型",
+        "value": "销量预测与补货建议"
+      },
+      {
+        "label": "输入数据",
+        "value": "历史销售、天气、舆情等外部因素"
+      },
+      {
+        "label": "输出内容",
+        "value": "销量曲线、补货方案、库存健康度"
+      },
+      {
+        "label": "适用场景",
+        "value": "补货决策、库存优化、供应链协同"
+      }
+    ]
+  },
+  {
+    "id": "product-operations-service-optimization",
+    "name": "智能客服体验优化模块",
+    "category": "数字员工/运营能力",
+    "summary": "识别情绪激烈对话并提供安抚话术和转人工建议。",
+    "priceText": "面议",
+    "parameters": [
+      {
+        "label": "能力类型",
+        "value": "客服体验与情绪分析"
+      },
+      {
+        "label": "识别对象",
+        "value": "高风险对话、情绪波动、服务异常点"
+      },
+      {
+        "label": "输出内容",
+        "value": "安抚话术、人工介入建议、满意度优化方向"
+      },
+      {
+        "label": "适用场景",
+        "value": "在线客服、售后支持、体验优化"
+      }
+    ]
+  },
+  {
+    "id": "product-operations-risk-monitoring",
+    "name": "运营风险实时监控模块",
+    "category": "数字员工/运营能力",
+    "summary": "汇总全链路风险事件并给出风险等级、处理优先级和应对策略。",
+    "priceText": "面议",
+    "parameters": [
+      {
+        "label": "能力类型",
+        "value": "全链路运营风险监控"
+      },
+      {
+        "label": "覆盖范围",
+        "value": "用户、营销、供应链、客服"
+      },
+      {
+        "label": "输出内容",
+        "value": "风险等级、优先级、事件处理建议"
+      },
+      {
+        "label": "适用场景",
+        "value": "风险看板、跨团队协同、运营预警"
+      }
+    ]
+  }
+]

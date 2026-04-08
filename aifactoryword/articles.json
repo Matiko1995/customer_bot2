@@ -1,0 +1,146 @@
+[
+  {
+    "id": "article-copywriter-overview",
+    "title": "AI 文案员工页面摘要",
+    "summary": "AI 文案员工页面围绕广告文案、着陆页文案、社交媒体内容、热点借势和效果复盘五个方向展开，重点展示 AI 如何提升内容生产和营销转化效率。",
+    "category": "数字员工/文案"
+  },
+  {
+    "id": "article-copywriter-ads",
+    "title": "多平台广告文案生成",
+    "summary": "页面展示 AI 如何根据不同平台规则生成广告文案，并输出差异化变体和 A/B 测试建议，适用于 Google、TikTok 等多渠道内容投放。",
+    "category": "数字员工/文案"
+  },
+  {
+    "id": "article-copywriter-landing-page",
+    "title": "着陆页文案智能构建",
+    "summary": "页面展示 AI 基于 AIDA、PAS、BAB 等框架自动生成落地页文案结构，并通过不同框架切换帮助团队比较页面表达效果。",
+    "category": "数字员工/文案"
+  },
+  {
+    "id": "article-copywriter-social",
+    "title": "社交媒体文案场景化生成",
+    "summary": "页面展示 AI 结合企业知识库和客户画像，为朋友圈、小红书、微博等平台生成差异化内容，并给出发布时间建议。",
+    "category": "数字员工/文案"
+  },
+  {
+    "id": "article-copywriter-hot-topics",
+    "title": "热点文案快速响应",
+    "summary": "页面展示 AI 如何结合热搜信息快速生成借势文案，并通过热点生命周期预测帮助团队选择最佳响应时机。",
+    "category": "数字员工/文案"
+  },
+  {
+    "id": "article-copywriter-review",
+    "title": "文案效果智能复盘",
+    "summary": "页面展示 AI 通过阅读率、互动率和转化率数据分析高效文案特征，并自动生成优化版本，用于持续提升转化表现。",
+    "category": "数字员工/文案"
+  },
+  {
+    "id": "article-legal-overview",
+    "title": "AI 法务员工页面摘要",
+    "summary": "AI 法务员工页面围绕条款提取、冲突检测、缺失条款补全、法规时效校验和审查报告生成五个方向展示 AI 如何辅助合同审查和法律风控。",
+    "category": "数字员工/法务"
+  },
+  {
+    "id": "article-legal-term-extraction",
+    "title": "智能条款提取与术语识别",
+    "summary": "页面展示 AI 结合法律 OCR 和上下文识别能力处理复杂合同文本，并对易混术语和上下文依据做联动高亮。",
+    "category": "数字员工/法务"
+  },
+  {
+    "id": "article-legal-conflict-detection",
+    "title": "条款冲突智能检测",
+    "summary": "页面展示 AI 自动识别合同中存在逻辑矛盾的条款组合，并通过右侧面板展示冲突关系与风险链条。",
+    "category": "数字员工/法务"
+  },
+  {
+    "id": "article-legal-missing-clauses",
+    "title": "缺失条款自动补全",
+    "summary": "页面展示 AI 如何识别合同关键章节中缺失的标准条款，并提供行业最佳实践文本供补全使用。",
+    "category": "数字员工/法务"
+  },
+  {
+    "id": "article-legal-regulation-check",
+    "title": "法规时效性校验",
+    "summary": "页面展示 AI 检查合同文本中引用的法条是否已更新，并对新旧法条差异进行可视化说明。",
+    "category": "数字员工/法务"
+  },
+  {
+    "id": "article-legal-report",
+    "title": "审查报告一键生成",
+    "summary": "页面展示 AI 自动汇总各类法律风险点，生成结构化 PDF 审查报告，支持直接下载或分享给团队成员。",
+    "category": "数字员工/法务"
+  },
+  {
+    "id": "article-finance-overview",
+    "title": "AI 财务员工页面摘要",
+    "summary": "AI 财务员工页面围绕发票校验、报销合规、对账匹配、税务申报和风险预警五个方向展示财务数字员工如何提升效率与合规性。",
+    "category": "数字员工/财务"
+  },
+  {
+    "id": "article-finance-invoice-check",
+    "title": "智能发票校验中心",
+    "summary": "页面展示 AI 通过 OCR 自动识别发票关键信息，并对异常项做高亮标注，支持单张和批量验真操作。",
+    "category": "数字员工/财务"
+  },
+  {
+    "id": "article-finance-expense-compliance",
+    "title": "费用报销合规检测",
+    "summary": "页面展示 AI 自动检测超标费用项、展示制度依据并生成整改建议，帮助企业统一报销规则执行。",
+    "category": "数字员工/财务"
+  },
+  {
+    "id": "article-finance-reconciliation",
+    "title": "智能对账匹配引擎",
+    "summary": "页面展示 AI 自动比对银行流水与财务系统数据，并对可疑交易做高亮分析和风险提示。",
+    "category": "数字员工/财务"
+  },
+  {
+    "id": "article-finance-tax-filing",
+    "title": "税务申报自动填报",
+    "summary": "页面展示 AI 将财务数据转换为税务口径并自动填入申报栏目，同时展示关键税种计算逻辑和填报进度。",
+    "category": "数字员工/财务"
+  },
+  {
+    "id": "article-finance-risk-dashboard",
+    "title": "财务风险实时预警看板",
+    "summary": "页面展示 AI 汇总发票、报销、对账和税务流程中的风险点，形成动态预警看板并支持导出审计报告。",
+    "category": "数字员工/财务"
+  },
+  {
+    "id": "article-operations-overview",
+    "title": "AI 运营员工页面摘要",
+    "summary": "AI 运营员工页面围绕用户分层、营销自动化、供应链预测、客服体验优化和运营风险监控五个方向展示 AI 运营支持能力。",
+    "category": "数字员工/运营"
+  },
+  {
+    "id": "article-operations-segmentation",
+    "title": "智能用户分层运营",
+    "summary": "页面展示 AI 根据 RFM 模型识别高价值、沉睡和潜在用户，并为不同人群生成针对性的运营策略。",
+    "category": "数字员工/运营"
+  },
+  {
+    "id": "article-operations-marketing-automation",
+    "title": "实时营销自动化",
+    "summary": "页面展示 AI 根据活动数据实时调整投放策略，对异常数据做高亮提示并输出优化建议。",
+    "category": "数字员工/运营"
+  },
+  {
+    "id": "article-operations-supply-forecast",
+    "title": "供应链智能预测",
+    "summary": "页面展示 AI 将历史销售数据与天气、舆情等因素联动分析，预测销量并生成补货方案和库存健康度评分。",
+    "category": "数字员工/运营"
+  },
+  {
+    "id": "article-operations-service-optimization",
+    "title": "智能客服体验优化",
+    "summary": "页面展示 AI 自动识别高风险客服对话，提供安抚话术模板和转人工时机建议，以改善客户服务体验。",
+    "category": "数字员工/运营"
+  },
+  {
+    "id": "article-operations-risk-monitoring",
+    "title": "运营风险实时监控",
+    "summary": "页面展示 AI 汇总全链路运营风险点并生成动态看板，通过红黄绿等级和优先级建议帮助团队快速处置。",
+    "category": "数字员工/运营"
+  }
+]

@@ -1,0 +1,27 @@
+{
+  "name": "customer-bot",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "npm run build:widget && npm run build:app && node scripts/archive-build-output.mjs",
+    "build:app": "nuxt build",
+    "build:widget": "tsup && node scripts/write-widget-version.mjs",
+    "preview": "node .output/server/index.mjs",
+    "test": "vitest run",
+    "package:current": "bash scripts/package-current.sh",
+    "release:current": "bash scripts/release-current.sh",
+    "deploy:current": "bash scripts/deploy-current.sh"
+  },
+  "dependencies": {
+    "nuxt": "^4.1.2",
+    "vue": "^3.5.18"
+  },
+  "devDependencies": {
+    "@types/node": "^25.3.3",
+    "jsdom": "^26.1.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.2",
+    "vitest": "^4.0.18"
+  }
+}

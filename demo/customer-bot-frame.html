@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customer Bot Frame</title>
+    <style>
+      body {
+        margin: 0;
+        background: transparent;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="../dist/customer-bot.js"></script>
+    <script>
+      CustomerBot.init({
+        siteName: 'AIFactory Frame',
+        themeColor: '#118ab2',
+        contact: {
+          phone: '13800000000',
+          email: 'hello@example.com',
+          address: 'Shanghai'
+        }
+      })
+      CustomerBot.open()
+    </script>
+  </body>
+</html>

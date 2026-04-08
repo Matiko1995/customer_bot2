@@ -1,0 +1,73 @@
+<h2>方案 A 细化: 运营结果优先</h2>
+<p class="subtitle">核心原则：先盯盘，再切租户处理，单租户配置不再是整个页面的默认起点</p>
+
+<div class="options">
+  <div class="option" data-choice="a1" onclick="toggleSelect(this)">
+    <div class="letter">A1</div>
+    <div class="content">
+      <h3>上总览，下工作区</h3>
+      <p>最稳妥。顶部是运营指挥台，下面才进入当前租户工作区。</p>
+    </div>
+  </div>
+  <div class="option" data-choice="a2" onclick="toggleSelect(this)">
+    <div class="letter">A2</div>
+    <div class="content">
+      <h3>左租户队列，右实时看板</h3>
+      <p>更偏调度中心。右侧是大盘与异常，底部弹出工作区。</p>
+    </div>
+  </div>
+</div>
+
+<div class="split section">
+  <div class="mockup">
+    <div class="mockup-header">A1 推荐稿</div>
+    <div class="mockup-body">
+      <div class="mock-nav">总览 | 租户队列 | 异常会话 | 内容运营 | 商业化</div>
+      <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; margin-top:12px;">
+        <div class="placeholder" style="height:72px;">今日会话</div>
+        <div class="placeholder" style="height:72px;">今日留资</div>
+        <div class="placeholder" style="height:72px;">高频资料命中</div>
+        <div class="placeholder" style="height:72px;">待处理异常租户</div>
+      </div>
+      <div style="display:grid; grid-template-columns: 1.2fr 0.8fr; gap:12px; margin-top:12px;">
+        <div class="placeholder" style="height:160px;">会话趋势 + 命中趋势 + 热门问题</div>
+        <div class="placeholder" style="height:160px;">异常列表 / 今日待跟进租户</div>
+      </div>
+      <div style="display:grid; grid-template-columns: 0.9fr 1.1fr; gap:12px; margin-top:12px;">
+        <div class="mock-sidebar">租户队列<br>状态筛选<br>到期套餐<br>低命中租户</div>
+        <div class="mock-content">
+          <div class="placeholder" style="height:60px; margin-bottom:10px;">当前租户摘要</div>
+          <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:10px;">
+            <div class="placeholder" style="height:84px;">内容</div>
+            <div class="placeholder" style="height:84px;">聊天</div>
+            <div class="placeholder" style="height:84px;">账单</div>
+            <div class="placeholder" style="height:84px;">安装</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mockup">
+    <div class="mockup-header">A2 调度中心稿</div>
+    <div class="mockup-body">
+      <div style="display:grid; grid-template-columns: 0.72fr 1.28fr; gap:12px;">
+        <div class="mock-sidebar">租户队列<br>待处理会话<br>重点客户<br>高消耗租户</div>
+        <div>
+          <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:10px;">
+            <div class="placeholder" style="height:70px;">会话</div>
+            <div class="placeholder" style="height:70px;">留资</div>
+            <div class="placeholder" style="height:70px;">转化</div>
+          </div>
+          <div class="placeholder" style="height:178px; margin-top:12px;">实时事件流 / 命中排行 / 风险提醒</div>
+          <div class="placeholder" style="height:108px; margin-top:12px;">选中租户后展开操作抽屉</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <p class="label">我的建议</p>
+  <p>推荐继续走 <strong>A1</strong>。它更容易在当前代码基础上落地，也最符合你要的“不是一路滚到底”的管理台感受：上面是运营结果，下面是可切换的租户工作区。</p>
+</div>
