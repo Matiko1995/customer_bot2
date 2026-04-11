@@ -1,0 +1,86 @@
+[
+  {
+    "id": "fastener-product-din933-304-m8x30",
+    "name": "DIN 933 六角头螺栓 M8x30",
+    "category": "螺栓",
+    "summary": "全牙外六角螺栓，适用于设备装配和通用连接。",
+    "priceText": "¥0.95 / 个",
+    "parameters": [
+      { "label": "标准", "value": "DIN 933" },
+      { "label": "规格", "value": "M8 x 30" },
+      { "label": "材质", "value": "304 不锈钢" },
+      { "label": "表面处理", "value": "本色" },
+      { "label": "起订量", "value": "3000 个" }
+    ]
+  },
+  {
+    "id": "fastener-product-gb5783-88-m10x40",
+    "name": "GB 5783 外六角螺栓 M10x40",
+    "category": "螺栓",
+    "summary": "8.8级碳钢外六角螺栓，适用于常规机械装配。",
+    "priceText": "¥1.10 / 个",
+    "parameters": [
+      { "label": "标准", "value": "GB 5783" },
+      { "label": "规格", "value": "M10 x 40" },
+      { "label": "材质", "value": "8.8级碳钢" },
+      { "label": "表面处理", "value": "镀锌" },
+      { "label": "起订量", "value": "2000 个" }
+    ]
+  },
+  {
+    "id": "fastener-product-din912-129-m6x25",
+    "name": "DIN 912 内六角圆柱头螺钉 M6x25",
+    "category": "螺钉",
+    "summary": "12.9级内六角螺钉，适用于模具、治具和高强度连接场景。",
+    "priceText": "¥0.72 / 个",
+    "parameters": [
+      { "label": "标准", "value": "DIN 912" },
+      { "label": "规格", "value": "M6 x 25" },
+      { "label": "材质", "value": "12.9级合金钢" },
+      { "label": "表面处理", "value": "发黑" },
+      { "label": "起订量", "value": "5000 个" }
+    ]
+  },
+  {
+    "id": "fastener-product-din934-304-m8",
+    "name": "DIN 934 六角螺母 M8",
+    "category": "螺母",
+    "summary": "304 不锈钢六角螺母，适合与 DIN 933 / ISO 4017 配套使用。",
+    "priceText": "¥0.18 / 个",
+    "parameters": [
+      { "label": "标准", "value": "DIN 934" },
+      { "label": "规格", "value": "M8" },
+      { "label": "材质", "value": "304 不锈钢" },
+      { "label": "表面处理", "value": "本色" },
+      { "label": "起订量", "value": "10000 个" }
+    ]
+  },
+  {
+    "id": "fastener-product-iso7089-washer-m8",
+    "name": "ISO 7089 平垫 M8",
+    "category": "垫圈",
+    "summary": "标准平垫圈，用于增加受力面积和保护接触面。",
+    "priceText": "¥0.06 / 个",
+    "parameters": [
+      { "label": "标准", "value": "ISO 7089" },
+      { "label": "规格", "value": "M8" },
+      { "label": "材质", "value": "304 不锈钢" },
+      { "label": "表面处理", "value": "本色" },
+      { "label": "起订量", "value": "20000 个" }
+    ]
+  },
+  {
+    "id": "fastener-product-din975-thread-rod-m12",
+    "name": "DIN 975 牙条 M12",
+    "category": "牙条",
+    "summary": "通牙牙条，常用于吊装、支架和机电安装。",
+    "priceText": "¥8.50 / 米",
+    "parameters": [
+      { "label": "标准", "value": "DIN 975" },
+      { "label": "规格", "value": "M12" },
+      { "label": "材质", "value": "碳钢" },
+      { "label": "表面处理", "value": "热镀锌" },
+      { "label": "供货方式", "value": "1 米 / 2 米 / 3 米切段" }
+    ]
+  }
+]

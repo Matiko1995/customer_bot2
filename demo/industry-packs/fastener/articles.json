@@ -1,0 +1,32 @@
+[
+  {
+    "id": "fastener-article-standards",
+    "title": "紧固件标准体系与常见对照关系",
+    "summary": "介绍 GB、DIN、ISO 等标准体系在螺栓、螺母、螺钉中的常见对应关系。",
+    "category": "标准"
+  },
+  {
+    "id": "fastener-article-materials",
+    "title": "紧固件材质选择：碳钢、304、316 如何判断",
+    "summary": "针对常见使用环境说明碳钢和不锈钢材质的选择逻辑。",
+    "category": "材质"
+  },
+  {
+    "id": "fastener-article-strength",
+    "title": "8.8级、10.9级、12.9级常见应用区别",
+    "summary": "帮助客户理解不同强度等级的适用场景与注意事项。",
+    "category": "等级"
+  },
+  {
+    "id": "fastener-article-surface",
+    "title": "镀锌、发黑、达克罗、热镀锌适用场景对比",
+    "summary": "从防腐等级、成本和外观角度比较常见表面处理方案。",
+    "category": "表面处理"
+  },
+  {
+    "id": "fastener-article-custom",
+    "title": "非标紧固件询盘时客服需要先确认哪些信息",
+    "summary": "整理非标件沟通时必须先收集的图纸、样品、材质、数量和交期信息。",
+    "category": "非标定制"
+  }
+]
