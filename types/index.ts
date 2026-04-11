@@ -1,3 +1,5 @@
+import type { TenantRagSettings } from '../packages/shared-config/src/rag-settings.ts'
+
 export interface SiteConfig {
   brandName: string
   heroTitle: string
@@ -68,6 +70,10 @@ export interface ConversationMessage {
   content: string
   createdAt: number
   attachments?: MessageAttachment[]
+  citations?: CitationRecord[]
+  answerSource?: AnswerSource
+  credentialSource?: CredentialSource
+  retrievalConfidence?: RetrievalConfidence
 }
 
 export interface TenantRecord {
@@ -86,6 +92,7 @@ export interface TenantRecord {
   reuseAnsweredQuestions?: boolean
   deletedAt?: number
   embedKey: string
+  ragSettings?: TenantRagSettings
   billingSubscription?: TenantBillingSubscription
   contentConfig?: TenantContentConfig
   createdAt: number
@@ -123,6 +130,85 @@ export interface TenantContentSource {
   answerHints?: string[]
   updatedAt?: number
 }
+
+export type DataSourceType = 'webpage' | 'file' | 'imap'
+
+export type DataSourceStatus = 'active' | 'disabled'
+
+export type DataSourceSyncMode = 'manual' | 'scheduled'
+
+export interface DataSourceRecord {
+  id: string
+  tenantId: string
+  type: DataSourceType
+  status: DataSourceStatus
+  syncMode: DataSourceSyncMode
+  scheduleCron?: string
+  config: Record<string, unknown>
+  lastSyncedAt?: number
+  createdAt: number
+  updatedAt: number
+}
+
+export type IngestionTriggerMode = 'manual' | 'scheduled' | 'retry'
+
+export type IngestionJobStatus = 'queued' | 'running' | 'succeeded' | 'failed'
+
+export interface IngestionJobRecord {
+  id: string
+  tenantId: string
+  dataSourceId: string
+  triggerMode: IngestionTriggerMode
+  status: IngestionJobStatus
+  startedAt?: number
+  finishedAt?: number
+  errorMessage?: string
+  stats: Record<string, unknown>
+}
+
+export interface SourceDocumentRecord {
+  id: string
+  tenantId: string
+  dataSourceId: string
+  externalId?: string
+  title: string
+  mimeType: string
+  sourceUri: string
+  contentText: string
+  metadata: Record<string, unknown>
+  contentHash: string
+  versionHash: string
+  createdAt: number
+  updatedAt: number
+}
+
+export interface DocumentChunkRecord {
+  id: string
+  tenantId: string
+  documentId: string
+  chunkIndex: number
+  content: string
+  tokenCount: number
+  metadata: Record<string, unknown>
+  embedding?: number[]
+  createdAt: number
+}
+
+export interface CitationRecord {
+  documentId: string
+  chunkId: string
+  title: string
+  snippet: string
+  score: number
+  sourceUri?: string
+  metadata?: Record<string, unknown>
+}
+
+export type AnswerSource = 'structured' | 'rag' | 'general_fallback'
+
+export type CredentialSource = 'tenant' | 'platform_shared'
+
+export type RetrievalConfidence = 'high' | 'low' | 'miss'
 
 export interface AdminUserRecord {
   id: string
@@ -172,6 +258,10 @@ export interface ChatMessageRecord {
   createdAt: number
   attachments?: MessageAttachment[]
   matchedContentSources?: MatchedContentSource[]
+  citations?: CitationRecord[]
+  answerSource?: AnswerSource
+  credentialSource?: CredentialSource
+  retrievalConfidence?: RetrievalConfidence
 }
 
 export interface MatchedContentSource {
@@ -206,6 +296,8 @@ export interface LlmUsageRecord {
   totalTokens: number
   amount: string
   status: 'success' | 'failed' | 'unknown'
+  credentialSource?: CredentialSource
+  answerSource?: AnswerSource
   createdAt: number
 }
 

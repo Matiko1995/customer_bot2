@@ -1,5 +1,5 @@
-import { getStorage } from '../lib/storage'
-import { resolveTenant } from '../lib/tenant-resolver'
+import { createAgentRuntimeGateway } from '../lib/service-gateways/agent-runtime'
+import { getRagRepository, getStorage } from '../lib/storage'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody<{
@@ -20,31 +20,29 @@ export default defineEventHandler(async (event) => {
   }
 
   const storage = getStorage()
-  const tenant = await resolveTenant(body.tenantId, storage)
-
-  if (!tenant) {
-    throw createError({
-      statusCode: 404,
-      statusMessage: 'Tenant not found'
-    })
-  }
-
-  const leadId = `lead-${Date.now()}`
-  await storage.saveLead({
-    id: leadId,
-    tenantId: tenant.id,
-    sessionId: body.sessionId || '',
-    name: body.name,
-    company: body.company,
-    contact: body.contact,
-    demandType: body.demandType,
-    message: body.message || '',
-    createdAt: Date.now()
+  const gateway = createAgentRuntimeGateway({
+    storage,
+    ragRepository: getRagRepository()
   })
 
-  return {
-    ok: true,
-    id: leadId,
-    message: '提交成功，我们会在 1 个工作日内联系你。'
+  try {
+    return await gateway.contact({
+      tenantId: body.tenantId,
+      sessionId: body.sessionId || '',
+      name: body.name,
+      company: body.company,
+      contact: body.contact,
+      demandType: body.demandType,
+      message: body.message || ''
+    })
+  } catch (error) {
+    if (error instanceof Error && error.message === 'Tenant not found') {
+      throw createError({
+        statusCode: 404,
+        statusMessage: 'Tenant not found'
+      })
+    }
+
+    throw error
   }
 })

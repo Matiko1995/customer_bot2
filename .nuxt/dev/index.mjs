@@ -1,42 +1,43 @@
 import process from 'node:process';globalThis._importMeta_={url:import.meta.url,env:process.env};import { tmpdir } from 'node:os';
-import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, sendRedirect, proxyRequest, getRequestHeader, setResponseHeaders, setResponseStatus, send, getRequestHeaders, setResponseHeader, appendResponseHeader, getRequestURL, getResponseHeader, removeResponseHeader, createError, getHeader, setHeader, getMethod, getQuery as getQuery$1, readBody, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getResponseStatus, getRouterParam, getCookie, setCookie, deleteCookie, getResponseStatusText } from 'file:///Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/node_modules/h3/dist/index.mjs';
 import { Server } from 'node:http';
-import { resolve, dirname, join } from 'node:path';
-import nodeCrypto, { randomInt, createHash } from 'node:crypto';
+import { resolve, dirname, join, extname, basename } from 'node:path';
+import nodeCrypto, { createHash, randomInt } from 'node:crypto';
 import { parentPort, threadId } from 'node:worker_threads';
-import { escapeHtml } from 'file:///Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/node_modules/@vue/shared/dist/shared.cjs.js';
-import { readFile, mkdir, writeFile } from 'node:fs/promises';
-import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'file:///Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/node_modules/vue-bundle-renderer/dist/runtime.mjs';
-import { parseURL, withoutBase, joinURL, getQuery, withQuery, withTrailingSlash, decodePath, withLeadingSlash, withoutTrailingSlash, joinRelativeURL } from 'file:///Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/node_modules/ufo/dist/index.mjs';
-import destr, { destr as destr$1 } from 'file:///Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/node_modules/destr/dist/index.mjs';
-import { createHooks } from 'file:///Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/node_modules/nitropack/node_modules/hookable/dist/index.mjs';
-import { createFetch, Headers as Headers$1 } from 'file:///Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/node_modules/ofetch/dist/node.mjs';
-import { fetchNodeRequestHandler, callNodeRequestHandler } from 'file:///Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/node_modules/node-mock-http/dist/index.mjs';
-import { createStorage as createStorage$1, prefixStorage } from 'file:///Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/node_modules/unstorage/dist/index.mjs';
-import unstorage_47drivers_47fs from 'file:///Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/node_modules/unstorage/drivers/fs.mjs';
-import { digest } from 'file:///Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/node_modules/ohash/dist/index.mjs';
-import { klona } from 'file:///Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/node_modules/klona/dist/index.mjs';
-import defu, { defuFn } from 'file:///Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/node_modules/defu/dist/defu.mjs';
-import { snakeCase } from 'file:///Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/node_modules/scule/dist/index.mjs';
-import { getContext } from 'file:///Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/node_modules/unctx/dist/index.mjs';
-import { toRouteMatcher, createRouter } from 'file:///Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/node_modules/radix3/dist/index.mjs';
-import consola, { consola as consola$1 } from 'file:///Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/node_modules/consola/dist/index.mjs';
-import { ErrorParser } from 'file:///Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/node_modules/youch-core/build/index.js';
-import { Youch } from 'file:///Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/node_modules/youch/build/index.js';
-import { SourceMapConsumer } from 'file:///Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/node_modules/source-map/source-map.js';
+import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, sendRedirect, proxyRequest, getRequestHeader, setResponseHeaders, setResponseStatus, send, getRequestHeaders, setResponseHeader, appendResponseHeader, getRequestURL, getResponseHeader, removeResponseHeader, createError, getHeader, setHeader, getMethod, getQuery as getQuery$1, readBody, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getResponseStatus, getRouterParam, getCookie, setCookie, deleteCookie, getResponseStatusText } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/h3/dist/index.mjs';
+import { escapeHtml } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/@vue/shared/dist/shared.cjs.js';
+import { readFile, mkdir, writeFile, readdir } from 'node:fs/promises';
+import { Buffer as Buffer$1 } from 'node:buffer';
+import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/vue-bundle-renderer/dist/runtime.mjs';
+import { parseURL, withoutBase, joinURL, getQuery, withQuery, withTrailingSlash, decodePath, withLeadingSlash, withoutTrailingSlash, joinRelativeURL } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/ufo/dist/index.mjs';
+import destr, { destr as destr$1 } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/destr/dist/index.mjs';
+import { renderToString } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/vue/server-renderer/index.mjs';
+import { klona } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/klona/dist/index.mjs';
+import defu, { defuFn } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/defu/dist/defu.mjs';
+import { snakeCase } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/scule/dist/index.mjs';
+import { createHead as createHead$1, propsToString, renderSSRHead } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/unhead/dist/server.mjs';
+import { stringify, uneval } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/devalue/index.js';
+import { isVNode, isRef, toValue } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/vue/index.mjs';
+import { createHooks } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/nitropack/node_modules/hookable/dist/index.mjs';
+import { createFetch, Headers as Headers$1 } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/ofetch/dist/node.mjs';
+import { fetchNodeRequestHandler, callNodeRequestHandler } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/node-mock-http/dist/index.mjs';
+import { createStorage as createStorage$1, prefixStorage } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/unstorage/dist/index.mjs';
+import unstorage_47drivers_47fs from 'file://D:/ai/aifactory_website/customer_bot/node_modules/unstorage/drivers/fs.mjs';
+import { digest } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/ohash/dist/index.mjs';
+import { toRouteMatcher, createRouter } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/radix3/dist/index.mjs';
+import consola, { consola as consola$1 } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/consola/dist/index.mjs';
+import { ErrorParser } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/youch-core/build/index.js';
+import { Youch } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/youch/build/index.js';
+import { SourceMapConsumer } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/source-map/source-map.js';
 import { AsyncLocalStorage } from 'node:async_hooks';
-import { stringify, uneval } from 'file:///Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/node_modules/devalue/index.js';
-import { captureRawStackTrace, parseRawStackTrace } from 'file:///Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/node_modules/errx/dist/index.js';
-import { isVNode, isRef, toValue } from 'file:///Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/node_modules/vue/index.mjs';
-import _wH6JrtIxmaSoA8lCPWFnE9z4lQeXW6H5z3l5aymEQw from 'file:///Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/node_modules/@nuxt/vite-builder/dist/fix-stacktrace.mjs';
+import { getContext } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/unctx/dist/index.mjs';
+import { captureRawStackTrace, parseRawStackTrace } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/errx/dist/index.js';
+import _wH6JrtIxmaSoA8lCPWFnE9z4lQeXW6H5z3l5aymEQw from 'file://D:/ai/aifactory_website/customer_bot/node_modules/@nuxt/vite-builder/dist/fix-stacktrace.mjs';
 import { promises } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { dirname as dirname$1, resolve as resolve$1 } from 'file:///Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/node_modules/pathe/dist/index.mjs';
-import { createHead as createHead$1, propsToString, renderSSRHead } from 'file:///Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/node_modules/unhead/dist/server.mjs';
-import { renderToString } from 'file:///Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/node_modules/vue/server-renderer/index.mjs';
-import { walkResolver } from 'file:///Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/node_modules/unhead/dist/utils.mjs';
+import { dirname as dirname$1, resolve as resolve$1 } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/pathe/dist/index.mjs';
+import { walkResolver } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/unhead/dist/utils.mjs';
 
-const serverAssets = [{"baseName":"server","dir":"/Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/server/assets"}];
+const serverAssets = [{"baseName":"server","dir":"D:/ai/aifactory_website/customer_bot/server/assets"}];
 
 const assets$1 = createStorage$1();
 
@@ -48,11 +49,11 @@ const storage = createStorage$1({});
 
 storage.mount('/assets', assets$1);
 
-storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/Users/matiko/Documents/Webstrom/aifactory_website/customer_bot","watchOptions":{"ignored":[null]}}));
-storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/server","watchOptions":{"ignored":[null]}}));
-storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/.nuxt"}));
-storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/.nuxt/cache"}));
-storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"/Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/.data/kv"}));
+storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"D:/ai/aifactory_website/customer_bot","watchOptions":{"ignored":[null]}}));
+storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"D:/ai/aifactory_website/customer_bot/server","watchOptions":{"ignored":[null]}}));
+storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"D:/ai/aifactory_website/customer_bot/.nuxt"}));
+storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"D:/ai/aifactory_website/customer_bot/.nuxt/cache"}));
+storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"D:/ai/aifactory_website/customer_bot/.data/kv"}));
 
 function useStorage(base = "") {
   return base ? prefixStorage(storage, base) : storage;
@@ -654,6 +655,9 @@ const _inlineRuntimeConfig = {
   "customerBotLlmEndpoint": "",
   "customerBotLlmApiKey": "",
   "customerBotLlmModel": "",
+  "customerBotPlatformLlmEndpoint": "",
+  "customerBotPlatformLlmApiKey": "",
+  "customerBotPlatformLlmModel": "",
   "customerBotWidgetVersion": ""
 };
 const envOptions = {
@@ -698,11 +702,6 @@ new Proxy(/* @__PURE__ */ Object.create(null), {
     }
     return void 0;
   }
-});
-
-getContext("nitro-app", {
-  asyncContext: false,
-  AsyncLocalStorage: void 0
 });
 
 const config = useRuntimeConfig();
@@ -2021,24 +2020,7 @@ async function errorHandler(error, event) {
   // H3 will handle fallback
 }
 
-const script = `
-if (!window.__NUXT_DEVTOOLS_TIME_METRIC__) {
-  Object.defineProperty(window, '__NUXT_DEVTOOLS_TIME_METRIC__', {
-    value: {},
-    enumerable: false,
-    configurable: true,
-  })
-}
-window.__NUXT_DEVTOOLS_TIME_METRIC__.appInit = Date.now()
-`;
-
-const _PLv7xErYKPZRrrkaaxHX0ijhAAz2pW6Rxxi4xlb5Po = (function(nitro) {
-  nitro.hooks.hook("render:html", (htmlContext) => {
-    htmlContext.head.push(`<script>${script}<\/script>`);
-  });
-});
-
-const rootDir = "/Users/matiko/Documents/Webstrom/aifactory_website/customer_bot";
+const rootDir = "D:/ai/aifactory_website/customer_bot";
 
 const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1"},{"charset":"utf-8"}],"link":[],"style":[],"script":[],"noscript":[]};
 
@@ -2067,7 +2049,7 @@ const asyncContext = getContext("nuxt-dev", {
 	asyncContext: true,
 	AsyncLocalStorage
 });
-const _oWcoP6LH8E86g2hnncpibrkZ4hp7Ax6SX8hFjBhSzo = (nitroApp) => {
+const _8u4YFeAt_fLTgOoFQaol9xdDrwe2aRzgnFZecKUDs7U = (nitroApp) => {
 	const handler = nitroApp.h3App.handler;
 	nitroApp.h3App.handler = (event) => {
 		return asyncContext.callAsync({
@@ -2141,27 +2123,11 @@ function onConsoleLog(callback) {
 }
 
 const plugins = [
-  _PLv7xErYKPZRrrkaaxHX0ijhAAz2pW6Rxxi4xlb5Po,
-_oWcoP6LH8E86g2hnncpibrkZ4hp7Ax6SX8hFjBhSzo,
+  _8u4YFeAt_fLTgOoFQaol9xdDrwe2aRzgnFZecKUDs7U,
 _wH6JrtIxmaSoA8lCPWFnE9z4lQeXW6H5z3l5aymEQw
 ];
 
-const assets = {
-  "/index.mjs": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"32702-0gItflAlkpKXPaHgFM4sL/6vax0\"",
-    "mtime": "2026-03-22T07:56:23.277Z",
-    "size": 206594,
-    "path": "index.mjs"
-  },
-  "/index.mjs.map": {
-    "type": "application/json",
-    "etag": "\"c11b9-tykFxxADxuGL851iwbiNVqYtiVY\"",
-    "mtime": "2026-03-22T07:56:23.280Z",
-    "size": 790969,
-    "path": "index.mjs.map"
-  }
-};
+const assets = {};
 
 function readAsset (id) {
   const serverDir = dirname$1(fileURLToPath(globalThis._importMeta_.url));
@@ -2186,7 +2152,7 @@ function getAsset (id) {
 
 const METHODS = /* @__PURE__ */ new Set(["HEAD", "GET"]);
 const EncodingMap = { gzip: ".gz", br: ".br" };
-const _mpCeFX = eventHandler((event) => {
+const _3xqaAl = eventHandler((event) => {
   if (event.method && !METHODS.has(event.method)) {
     return;
   }
@@ -2251,25 +2217,28 @@ const _mpCeFX = eventHandler((event) => {
 });
 
 function normalizeOrigin(origin) {
-  return origin.trim().replace(/\/$/, "");
+    return origin.trim().replace(/\/$/, '');
 }
 function resolveAllowedOrigins() {
-  const defaults = ["https://www.aifactory.website", "https://aifactory.website", "http://localhost:3000"];
-  const raw = process.env.CUSTOMER_BOT_ALLOWED_ORIGINS || defaults.join(",");
-  return raw.split(",").map((item) => normalizeOrigin(item)).filter(Boolean);
+    const defaults = ['https://www.aifactory.website', 'https://aifactory.website', 'http://localhost:3000'];
+    const raw = process.env.CUSTOMER_BOT_ALLOWED_ORIGINS || defaults.join(',');
+    return raw
+        .split(',')
+        .map((item) => normalizeOrigin(item))
+        .filter(Boolean);
 }
-const _xU5C25 = defineEventHandler((event) => {
-  const requestOrigin = typeof getHeader(event, "origin") === "string" ? normalizeOrigin(String(getHeader(event, "origin"))) : "";
-  const allowedOrigins = resolveAllowedOrigins();
-  const allowOrigin = requestOrigin && allowedOrigins.includes(requestOrigin) ? requestOrigin : allowedOrigins[0] || "*";
-  setHeader(event, "Access-Control-Allow-Origin", allowOrigin);
-  setHeader(event, "Vary", "Origin");
-  setHeader(event, "Access-Control-Allow-Methods", "GET, POST, PUT, OPTIONS");
-  setHeader(event, "Access-Control-Allow-Headers", "Content-Type, Authorization");
-  if (getMethod(event) === "OPTIONS") {
-    setResponseStatus(event, 204);
-    return "";
-  }
+const _Z4ewqf = defineEventHandler((event) => {
+    const requestOrigin = typeof getHeader(event, 'origin') === 'string' ? normalizeOrigin(String(getHeader(event, 'origin'))) : '';
+    const allowedOrigins = resolveAllowedOrigins();
+    const allowOrigin = requestOrigin && allowedOrigins.includes(requestOrigin) ? requestOrigin : allowedOrigins[0] || '*';
+    setHeader(event, 'Access-Control-Allow-Origin', allowOrigin);
+    setHeader(event, 'Vary', 'Origin');
+    setHeader(event, 'Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS');
+    setHeader(event, 'Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    if (getMethod(event) === 'OPTIONS') {
+        setResponseStatus(event, 204);
+        return '';
+    }
 });
 
 const VueResolver = (_, value) => {
@@ -2349,9 +2318,9 @@ function publicAssetsURL(...path) {
 const APP_ROOT_OPEN_TAG = `<${appRootTag}${propsToString(appRootAttrs)}>`;
 const APP_ROOT_CLOSE_TAG = `</${appRootTag}>`;
 // @ts-expect-error file will be produced after app build
-const getServerEntry = () => import('file:///Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/.nuxt//dist/server/server.mjs').then((r) => r.default || r);
+const getServerEntry = () => import('file://D:/ai/aifactory_website/customer_bot/.nuxt//dist/server/server.mjs').then((r) => r.default || r);
 // @ts-expect-error file will be produced after app build
-const getClientManifest = () => import('file:///Users/matiko/Documents/Webstrom/aifactory_website/customer_bot/.nuxt//dist/server/client.manifest.mjs').then((r) => r.default || r).then((r) => typeof r === "function" ? r() : r);
+const getClientManifest = () => import('file://D:/ai/aifactory_website/customer_bot/.nuxt//dist/server/client.manifest.mjs').then((r) => r.default || r).then((r) => typeof r === "function" ? r() : r);
 // -- SSR Renderer --
 const getSSRRenderer = lazyCachedFunction(async () => {
 	// Load server bundle
@@ -2643,68 +2612,92 @@ async function getIslandContext(event) {
 	};
 }
 
-const _lazy_EhxJaW = () => Promise.resolve().then(function () { return billing_get$1; });
-const _lazy_oi_sC1 = () => Promise.resolve().then(function () { return chats_get$3; });
-const _lazy_6nhPJ4 = () => Promise.resolve().then(function () { return contentStats_get$1; });
-const _lazy_o5nctK = () => Promise.resolve().then(function () { return leads_get$3; });
-const _lazy_Emqv9G = () => Promise.resolve().then(function () { return login_post$3; });
-const _lazy_UvtfYx = () => Promise.resolve().then(function () { return overview_get$3; });
-const _lazy__BzXwv = () => Promise.resolve().then(function () { return tenants_get$1; });
-const _lazy_PuhDEH = () => Promise.resolve().then(function () { return tenants_post$1; });
-const _lazy_FSX2Pf = () => Promise.resolve().then(function () { return _tenantId__delete$1; });
-const _lazy_PA639l = () => Promise.resolve().then(function () { return _tenantId__get$1; });
-const _lazy_zleyXh = () => Promise.resolve().then(function () { return _tenantId__put$1; });
-const _lazy_sGz5fh = () => Promise.resolve().then(function () { return resetCode_post$3; });
-const _lazy_EOZgbp = () => Promise.resolve().then(function () { return restore_post$1; });
-const _lazy_O6jNGb = () => Promise.resolve().then(function () { return training_post$1; });
-const _lazy_5ELkyr = () => Promise.resolve().then(function () { return chat_post$1; });
-const _lazy_j1QvCP = () => Promise.resolve().then(function () { return contact_post$1; });
-const _lazy_wpqpyq = () => Promise.resolve().then(function () { return config_get$1; });
-const _lazy_wmzq0a = () => Promise.resolve().then(function () { return changePassword_post$1; });
-const _lazy_bWLaCk = () => Promise.resolve().then(function () { return chats_get$1; });
-const _lazy_GYB2OI = () => Promise.resolve().then(function () { return leads_get$1; });
-const _lazy_gW1IQz = () => Promise.resolve().then(function () { return login_post$1; });
-const _lazy_W8CXmq = () => Promise.resolve().then(function () { return logout_post$1; });
-const _lazy_Ew0F5z = () => Promise.resolve().then(function () { return me_get$1; });
-const _lazy_4cjFwQ = () => Promise.resolve().then(function () { return overview_get$1; });
-const _lazy_i8i6fF = () => Promise.resolve().then(function () { return resetCode_post$1; });
-const _lazy_xIFJSj = () => Promise.resolve().then(function () { return resetPassword_post$1; });
-const _lazy_wZ_Ygp = () => Promise.resolve().then(function () { return customerBot_js_get$1; });
-const _lazy_l29ODy = () => Promise.resolve().then(function () { return renderer; });
+const _lazy_yz4J0s = () => Promise.resolve().then(function () { return billing_get$1; });
+const _lazy_D_dIyv = () => Promise.resolve().then(function () { return chats_get$3; });
+const _lazy_OR1GYX = () => Promise.resolve().then(function () { return contentStats_get$1; });
+const _lazy_VS3RNi = () => Promise.resolve().then(function () { return leads_get$3; });
+const _lazy_ok8EwH = () => Promise.resolve().then(function () { return login_post$3; });
+const _lazy_VfduKW = () => Promise.resolve().then(function () { return overview_get$3; });
+const _lazy_Ysthk9 = () => Promise.resolve().then(function () { return tenants_get$1; });
+const _lazy_kJia_0 = () => Promise.resolve().then(function () { return tenants_post$1; });
+const _lazy_Vs_Bg5 = () => Promise.resolve().then(function () { return _tenantId__delete$1; });
+const _lazy_v8h6Cp = () => Promise.resolve().then(function () { return _tenantId__get$1; });
+const _lazy_ZMGBwg = () => Promise.resolve().then(function () { return _tenantId__put$1; });
+const _lazy_bF7GWq = () => Promise.resolve().then(function () { return agentDocs_get$1; });
+const _lazy_Rtg2qk = () => Promise.resolve().then(function () { return _fileName__put$1; });
+const _lazy_Azo2Rk = () => Promise.resolve().then(function () { return indexStats_get$1; });
+const _lazy_16TMUG = () => Promise.resolve().then(function () { return jobs_get$1; });
+const _lazy_cwFX1F = () => Promise.resolve().then(function () { return retry_post$1; });
+const _lazy_A6kv_M = () => Promise.resolve().then(function () { return reindex_post$1; });
+const _lazy_3on3Pw = () => Promise.resolve().then(function () { return resetCode_post$3; });
+const _lazy_RbTA88 = () => Promise.resolve().then(function () { return restore_post$1; });
+const _lazy_9mBMsE = () => Promise.resolve().then(function () { return sources_get$1; });
+const _lazy_zJHExf = () => Promise.resolve().then(function () { return sources_post$1; });
+const _lazy_u2fCqk = () => Promise.resolve().then(function () { return _sourceId__delete$1; });
+const _lazy_8HDzUf = () => Promise.resolve().then(function () { return _sourceId__put$1; });
+const _lazy_noAUVL = () => Promise.resolve().then(function () { return sync_post$1; });
+const _lazy_U7ZBZZ = () => Promise.resolve().then(function () { return upload_post$1; });
+const _lazy_UidVOf = () => Promise.resolve().then(function () { return training_post$1; });
+const _lazy_0YXui6 = () => Promise.resolve().then(function () { return chat_post$1; });
+const _lazy_VCHzWy = () => Promise.resolve().then(function () { return contact_post$1; });
+const _lazy_rjQ2GS = () => Promise.resolve().then(function () { return config_get$1; });
+const _lazy_DWjDR3 = () => Promise.resolve().then(function () { return changePassword_post$1; });
+const _lazy_6GM9bC = () => Promise.resolve().then(function () { return chats_get$1; });
+const _lazy_u2Rm2Q = () => Promise.resolve().then(function () { return leads_get$1; });
+const _lazy_YiteqK = () => Promise.resolve().then(function () { return login_post$1; });
+const _lazy_JVypLi = () => Promise.resolve().then(function () { return logout_post$1; });
+const _lazy_UaYnYf = () => Promise.resolve().then(function () { return me_get$1; });
+const _lazy_w8w4QF = () => Promise.resolve().then(function () { return overview_get$1; });
+const _lazy_R20QsW = () => Promise.resolve().then(function () { return resetCode_post$1; });
+const _lazy_xatDb_ = () => Promise.resolve().then(function () { return resetPassword_post$1; });
+const _lazy_mpdrfE = () => Promise.resolve().then(function () { return customerBot_js_get$1; });
+const _lazy_hTWONt = () => Promise.resolve().then(function () { return renderer; });
 
 const handlers = [
-  { route: '', handler: _mpCeFX, lazy: false, middleware: true, method: undefined },
-  { route: '', handler: _xU5C25, lazy: false, middleware: true, method: undefined },
-  { route: '/api/admin/billing', handler: _lazy_EhxJaW, lazy: true, middleware: false, method: "get" },
-  { route: '/api/admin/chats', handler: _lazy_oi_sC1, lazy: true, middleware: false, method: "get" },
-  { route: '/api/admin/content-stats', handler: _lazy_6nhPJ4, lazy: true, middleware: false, method: "get" },
-  { route: '/api/admin/leads', handler: _lazy_o5nctK, lazy: true, middleware: false, method: "get" },
-  { route: '/api/admin/login', handler: _lazy_Emqv9G, lazy: true, middleware: false, method: "post" },
-  { route: '/api/admin/overview', handler: _lazy_UvtfYx, lazy: true, middleware: false, method: "get" },
-  { route: '/api/admin/tenants', handler: _lazy__BzXwv, lazy: true, middleware: false, method: "get" },
-  { route: '/api/admin/tenants', handler: _lazy_PuhDEH, lazy: true, middleware: false, method: "post" },
-  { route: '/api/admin/tenants/:tenantId', handler: _lazy_FSX2Pf, lazy: true, middleware: false, method: "delete" },
-  { route: '/api/admin/tenants/:tenantId', handler: _lazy_PA639l, lazy: true, middleware: false, method: "get" },
-  { route: '/api/admin/tenants/:tenantId', handler: _lazy_zleyXh, lazy: true, middleware: false, method: "put" },
-  { route: '/api/admin/tenants/:tenantId/reset-code', handler: _lazy_sGz5fh, lazy: true, middleware: false, method: "post" },
-  { route: '/api/admin/tenants/:tenantId/restore', handler: _lazy_EOZgbp, lazy: true, middleware: false, method: "post" },
-  { route: '/api/admin/tenants/:tenantId/training', handler: _lazy_O6jNGb, lazy: true, middleware: false, method: "post" },
-  { route: '/api/chat', handler: _lazy_5ELkyr, lazy: true, middleware: false, method: "post" },
-  { route: '/api/contact', handler: _lazy_j1QvCP, lazy: true, middleware: false, method: "post" },
-  { route: '/api/embed/config', handler: _lazy_wpqpyq, lazy: true, middleware: false, method: "get" },
-  { route: '/api/tenant/change-password', handler: _lazy_wmzq0a, lazy: true, middleware: false, method: "post" },
-  { route: '/api/tenant/chats', handler: _lazy_bWLaCk, lazy: true, middleware: false, method: "get" },
-  { route: '/api/tenant/leads', handler: _lazy_GYB2OI, lazy: true, middleware: false, method: "get" },
-  { route: '/api/tenant/login', handler: _lazy_gW1IQz, lazy: true, middleware: false, method: "post" },
-  { route: '/api/tenant/logout', handler: _lazy_W8CXmq, lazy: true, middleware: false, method: "post" },
-  { route: '/api/tenant/me', handler: _lazy_Ew0F5z, lazy: true, middleware: false, method: "get" },
-  { route: '/api/tenant/overview', handler: _lazy_4cjFwQ, lazy: true, middleware: false, method: "get" },
-  { route: '/api/tenant/reset-code', handler: _lazy_i8i6fF, lazy: true, middleware: false, method: "post" },
-  { route: '/api/tenant/reset-password', handler: _lazy_xIFJSj, lazy: true, middleware: false, method: "post" },
-  { route: '/customer-bot.js', handler: _lazy_wZ_Ygp, lazy: true, middleware: false, method: "get" },
-  { route: '/__nuxt_error', handler: _lazy_l29ODy, lazy: true, middleware: false, method: undefined },
+  { route: '', handler: _3xqaAl, lazy: false, middleware: true, method: undefined },
+  { route: '', handler: _Z4ewqf, lazy: false, middleware: true, method: undefined },
+  { route: '/api/admin/billing', handler: _lazy_yz4J0s, lazy: true, middleware: false, method: "get" },
+  { route: '/api/admin/chats', handler: _lazy_D_dIyv, lazy: true, middleware: false, method: "get" },
+  { route: '/api/admin/content-stats', handler: _lazy_OR1GYX, lazy: true, middleware: false, method: "get" },
+  { route: '/api/admin/leads', handler: _lazy_VS3RNi, lazy: true, middleware: false, method: "get" },
+  { route: '/api/admin/login', handler: _lazy_ok8EwH, lazy: true, middleware: false, method: "post" },
+  { route: '/api/admin/overview', handler: _lazy_VfduKW, lazy: true, middleware: false, method: "get" },
+  { route: '/api/admin/tenants', handler: _lazy_Ysthk9, lazy: true, middleware: false, method: "get" },
+  { route: '/api/admin/tenants', handler: _lazy_kJia_0, lazy: true, middleware: false, method: "post" },
+  { route: '/api/admin/tenants/:tenantId', handler: _lazy_Vs_Bg5, lazy: true, middleware: false, method: "delete" },
+  { route: '/api/admin/tenants/:tenantId', handler: _lazy_v8h6Cp, lazy: true, middleware: false, method: "get" },
+  { route: '/api/admin/tenants/:tenantId', handler: _lazy_ZMGBwg, lazy: true, middleware: false, method: "put" },
+  { route: '/api/admin/tenants/:tenantId/agent-docs', handler: _lazy_bF7GWq, lazy: true, middleware: false, method: "get" },
+  { route: '/api/admin/tenants/:tenantId/agent-docs/:fileName', handler: _lazy_Rtg2qk, lazy: true, middleware: false, method: "put" },
+  { route: '/api/admin/tenants/:tenantId/index-stats', handler: _lazy_Azo2Rk, lazy: true, middleware: false, method: "get" },
+  { route: '/api/admin/tenants/:tenantId/jobs', handler: _lazy_16TMUG, lazy: true, middleware: false, method: "get" },
+  { route: '/api/admin/tenants/:tenantId/jobs/:jobId/retry', handler: _lazy_cwFX1F, lazy: true, middleware: false, method: "post" },
+  { route: '/api/admin/tenants/:tenantId/jobs/reindex', handler: _lazy_A6kv_M, lazy: true, middleware: false, method: "post" },
+  { route: '/api/admin/tenants/:tenantId/reset-code', handler: _lazy_3on3Pw, lazy: true, middleware: false, method: "post" },
+  { route: '/api/admin/tenants/:tenantId/restore', handler: _lazy_RbTA88, lazy: true, middleware: false, method: "post" },
+  { route: '/api/admin/tenants/:tenantId/sources', handler: _lazy_9mBMsE, lazy: true, middleware: false, method: "get" },
+  { route: '/api/admin/tenants/:tenantId/sources', handler: _lazy_zJHExf, lazy: true, middleware: false, method: "post" },
+  { route: '/api/admin/tenants/:tenantId/sources/:sourceId', handler: _lazy_u2fCqk, lazy: true, middleware: false, method: "delete" },
+  { route: '/api/admin/tenants/:tenantId/sources/:sourceId', handler: _lazy_8HDzUf, lazy: true, middleware: false, method: "put" },
+  { route: '/api/admin/tenants/:tenantId/sources/:sourceId/sync', handler: _lazy_noAUVL, lazy: true, middleware: false, method: "post" },
+  { route: '/api/admin/tenants/:tenantId/sources/:sourceId/upload', handler: _lazy_U7ZBZZ, lazy: true, middleware: false, method: "post" },
+  { route: '/api/admin/tenants/:tenantId/training', handler: _lazy_UidVOf, lazy: true, middleware: false, method: "post" },
+  { route: '/api/chat', handler: _lazy_0YXui6, lazy: true, middleware: false, method: "post" },
+  { route: '/api/contact', handler: _lazy_VCHzWy, lazy: true, middleware: false, method: "post" },
+  { route: '/api/embed/config', handler: _lazy_rjQ2GS, lazy: true, middleware: false, method: "get" },
+  { route: '/api/tenant/change-password', handler: _lazy_DWjDR3, lazy: true, middleware: false, method: "post" },
+  { route: '/api/tenant/chats', handler: _lazy_6GM9bC, lazy: true, middleware: false, method: "get" },
+  { route: '/api/tenant/leads', handler: _lazy_u2Rm2Q, lazy: true, middleware: false, method: "get" },
+  { route: '/api/tenant/login', handler: _lazy_YiteqK, lazy: true, middleware: false, method: "post" },
+  { route: '/api/tenant/logout', handler: _lazy_JVypLi, lazy: true, middleware: false, method: "post" },
+  { route: '/api/tenant/me', handler: _lazy_UaYnYf, lazy: true, middleware: false, method: "get" },
+  { route: '/api/tenant/overview', handler: _lazy_w8w4QF, lazy: true, middleware: false, method: "get" },
+  { route: '/api/tenant/reset-code', handler: _lazy_R20QsW, lazy: true, middleware: false, method: "post" },
+  { route: '/api/tenant/reset-password', handler: _lazy_xatDb_, lazy: true, middleware: false, method: "post" },
+  { route: '/customer-bot.js', handler: _lazy_mpdrfE, lazy: true, middleware: false, method: "get" },
+  { route: '/__nuxt_error', handler: _lazy_hTWONt, lazy: true, middleware: false, method: undefined },
   { route: '/__nuxt_island/**', handler: handler$1, lazy: false, middleware: false, method: undefined },
-  { route: '/**', handler: _lazy_l29ODy, lazy: true, middleware: false, method: undefined }
+  { route: '/**', handler: _lazy_hTWONt, lazy: true, middleware: false, method: undefined }
 ];
 
 function createNitroApp() {
@@ -3044,458 +3037,882 @@ const styles$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   default: styles
 }, Symbol.toStringTag, { value: 'Module' }));
 
-const ADMIN_COOKIE = "customer_bot_admin";
-const TENANT_COOKIE = "customer_bot_tenant";
+const ADMIN_COOKIE = 'customer_bot_admin';
+const TENANT_COOKIE = 'customer_bot_tenant';
 function getAdminConfig() {
-  return {
-    email: process.env.CUSTOMER_BOT_ADMIN_EMAIL || "admin@example.com",
-    password: process.env.CUSTOMER_BOT_ADMIN_PASSWORD || "admin123456"
-  };
+    return {
+        email: process.env.CUSTOMER_BOT_ADMIN_EMAIL || 'admin@example.com',
+        password: process.env.CUSTOMER_BOT_ADMIN_PASSWORD || 'admin123456'
+    };
 }
 function validateAdminCredentials(email, password) {
-  const config = getAdminConfig();
-  return email === config.email && password === config.password;
+    const config = getAdminConfig();
+    return email === config.email && password === config.password;
 }
 function setAdminSession(event) {
-  setCookie(event, ADMIN_COOKIE, "authenticated", {
-    httpOnly: true,
-    sameSite: "lax",
-    path: "/"
-  });
+    setCookie(event, ADMIN_COOKIE, 'authenticated', {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/'
+    });
 }
 function requireAdminSession(event) {
-  const session = getCookie(event, ADMIN_COOKIE);
-  if (session !== "authenticated") {
-    throw createError({
-      statusCode: 401,
-      statusMessage: "Unauthorized"
-    });
-  }
+    const session = getCookie(event, ADMIN_COOKIE);
+    if (session !== 'authenticated') {
+        throw createError({
+            statusCode: 401,
+            statusMessage: 'Unauthorized'
+        });
+    }
 }
 function setTenantSession(event, payload) {
-  setCookie(event, TENANT_COOKIE, JSON.stringify(payload), {
-    httpOnly: true,
-    sameSite: "lax",
-    path: "/"
-  });
+    setCookie(event, TENANT_COOKIE, JSON.stringify(payload), {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/'
+    });
 }
 function clearTenantSession(event) {
-  deleteCookie(event, TENANT_COOKIE, {
-    path: "/"
-  });
+    deleteCookie(event, TENANT_COOKIE, {
+        path: '/'
+    });
 }
 function requireTenantSession(event) {
-  const raw = getCookie(event, TENANT_COOKIE);
-  if (!raw) {
-    throw createError({
-      statusCode: 401,
-      statusMessage: "Unauthorized"
-    });
-  }
-  try {
-    const parsed = JSON.parse(raw);
-    if (!parsed.tenantUserId || !parsed.tenantId || !parsed.email) {
-      throw new Error("invalid tenant session");
+    const raw = getCookie(event, TENANT_COOKIE);
+    if (!raw) {
+        throw createError({
+            statusCode: 401,
+            statusMessage: 'Unauthorized'
+        });
     }
-    return parsed;
-  } catch {
-    throw createError({
-      statusCode: 401,
-      statusMessage: "Unauthorized"
-    });
-  }
+    try {
+        const parsed = JSON.parse(raw);
+        if (!parsed.tenantUserId || !parsed.tenantId || !parsed.email) {
+            throw new Error('invalid tenant session');
+        }
+        return parsed;
+    }
+    catch {
+        throw createError({
+            statusCode: 401,
+            statusMessage: 'Unauthorized'
+        });
+    }
 }
 
 const billingPlans = [
-  {
-    id: "plan-basic",
-    name: "\u57FA\u7840\u7248",
-    monthlyFee: "99.00",
-    includedTokens: 5e4,
-    overagePricePerThousandTokens: "1.00",
-    active: true
-  },
-  {
-    id: "plan-standard",
-    name: "\u6807\u51C6\u7248",
-    monthlyFee: "199.00",
-    includedTokens: 1e5,
-    overagePricePerThousandTokens: "0.80",
-    active: true
-  },
-  {
-    id: "plan-pro",
-    name: "\u4E13\u4E1A\u7248",
-    monthlyFee: "399.00",
-    includedTokens: 25e4,
-    overagePricePerThousandTokens: "0.60",
-    active: true
-  }
+    {
+        id: 'plan-basic',
+        name: '基础版',
+        monthlyFee: '99.00',
+        includedTokens: 50000,
+        overagePricePerThousandTokens: '1.00',
+        active: true
+    },
+    {
+        id: 'plan-standard',
+        name: '标准版',
+        monthlyFee: '199.00',
+        includedTokens: 100000,
+        overagePricePerThousandTokens: '0.80',
+        active: true
+    },
+    {
+        id: 'plan-pro',
+        name: '专业版',
+        monthlyFee: '399.00',
+        includedTokens: 250000,
+        overagePricePerThousandTokens: '0.60',
+        active: true
+    }
 ];
 function getBillingPlanById(planId) {
-  var _a;
-  if (!planId) {
-    return null;
-  }
-  return (_a = billingPlans.find((item) => item.id === planId)) != null ? _a : null;
+    var _a;
+    if (!planId) {
+        return null;
+    }
+    return (_a = billingPlans.find((item) => item.id === planId)) !== null && _a !== void 0 ? _a : null;
 }
 
 function getMonthKey(timestamp) {
-  const date = new Date(timestamp);
-  const year = date.getUTCFullYear();
-  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
-  return `${year}-${month}`;
+    const date = new Date(timestamp);
+    const year = date.getUTCFullYear();
+    const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+    return `${year}-${month}`;
 }
 function addMoney(left, right) {
-  return (Number(left) + Number(right)).toFixed(2);
+    return (Number(left) + Number(right)).toFixed(2);
 }
 function multiplyMoney(left, right) {
-  return (Number(left) * right).toFixed(2);
+    return (Number(left) * right).toFixed(2);
 }
 function buildMonthlyBillingSummary(records, plan, subscription) {
-  const grouped = /* @__PURE__ */ new Map();
-  for (const record of records) {
-    if (record.status !== "success") {
-      continue;
+    const grouped = new Map();
+    for (const record of records) {
+        if (record.status !== 'success') {
+            continue;
+        }
+        const month = getMonthKey(record.createdAt);
+        const key = `${record.tenantId}:${month}`;
+        const existing = grouped.get(key);
+        if (existing) {
+            existing.inputTokens += record.inputTokens;
+            existing.outputTokens += record.outputTokens;
+            existing.totalTokens += record.totalTokens;
+            if (!plan || !subscription) {
+                existing.amount = addMoney(existing.amount, record.amount);
+            }
+            continue;
+        }
+        grouped.set(key, {
+            tenantId: record.tenantId,
+            month,
+            inputTokens: record.inputTokens,
+            outputTokens: record.outputTokens,
+            totalTokens: record.totalTokens,
+            includedTokens: 0,
+            billableTokens: 0,
+            baseFee: '0.00',
+            overageFee: '0.00',
+            amount: !plan || !subscription ? Number(record.amount).toFixed(2) : '0.00'
+        });
     }
-    const month = getMonthKey(record.createdAt);
-    const key = `${record.tenantId}:${month}`;
-    const existing = grouped.get(key);
-    if (existing) {
-      existing.inputTokens += record.inputTokens;
-      existing.outputTokens += record.outputTokens;
-      existing.totalTokens += record.totalTokens;
-      if (!plan || !subscription) {
-        existing.amount = addMoney(existing.amount, record.amount);
-      }
-      continue;
+    for (const summary of grouped.values()) {
+        if (!plan || !subscription) {
+            continue;
+        }
+        summary.includedTokens = plan.includedTokens;
+        summary.billableTokens = Math.max(0, summary.totalTokens - plan.includedTokens);
+        summary.baseFee = Number(plan.monthlyFee).toFixed(2);
+        summary.overageFee = multiplyMoney(plan.overagePricePerThousandTokens, summary.billableTokens / 1000);
+        summary.amount = addMoney(summary.baseFee, summary.overageFee);
     }
-    grouped.set(key, {
-      tenantId: record.tenantId,
-      month,
-      inputTokens: record.inputTokens,
-      outputTokens: record.outputTokens,
-      totalTokens: record.totalTokens,
-      includedTokens: 0,
-      billableTokens: 0,
-      baseFee: "0.00",
-      overageFee: "0.00",
-      amount: !plan || !subscription ? Number(record.amount).toFixed(2) : "0.00"
-    });
-  }
-  for (const summary of grouped.values()) {
-    if (!plan || !subscription) {
-      continue;
-    }
-    summary.includedTokens = plan.includedTokens;
-    summary.billableTokens = Math.max(0, summary.totalTokens - plan.includedTokens);
-    summary.baseFee = Number(plan.monthlyFee).toFixed(2);
-    summary.overageFee = multiplyMoney(plan.overagePricePerThousandTokens, summary.billableTokens / 1e3);
-    summary.amount = addMoney(summary.baseFee, summary.overageFee);
-  }
-  return Array.from(grouped.values()).sort((left, right) => left.month.localeCompare(right.month));
+    return Array.from(grouped.values()).sort((left, right) => left.month.localeCompare(right.month));
 }
 function buildBillingCsv(summaries) {
-  const header = [
-    "tenantId",
-    "month",
-    "inputTokens",
-    "outputTokens",
-    "totalTokens",
-    "includedTokens",
-    "billableTokens",
-    "baseFee",
-    "overageFee",
-    "amount"
-  ];
-  const rows = summaries.map(
-    (item) => [
-      item.tenantId,
-      item.month,
-      item.inputTokens,
-      item.outputTokens,
-      item.totalTokens,
-      item.includedTokens,
-      item.billableTokens,
-      item.baseFee,
-      item.overageFee,
-      item.amount
-    ].join(",")
-  );
-  return [header.join(","), ...rows].join("\n");
+    const header = [
+        'tenantId',
+        'month',
+        'inputTokens',
+        'outputTokens',
+        'totalTokens',
+        'includedTokens',
+        'billableTokens',
+        'baseFee',
+        'overageFee',
+        'amount'
+    ];
+    const rows = summaries.map((item) => [
+        item.tenantId,
+        item.month,
+        item.inputTokens,
+        item.outputTokens,
+        item.totalTokens,
+        item.includedTokens,
+        item.billableTokens,
+        item.baseFee,
+        item.overageFee,
+        item.amount
+    ].join(','));
+    return [header.join(','), ...rows].join('\n');
+}
+function buildUsageBreakdown(records) {
+    const grouped = new Map();
+    for (const record of records) {
+        if (record.status !== 'success') {
+            continue;
+        }
+        const credentialSource = record.credentialSource || 'unknown';
+        const answerSource = record.answerSource || 'unknown';
+        const key = `${credentialSource}:${answerSource}`;
+        const current = grouped.get(key);
+        if (current) {
+            current.totalTokens += record.totalTokens;
+            current.amount = addMoney(current.amount, record.amount);
+            current.requestCount += 1;
+            continue;
+        }
+        grouped.set(key, {
+            credentialSource,
+            answerSource,
+            totalTokens: record.totalTokens,
+            amount: Number(record.amount).toFixed(2),
+            requestCount: 1
+        });
+    }
+    return Array.from(grouped.values()).sort((left, right) => right.totalTokens - left.totalTokens);
 }
 
-const DEMO_TENANT_ID = "tenant-demo";
+const DEMO_TENANT_ID = 'tenant-demo';
+
+const RAG_PRESET_DEFINITIONS = {
+    general: {
+        label: '通用知识库',
+        description: '适合通用企业资料、产品文档、流程说明等常规知识问答。',
+        industryPreset: 'general',
+        chunkSize: 500,
+        chunkOverlap: 80,
+        retrievalTopK: 3,
+        ingestionStructureTemplate: ['标题', '摘要', '关键事实', '参数/步骤', '来源'].join('\n'),
+        answerStructureTemplate: ['结论', '依据', '补充说明', '来源'].join('\n'),
+        retrievalPromptTemplate: [
+            '你正在回答租户知识库问题。',
+            '请严格基于命中资料回答：{{query}}',
+            '若资料不足，请明确说明资料未直接命中。'
+        ].join('\n'),
+        fallbackPromptTemplate: [
+            '当前租户资料未直接命中。',
+            '请对问题“{{query}}”给出通用但谨慎的答复。',
+            '不要编造价格、参数或交付承诺。'
+        ].join('\n')
+    },
+    fastener: {
+        label: '紧固件行业',
+        description: '适合螺栓、螺母、螺钉、垫圈等规格、材质、标准、强度等级类知识问答。',
+        industryPreset: 'fastener',
+        chunkSize: 640,
+        chunkOverlap: 96,
+        retrievalTopK: 5,
+        ingestionStructureTemplate: [
+            '产品名称',
+            '品类',
+            '标准（GB/DIN/ISO/ANSI）',
+            '材质',
+            '强度等级',
+            '规格尺寸',
+            '表面处理',
+            '包装/交期',
+            '应用场景',
+            '来源'
+        ].join('\n'),
+        answerStructureTemplate: ['结论', '适用规格/标准', '材质/等级', '注意事项', '来源'].join('\n'),
+        retrievalPromptTemplate: [
+            '你正在回答紧固件行业知识问题。',
+            '优先识别标准、材质、强度等级、规格尺寸、表面处理等字段。',
+            '请严格基于命中资料回答：{{query}}。'
+        ].join('\n'),
+        fallbackPromptTemplate: [
+            '当前紧固件资料未直接命中。',
+            '请针对问题“{{query}}”给出通用但谨慎的行业说明。',
+            '不得编造报价、库存、交期或认证信息。'
+        ].join('\n')
+    }
+};
+Object.values(RAG_PRESET_DEFINITIONS).map((item) => ({
+    value: item.industryPreset,
+    label: item.label,
+    description: item.description
+}));
+function clamp(value, min, max) {
+    return Math.min(max, Math.max(min, value));
+}
+function isRagIndustryPreset(value) {
+    return value === 'general' || value === 'fastener';
+}
+function createDefaultTenantRagSettings(preset = 'general') {
+    const item = RAG_PRESET_DEFINITIONS[preset];
+    return {
+        enabled: false,
+        industryPreset: item.industryPreset,
+        chunkSize: item.chunkSize,
+        chunkOverlap: item.chunkOverlap,
+        retrievalTopK: item.retrievalTopK,
+        ingestionStructureTemplate: item.ingestionStructureTemplate,
+        answerStructureTemplate: item.answerStructureTemplate,
+        retrievalPromptTemplate: item.retrievalPromptTemplate,
+        fallbackPromptTemplate: item.fallbackPromptTemplate
+    };
+}
+function normalizeTenantRagSettings(input) {
+    var _a, _b, _c, _d, _e, _f, _g;
+    const preset = isRagIndustryPreset(input === null || input === void 0 ? void 0 : input.industryPreset) ? input.industryPreset : 'general';
+    const defaults = createDefaultTenantRagSettings(preset);
+    const chunkSize = clamp(Number((_a = input === null || input === void 0 ? void 0 : input.chunkSize) !== null && _a !== void 0 ? _a : defaults.chunkSize) || defaults.chunkSize, 200, 2000);
+    const chunkOverlap = clamp(Number((_b = input === null || input === void 0 ? void 0 : input.chunkOverlap) !== null && _b !== void 0 ? _b : defaults.chunkOverlap) || defaults.chunkOverlap, 0, Math.max(0, chunkSize - 50));
+    return {
+        enabled: (input === null || input === void 0 ? void 0 : input.enabled) === true,
+        industryPreset: preset,
+        chunkSize,
+        chunkOverlap,
+        retrievalTopK: clamp(Number((_c = input === null || input === void 0 ? void 0 : input.retrievalTopK) !== null && _c !== void 0 ? _c : defaults.retrievalTopK) || defaults.retrievalTopK, 1, 10),
+        ingestionStructureTemplate: ((_d = input === null || input === void 0 ? void 0 : input.ingestionStructureTemplate) === null || _d === void 0 ? void 0 : _d.trim()) || defaults.ingestionStructureTemplate,
+        answerStructureTemplate: ((_e = input === null || input === void 0 ? void 0 : input.answerStructureTemplate) === null || _e === void 0 ? void 0 : _e.trim()) || defaults.answerStructureTemplate,
+        retrievalPromptTemplate: ((_f = input === null || input === void 0 ? void 0 : input.retrievalPromptTemplate) === null || _f === void 0 ? void 0 : _f.trim()) || defaults.retrievalPromptTemplate,
+        fallbackPromptTemplate: ((_g = input === null || input === void 0 ? void 0 : input.fallbackPromptTemplate) === null || _g === void 0 ? void 0 : _g.trim()) || defaults.fallbackPromptTemplate
+    };
+}
 
 function getStorageFilePath() {
-  return process.env.CUSTOMER_BOT_DATA_FILE || resolve(process.cwd(), ".data/customer-bot-storage.json");
+    return process.env.CUSTOMER_BOT_DATA_FILE || resolve(process.cwd(), '.data/customer-bot-storage.json');
 }
 function createDemoTenant() {
-  const now = Date.now();
-  return {
-    id: DEMO_TENANT_ID,
-    name: "Demo Tenant",
-    status: "active",
-    brandName: "AIFactory Demo Bot",
-    themeColor: "#118ab2",
-    contactPhone: "+86 138-0000-0000",
-    contactEmail: "demo@example.com",
-    contactAddress: "Shanghai",
-    systemPrompt: "\u4F60\u662F AIFactory \u7684 AI \u5BA2\u670D\u6F14\u793A\u52A9\u624B\u3002\u8BF7\u4F18\u5148\u56DE\u7B54\u4EA7\u54C1\u80FD\u529B\u3001\u90E8\u7F72\u65B9\u5F0F\u3001\u62A5\u4EF7\u6D41\u7A0B\uFF0C\u5E76\u4E3B\u52A8\u5F15\u5BFC\u7528\u6237\u7559\u8D44\u3002",
-    embedKey: "embed-demo-tenant",
-    billingSubscription: {
-      planId: "plan-standard",
-      startedAt: now,
-      notes: "demo tenant default plan"
-    },
-    contentConfig: void 0,
-    createdAt: now,
-    updatedAt: now
-  };
+    const now = Date.now();
+    return {
+        id: DEMO_TENANT_ID,
+        name: 'Demo Tenant',
+        status: 'active',
+        brandName: 'AIFactory Demo Bot',
+        themeColor: '#118ab2',
+        contactPhone: '+86 138-0000-0000',
+        contactEmail: 'demo@example.com',
+        contactAddress: 'Shanghai',
+        systemPrompt: '你是 AIFactory 的 AI 客服演示助手。请优先回答产品能力、部署方式、报价流程，并主动引导用户留资。',
+        embedKey: 'embed-demo-tenant',
+        ragSettings: createDefaultTenantRagSettings(),
+        billingSubscription: {
+            planId: 'plan-standard',
+            startedAt: now,
+            notes: 'demo tenant default plan'
+        },
+        contentConfig: undefined,
+        createdAt: now,
+        updatedAt: now
+    };
+}
+
+function getConnectionString() {
+    var _a;
+    const value = (_a = process.env.CUSTOMER_BOT_DATABASE_URL) === null || _a === void 0 ? void 0 : _a.trim();
+    if (!value) {
+        throw new Error('CUSTOMER_BOT_DATABASE_URL is required');
+    }
+    return value;
+}
+async function createDbPool() {
+    const optionalModule$1 = await Promise.resolve().then(function () { return optionalModule; });
+    const pgModule = await optionalModule$1.importOptionalModule('pg', 'npm install pg');
+    const Pool = pgModule.Pool;
+    return new Pool({
+        connectionString: getConnectionString()
+    });
+}
+
+function mapDataSourceRow(row) {
+    return {
+        id: row.id,
+        tenantId: row.tenant_id,
+        type: row.type,
+        status: row.status,
+        syncMode: row.sync_mode,
+        scheduleCron: row.schedule_cron || '',
+        config: row.config_json || {},
+        lastSyncedAt: row.last_synced_at || undefined,
+        createdAt: row.created_at,
+        updatedAt: row.updated_at
+    };
+}
+function mapIngestionJobRow(row) {
+    return {
+        id: row.id,
+        tenantId: row.tenant_id,
+        dataSourceId: row.data_source_id,
+        triggerMode: row.trigger_mode,
+        status: row.status,
+        startedAt: row.started_at || undefined,
+        finishedAt: row.finished_at || undefined,
+        errorMessage: row.error_message || undefined,
+        stats: row.stats_json || {}
+    };
+}
+function mapSourceDocumentRow(row) {
+    return {
+        id: row.id,
+        tenantId: row.tenant_id,
+        dataSourceId: row.data_source_id,
+        externalId: row.external_id || undefined,
+        title: row.title,
+        mimeType: row.mime_type,
+        sourceUri: row.source_uri,
+        contentText: row.content_text,
+        metadata: row.metadata_json || {},
+        contentHash: row.content_hash,
+        versionHash: row.version_hash,
+        createdAt: row.created_at,
+        updatedAt: row.updated_at
+    };
+}
+function mapDocumentChunkRow(row) {
+    return {
+        id: row.id,
+        tenantId: row.tenant_id,
+        documentId: row.document_id,
+        chunkIndex: row.chunk_index,
+        content: row.content,
+        tokenCount: row.token_count,
+        metadata: row.metadata_json || {},
+        embedding: row.embedding || undefined,
+        createdAt: row.created_at
+    };
+}
+function toVectorLiteral(embedding) {
+    if (!(embedding === null || embedding === void 0 ? void 0 : embedding.length)) {
+        return null;
+    }
+    return `[${embedding.join(',')}]`;
+}
+function createPostgresRagRepository(pool) {
+    return {
+        async saveDataSource(record) {
+            var _a, _b;
+            await pool.query(`
+          INSERT INTO data_sources (
+            id, tenant_id, type, status, sync_mode, schedule_cron, config_json, last_synced_at, created_at, updated_at
+          ) VALUES ($1, $2, $3, $4, $5, $6, $7::jsonb, $8, $9, $10)
+          ON CONFLICT (id) DO UPDATE SET
+            type = EXCLUDED.type,
+            status = EXCLUDED.status,
+            sync_mode = EXCLUDED.sync_mode,
+            schedule_cron = EXCLUDED.schedule_cron,
+            config_json = EXCLUDED.config_json,
+            last_synced_at = EXCLUDED.last_synced_at,
+            updated_at = EXCLUDED.updated_at
+        `, [
+                record.id,
+                record.tenantId,
+                record.type,
+                record.status,
+                record.syncMode,
+                record.scheduleCron || null,
+                JSON.stringify((_a = record.config) !== null && _a !== void 0 ? _a : {}),
+                (_b = record.lastSyncedAt) !== null && _b !== void 0 ? _b : null,
+                record.createdAt,
+                record.updatedAt
+            ]);
+        },
+        async getDataSourceById(dataSourceId) {
+            const result = await pool.query(`SELECT * FROM data_sources WHERE id = $1 LIMIT 1`, [dataSourceId]);
+            const row = result.rows[0];
+            return row ? mapDataSourceRow(row) : undefined;
+        },
+        async listDataSourcesByTenant(tenantId) {
+            const result = await pool.query(`SELECT * FROM data_sources WHERE tenant_id = $1 ORDER BY updated_at DESC`, [tenantId]);
+            return result.rows.map(mapDataSourceRow);
+        },
+        async saveIngestionJob(record) {
+            var _a, _b, _c, _d;
+            await pool.query(`
+          INSERT INTO ingestion_jobs (
+            id, tenant_id, data_source_id, trigger_mode, status, started_at, finished_at, error_message, stats_json
+          ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9::jsonb)
+          ON CONFLICT (id) DO UPDATE SET
+            status = EXCLUDED.status,
+            started_at = EXCLUDED.started_at,
+            finished_at = EXCLUDED.finished_at,
+            error_message = EXCLUDED.error_message,
+            stats_json = EXCLUDED.stats_json
+        `, [
+                record.id,
+                record.tenantId,
+                record.dataSourceId,
+                record.triggerMode,
+                record.status,
+                (_a = record.startedAt) !== null && _a !== void 0 ? _a : null,
+                (_b = record.finishedAt) !== null && _b !== void 0 ? _b : null,
+                (_c = record.errorMessage) !== null && _c !== void 0 ? _c : null,
+                JSON.stringify((_d = record.stats) !== null && _d !== void 0 ? _d : {})
+            ]);
+        },
+        async getIngestionJobById(jobId) {
+            const result = await pool.query(`SELECT * FROM ingestion_jobs WHERE id = $1 LIMIT 1`, [jobId]);
+            const row = result.rows[0];
+            return row ? mapIngestionJobRow(row) : undefined;
+        },
+        async listIngestionJobsByTenant(tenantId) {
+            const result = await pool.query(`SELECT * FROM ingestion_jobs WHERE tenant_id = $1 ORDER BY COALESCE(finished_at, started_at, 0) DESC`, [tenantId]);
+            return result.rows.map(mapIngestionJobRow);
+        },
+        async saveDocument(record) {
+            var _a, _b;
+            await pool.query(`
+          INSERT INTO source_documents (
+            id, tenant_id, data_source_id, external_id, title, mime_type, source_uri, content_text, metadata_json, content_hash, version_hash, created_at, updated_at
+          ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9::jsonb, $10, $11, $12, $13)
+          ON CONFLICT (id) DO UPDATE SET
+            external_id = EXCLUDED.external_id,
+            title = EXCLUDED.title,
+            mime_type = EXCLUDED.mime_type,
+            source_uri = EXCLUDED.source_uri,
+            content_text = EXCLUDED.content_text,
+            metadata_json = EXCLUDED.metadata_json,
+            content_hash = EXCLUDED.content_hash,
+            version_hash = EXCLUDED.version_hash,
+            updated_at = EXCLUDED.updated_at
+        `, [
+                record.id,
+                record.tenantId,
+                record.dataSourceId,
+                (_a = record.externalId) !== null && _a !== void 0 ? _a : null,
+                record.title,
+                record.mimeType,
+                record.sourceUri,
+                record.contentText,
+                JSON.stringify((_b = record.metadata) !== null && _b !== void 0 ? _b : {}),
+                record.contentHash,
+                record.versionHash,
+                record.createdAt,
+                record.updatedAt
+            ]);
+        },
+        async getDocumentById(documentId) {
+            const result = await pool.query(`SELECT * FROM source_documents WHERE id = $1 LIMIT 1`, [documentId]);
+            const row = result.rows[0];
+            return row ? mapSourceDocumentRow(row) : undefined;
+        },
+        async listDocumentsByTenant(tenantId) {
+            const result = await pool.query(`SELECT * FROM source_documents WHERE tenant_id = $1 ORDER BY updated_at DESC`, [tenantId]);
+            return result.rows.map(mapSourceDocumentRow);
+        },
+        async replaceDocumentChunks(documentId, chunks) {
+            var _a;
+            await pool.query(`DELETE FROM document_chunks WHERE document_id = $1`, [documentId]);
+            for (const chunk of chunks) {
+                await pool.query(`
+            INSERT INTO document_chunks (
+              id, tenant_id, document_id, chunk_index, content, token_count, metadata_json, embedding, created_at
+            ) VALUES ($1, $2, $3, $4, $5, $6, $7::jsonb, $8::vector, $9)
+          `, [
+                    chunk.id,
+                    chunk.tenantId,
+                    chunk.documentId,
+                    chunk.chunkIndex,
+                    chunk.content,
+                    chunk.tokenCount,
+                    JSON.stringify((_a = chunk.metadata) !== null && _a !== void 0 ? _a : {}),
+                    toVectorLiteral(chunk.embedding),
+                    chunk.createdAt
+                ]);
+            }
+        },
+        async listChunksByDocument(documentId) {
+            const result = await pool.query(`SELECT * FROM document_chunks WHERE document_id = $1 ORDER BY chunk_index ASC`, [documentId]);
+            return result.rows.map(mapDocumentChunkRow);
+        }
+    };
+}
+
+function cloneRecord$1(value) {
+    return structuredClone(value);
+}
+function createInMemoryRagRepository() {
+    const dataSources = new Map();
+    const jobs = new Map();
+    const documents = new Map();
+    const chunksByDocument = new Map();
+    return {
+        async saveDataSource(record) {
+            dataSources.set(record.id, cloneRecord$1(record));
+        },
+        async getDataSourceById(dataSourceId) {
+            const record = dataSources.get(dataSourceId);
+            return record ? cloneRecord$1(record) : undefined;
+        },
+        async listDataSourcesByTenant(tenantId) {
+            return Array.from(dataSources.values())
+                .filter((record) => record.tenantId === tenantId)
+                .map(cloneRecord$1);
+        },
+        async saveIngestionJob(record) {
+            jobs.set(record.id, cloneRecord$1(record));
+        },
+        async getIngestionJobById(jobId) {
+            const record = jobs.get(jobId);
+            return record ? cloneRecord$1(record) : undefined;
+        },
+        async listIngestionJobsByTenant(tenantId) {
+            return Array.from(jobs.values())
+                .filter((record) => record.tenantId === tenantId)
+                .map(cloneRecord$1);
+        },
+        async saveDocument(record) {
+            documents.set(record.id, cloneRecord$1(record));
+        },
+        async getDocumentById(documentId) {
+            const record = documents.get(documentId);
+            return record ? cloneRecord$1(record) : undefined;
+        },
+        async listDocumentsByTenant(tenantId) {
+            return Array.from(documents.values())
+                .filter((record) => record.tenantId === tenantId)
+                .map(cloneRecord$1);
+        },
+        async replaceDocumentChunks(documentId, chunks) {
+            chunksByDocument.set(documentId, chunks.map(cloneRecord$1));
+        },
+        async listChunksByDocument(documentId) {
+            var _a;
+            return ((_a = chunksByDocument.get(documentId)) !== null && _a !== void 0 ? _a : []).map(cloneRecord$1);
+        }
+    };
 }
 
 const cloneRecord = (value) => structuredClone(value);
 const createEmptyState = () => ({
-  tenants: [],
-  sessions: [],
-  messages: [],
-  leads: [],
-  usage: [],
-  tenantUsers: [],
-  tenantPasswordResets: []
+    tenants: [],
+    sessions: [],
+    messages: [],
+    leads: [],
+    usage: [],
+    tenantUsers: [],
+    tenantPasswordResets: []
 });
 const createFileStore = (options) => {
-  let statePromise;
-  let writeQueue = Promise.resolve();
-  async function persist(state) {
-    const nextState = cloneRecord(state);
-    writeQueue = writeQueue.then(async () => {
-      await mkdir(dirname(options.filePath), { recursive: true });
-      await writeFile(options.filePath, JSON.stringify(nextState, null, 2), "utf8");
-    });
-    await writeQueue;
-  }
-  async function loadState() {
-    try {
-      const raw = await readFile(options.filePath, "utf8");
-      const parsed = JSON.parse(raw);
-      return {
-        tenants: Array.isArray(parsed.tenants) ? parsed.tenants.map(cloneRecord) : [],
-        sessions: Array.isArray(parsed.sessions) ? parsed.sessions.map(cloneRecord) : [],
-        messages: Array.isArray(parsed.messages) ? parsed.messages.map(cloneRecord) : [],
-        leads: Array.isArray(parsed.leads) ? parsed.leads.map(cloneRecord) : [],
-        usage: Array.isArray(parsed.usage) ? parsed.usage.map(cloneRecord) : [],
-        tenantUsers: Array.isArray(parsed.tenantUsers) ? parsed.tenantUsers.map(cloneRecord) : [],
-        tenantPasswordResets: Array.isArray(parsed.tenantPasswordResets) ? parsed.tenantPasswordResets.map(cloneRecord) : []
-      };
-    } catch (error) {
-      const maybeError = error;
-      if ((maybeError == null ? void 0 : maybeError.code) !== "ENOENT") {
-        throw error;
-      }
-      return createEmptyState();
+    let statePromise;
+    let writeQueue = Promise.resolve();
+    async function persist(state) {
+        const nextState = cloneRecord(state);
+        writeQueue = writeQueue.then(async () => {
+            await mkdir(dirname(options.filePath), { recursive: true });
+            await writeFile(options.filePath, JSON.stringify(nextState, null, 2), 'utf8');
+        });
+        await writeQueue;
     }
-  }
-  async function ensureState() {
-    if (!statePromise) {
-      statePromise = (async () => {
-        var _a;
-        const state = await loadState();
-        const seedTenants = (_a = options.seedTenants) != null ? _a : [];
-        let changed = false;
-        for (const tenant of seedTenants) {
-          if (!state.tenants.some((item) => item.id === tenant.id)) {
-            state.tenants.push(cloneRecord(tenant));
-            changed = true;
-          }
+    async function loadState() {
+        try {
+            const raw = await readFile(options.filePath, 'utf8');
+            const parsed = JSON.parse(raw);
+            return {
+                tenants: Array.isArray(parsed.tenants) ? parsed.tenants.map(cloneRecord) : [],
+                sessions: Array.isArray(parsed.sessions) ? parsed.sessions.map(cloneRecord) : [],
+                messages: Array.isArray(parsed.messages) ? parsed.messages.map(cloneRecord) : [],
+                leads: Array.isArray(parsed.leads) ? parsed.leads.map(cloneRecord) : [],
+                usage: Array.isArray(parsed.usage) ? parsed.usage.map(cloneRecord) : [],
+                tenantUsers: Array.isArray(parsed.tenantUsers) ? parsed.tenantUsers.map(cloneRecord) : [],
+                tenantPasswordResets: Array.isArray(parsed.tenantPasswordResets) ? parsed.tenantPasswordResets.map(cloneRecord) : []
+            };
         }
-        if (changed) {
-          await persist(state);
+        catch (error) {
+            const maybeError = error;
+            if ((maybeError === null || maybeError === void 0 ? void 0 : maybeError.code) !== 'ENOENT') {
+                throw error;
+            }
+            return createEmptyState();
         }
-        return state;
-      })();
     }
-    return statePromise;
-  }
-  async function updateState(mutator) {
-    const state = await ensureState();
-    await mutator(state);
-    await persist(state);
-  }
-  return {
-    async saveTenant(tenant) {
-      await updateState((state) => {
-        const nextTenant = cloneRecord(tenant);
-        const index = state.tenants.findIndex((item) => item.id === tenant.id);
-        if (index >= 0) {
-          state.tenants[index] = nextTenant;
-          return;
+    async function ensureState() {
+        if (!statePromise) {
+            statePromise = (async () => {
+                var _a;
+                const state = await loadState();
+                const seedTenants = (_a = options.seedTenants) !== null && _a !== void 0 ? _a : [];
+                let changed = false;
+                for (const tenant of seedTenants) {
+                    if (!state.tenants.some((item) => item.id === tenant.id)) {
+                        state.tenants.push(cloneRecord(tenant));
+                        changed = true;
+                    }
+                }
+                if (changed) {
+                    await persist(state);
+                }
+                return state;
+            })();
         }
-        state.tenants.push(nextTenant);
-      });
-    },
-    async getTenantById(tenantId) {
-      const state = await ensureState();
-      const tenant = state.tenants.find((item) => item.id === tenantId);
-      return tenant ? cloneRecord(tenant) : void 0;
-    },
-    async getTenantByEmbedKey(embedKey) {
-      const state = await ensureState();
-      const tenant = state.tenants.find((item) => item.embedKey === embedKey);
-      return tenant ? cloneRecord(tenant) : void 0;
-    },
-    async listTenants() {
-      const state = await ensureState();
-      return state.tenants.map(cloneRecord);
-    },
-    async saveSession(session) {
-      await updateState((state) => {
-        const nextSession = cloneRecord(session);
-        const index = state.sessions.findIndex((item) => item.id === session.id);
-        if (index >= 0) {
-          state.sessions[index] = nextSession;
-          return;
-        }
-        state.sessions.push(nextSession);
-      });
-    },
-    async getSessionById(sessionId) {
-      const state = await ensureState();
-      const session = state.sessions.find((item) => item.id === sessionId);
-      return session ? cloneRecord(session) : void 0;
-    },
-    async listSessionsByTenant(tenantId) {
-      const state = await ensureState();
-      return state.sessions.filter((item) => item.tenantId === tenantId).map(cloneRecord);
-    },
-    async saveMessage(message) {
-      await updateState((state) => {
-        state.messages.push(cloneRecord(message));
-      });
-    },
-    async listMessagesBySession(sessionId) {
-      const state = await ensureState();
-      return state.messages.filter((item) => item.sessionId === sessionId).map(cloneRecord);
-    },
-    async saveLead(lead) {
-      await updateState((state) => {
-        state.leads.push(cloneRecord(lead));
-      });
-    },
-    async listLeadsByTenant(tenantId) {
-      const state = await ensureState();
-      return state.leads.filter((item) => item.tenantId === tenantId).map(cloneRecord);
-    },
-    async saveUsageRecord(record) {
-      await updateState((state) => {
-        state.usage.push(cloneRecord(record));
-      });
-    },
-    async listUsageByTenant(tenantId) {
-      const state = await ensureState();
-      return state.usage.filter((item) => item.tenantId === tenantId).map(cloneRecord);
-    },
-    async saveTenantUser(user) {
-      await updateState((state) => {
-        const nextUser = cloneRecord(user);
-        const index = state.tenantUsers.findIndex((item) => item.id === user.id);
-        if (index >= 0) {
-          state.tenantUsers[index] = nextUser;
-          return;
-        }
-        state.tenantUsers.push(nextUser);
-      });
-    },
-    async getTenantUserByEmail(email) {
-      const state = await ensureState();
-      const normalized = email.trim().toLowerCase();
-      const user = state.tenantUsers.find((item) => item.email.toLowerCase() === normalized);
-      return user ? cloneRecord(user) : void 0;
-    },
-    async getTenantUserById(userId) {
-      const state = await ensureState();
-      const user = state.tenantUsers.find((item) => item.id === userId);
-      return user ? cloneRecord(user) : void 0;
-    },
-    async listTenantUsersByTenant(tenantId) {
-      const state = await ensureState();
-      return state.tenantUsers.filter((item) => item.tenantId === tenantId).map(cloneRecord);
-    },
-    async saveTenantPasswordReset(record) {
-      await updateState((state) => {
-        const nextRecord = cloneRecord(record);
-        const index = state.tenantPasswordResets.findIndex((item) => item.id === record.id);
-        if (index >= 0) {
-          state.tenantPasswordResets[index] = nextRecord;
-          return;
-        }
-        state.tenantPasswordResets.push(nextRecord);
-      });
-    },
-    async getTenantPasswordResetByCode(email, code) {
-      const state = await ensureState();
-      const normalized = email.trim().toLowerCase();
-      const item = state.tenantPasswordResets.find((reset) => reset.email.toLowerCase() === normalized && reset.code === code);
-      return item ? cloneRecord(item) : void 0;
+        return statePromise;
     }
-  };
+    async function updateState(mutator) {
+        const state = await ensureState();
+        await mutator(state);
+        await persist(state);
+    }
+    return {
+        async saveTenant(tenant) {
+            await updateState((state) => {
+                const nextTenant = cloneRecord(tenant);
+                const index = state.tenants.findIndex((item) => item.id === tenant.id);
+                if (index >= 0) {
+                    state.tenants[index] = nextTenant;
+                    return;
+                }
+                state.tenants.push(nextTenant);
+            });
+        },
+        async getTenantById(tenantId) {
+            const state = await ensureState();
+            const tenant = state.tenants.find((item) => item.id === tenantId);
+            return tenant ? cloneRecord(tenant) : undefined;
+        },
+        async getTenantByEmbedKey(embedKey) {
+            const state = await ensureState();
+            const tenant = state.tenants.find((item) => item.embedKey === embedKey);
+            return tenant ? cloneRecord(tenant) : undefined;
+        },
+        async listTenants() {
+            const state = await ensureState();
+            return state.tenants.map(cloneRecord);
+        },
+        async saveSession(session) {
+            await updateState((state) => {
+                const nextSession = cloneRecord(session);
+                const index = state.sessions.findIndex((item) => item.id === session.id);
+                if (index >= 0) {
+                    state.sessions[index] = nextSession;
+                    return;
+                }
+                state.sessions.push(nextSession);
+            });
+        },
+        async getSessionById(sessionId) {
+            const state = await ensureState();
+            const session = state.sessions.find((item) => item.id === sessionId);
+            return session ? cloneRecord(session) : undefined;
+        },
+        async listSessionsByTenant(tenantId) {
+            const state = await ensureState();
+            return state.sessions.filter((item) => item.tenantId === tenantId).map(cloneRecord);
+        },
+        async saveMessage(message) {
+            await updateState((state) => {
+                state.messages.push(cloneRecord(message));
+            });
+        },
+        async listMessagesBySession(sessionId) {
+            const state = await ensureState();
+            return state.messages.filter((item) => item.sessionId === sessionId).map(cloneRecord);
+        },
+        async saveLead(lead) {
+            await updateState((state) => {
+                state.leads.push(cloneRecord(lead));
+            });
+        },
+        async listLeadsByTenant(tenantId) {
+            const state = await ensureState();
+            return state.leads.filter((item) => item.tenantId === tenantId).map(cloneRecord);
+        },
+        async saveUsageRecord(record) {
+            await updateState((state) => {
+                state.usage.push(cloneRecord(record));
+            });
+        },
+        async listUsageByTenant(tenantId) {
+            const state = await ensureState();
+            return state.usage.filter((item) => item.tenantId === tenantId).map(cloneRecord);
+        },
+        async saveTenantUser(user) {
+            await updateState((state) => {
+                const nextUser = cloneRecord(user);
+                const index = state.tenantUsers.findIndex((item) => item.id === user.id);
+                if (index >= 0) {
+                    state.tenantUsers[index] = nextUser;
+                    return;
+                }
+                state.tenantUsers.push(nextUser);
+            });
+        },
+        async getTenantUserByEmail(email) {
+            const state = await ensureState();
+            const normalized = email.trim().toLowerCase();
+            const user = state.tenantUsers.find((item) => item.email.toLowerCase() === normalized);
+            return user ? cloneRecord(user) : undefined;
+        },
+        async getTenantUserById(userId) {
+            const state = await ensureState();
+            const user = state.tenantUsers.find((item) => item.id === userId);
+            return user ? cloneRecord(user) : undefined;
+        },
+        async listTenantUsersByTenant(tenantId) {
+            const state = await ensureState();
+            return state.tenantUsers.filter((item) => item.tenantId === tenantId).map(cloneRecord);
+        },
+        async saveTenantPasswordReset(record) {
+            await updateState((state) => {
+                const nextRecord = cloneRecord(record);
+                const index = state.tenantPasswordResets.findIndex((item) => item.id === record.id);
+                if (index >= 0) {
+                    state.tenantPasswordResets[index] = nextRecord;
+                    return;
+                }
+                state.tenantPasswordResets.push(nextRecord);
+            });
+        },
+        async getTenantPasswordResetByCode(email, code) {
+            const state = await ensureState();
+            const normalized = email.trim().toLowerCase();
+            const item = state.tenantPasswordResets.find((reset) => reset.email.toLowerCase() === normalized && reset.code === code);
+            return item ? cloneRecord(item) : undefined;
+        }
+    };
 };
 
 let singletonStore;
+let singletonRagRepository;
 const createStorage = () => createFileStore({
-  filePath: getStorageFilePath(),
-  seedTenants: [createDemoTenant()]
+    filePath: getStorageFilePath(),
+    seedTenants: [createDemoTenant()]
 });
 const getStorage = () => {
-  if (!singletonStore) {
-    singletonStore = createStorage();
-  }
-  return singletonStore;
+    if (!singletonStore) {
+        singletonStore = createStorage();
+    }
+    return singletonStore;
+};
+const createRagRepository = () => {
+    var _a;
+    if ((_a = process.env.CUSTOMER_BOT_DATABASE_URL) === null || _a === void 0 ? void 0 : _a.trim()) {
+        const deferredPool = createDbPool();
+        return createPostgresRagRepository({
+            async query(sql, params) {
+                const pool = await deferredPool;
+                return pool.query(sql, params);
+            },
+            async end() {
+                const pool = await deferredPool;
+                await pool.end();
+            }
+        });
+    }
+    return createInMemoryRagRepository();
+};
+const getRagRepository = () => {
+    if (!singletonRagRepository) {
+        singletonRagRepository = createRagRepository();
+    }
+    return singletonRagRepository;
 };
 
 async function resolveTenant(identifier, storage = getStorage()) {
-  const normalized = identifier.trim();
-  if (!normalized) {
-    return void 0;
-  }
-  const byId = await storage.getTenantById(normalized);
-  if (byId && !byId.deletedAt) {
-    return byId;
-  }
-  const byEmbedKey = await storage.getTenantByEmbedKey(normalized);
-  if (byEmbedKey && !byEmbedKey.deletedAt) {
-    return byEmbedKey;
-  }
-  return void 0;
+    const normalized = identifier.trim();
+    if (!normalized) {
+        return undefined;
+    }
+    const byId = await storage.getTenantById(normalized);
+    if (byId && !byId.deletedAt) {
+        return byId;
+    }
+    const byEmbedKey = await storage.getTenantByEmbedKey(normalized);
+    if (byEmbedKey && !byEmbedKey.deletedAt) {
+        return byEmbedKey;
+    }
+    return undefined;
 }
 
 const billing_get = defineEventHandler(async (event) => {
-  var _a;
-  requireAdminSession(event);
-  const query = getQuery$1(event);
-  const tenantId = typeof query.tenantId === "string" ? String(query.tenantId) : "";
-  if (!tenantId) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: "tenantId is required"
-    });
-  }
-  const storage = getStorage();
-  const tenant = await resolveTenant(tenantId, storage);
-  const usageRecords = await storage.listUsageByTenant(tenantId);
-  const plan = getBillingPlanById((_a = tenant == null ? void 0 : tenant.billingSubscription) == null ? void 0 : _a.planId);
-  const summaries = buildMonthlyBillingSummary(usageRecords, plan, tenant == null ? void 0 : tenant.billingSubscription);
-  if (query.format === "csv") {
-    setHeader(event, "content-type", "text/csv; charset=utf-8");
-    setHeader(event, "content-disposition", `attachment; filename="${tenantId}-billing.csv"`);
-    return buildBillingCsv(summaries);
-  }
-  return {
-    tenant,
-    plan,
-    usageRecords,
-    summaries
-  };
+    var _a;
+    requireAdminSession(event);
+    const query = getQuery$1(event);
+    const tenantId = typeof query.tenantId === 'string' ? String(query.tenantId) : '';
+    if (!tenantId) {
+        throw createError({
+            statusCode: 400,
+            statusMessage: 'tenantId is required'
+        });
+    }
+    const storage = getStorage();
+    const tenant = await resolveTenant(tenantId, storage);
+    const usageRecords = await storage.listUsageByTenant(tenantId);
+    const plan = getBillingPlanById((_a = tenant === null || tenant === void 0 ? void 0 : tenant.billingSubscription) === null || _a === void 0 ? void 0 : _a.planId);
+    const summaries = buildMonthlyBillingSummary(usageRecords, plan, tenant === null || tenant === void 0 ? void 0 : tenant.billingSubscription);
+    if (query.format === 'csv') {
+        setHeader(event, 'content-type', 'text/csv; charset=utf-8');
+        setHeader(event, 'content-disposition', `attachment; filename="${tenantId}-billing.csv"`);
+        return buildBillingCsv(summaries);
+    }
+    return {
+        tenant,
+        plan,
+        usageRecords,
+        summaries,
+        breakdown: buildUsageBreakdown(usageRecords)
+    };
 });
 
 const billing_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
@@ -3504,23 +3921,21 @@ const billing_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.definePrope
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const chats_get$2 = defineEventHandler(async (event) => {
-  requireAdminSession(event);
-  const tenantId = typeof getQuery$1(event).tenantId === "string" ? String(getQuery$1(event).tenantId) : "";
-  if (!tenantId) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: "tenantId is required"
-    });
-  }
-  const storage = getStorage();
-  const sessions = await storage.listSessionsByTenant(tenantId);
-  const items = await Promise.all(
-    sessions.map(async (session) => ({
-      session,
-      messages: await storage.listMessagesBySession(session.id)
-    }))
-  );
-  return { items };
+    requireAdminSession(event);
+    const tenantId = typeof getQuery$1(event).tenantId === 'string' ? String(getQuery$1(event).tenantId) : '';
+    if (!tenantId) {
+        throw createError({
+            statusCode: 400,
+            statusMessage: 'tenantId is required'
+        });
+    }
+    const storage = getStorage();
+    const sessions = await storage.listSessionsByTenant(tenantId);
+    const items = await Promise.all(sessions.map(async (session) => ({
+        session,
+        messages: await storage.listMessagesBySession(session.id)
+    })));
+    return { items };
 });
 
 const chats_get$3 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
@@ -3529,40 +3944,40 @@ const chats_get$3 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.definePropert
 }, Symbol.toStringTag, { value: 'Module' }));
 
 function aggregateMatchedContentSourceStats(messages) {
-  var _a;
-  const grouped = /* @__PURE__ */ new Map();
-  for (const message of messages) {
-    for (const source of (_a = message.matchedContentSources) != null ? _a : []) {
-      const existing = grouped.get(source.id);
-      if (existing) {
-        existing.hits += 1;
-        continue;
-      }
-      grouped.set(source.id, {
-        ...source,
-        hits: 1
-      });
+    var _a;
+    const grouped = new Map();
+    for (const message of messages) {
+        for (const source of (_a = message.matchedContentSources) !== null && _a !== void 0 ? _a : []) {
+            const existing = grouped.get(source.id);
+            if (existing) {
+                existing.hits += 1;
+                continue;
+            }
+            grouped.set(source.id, {
+                ...source,
+                hits: 1
+            });
+        }
     }
-  }
-  return Array.from(grouped.values()).sort((left, right) => right.hits - left.hits || left.title.localeCompare(right.title, "zh-CN"));
+    return Array.from(grouped.values()).sort((left, right) => right.hits - left.hits || left.title.localeCompare(right.title, 'zh-CN'));
 }
 
 const contentStats_get = defineEventHandler(async (event) => {
-  requireAdminSession(event);
-  const tenantId = typeof getQuery$1(event).tenantId === "string" ? String(getQuery$1(event).tenantId) : "";
-  if (!tenantId) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: "tenantId is required"
-    });
-  }
-  const storage = getStorage();
-  const sessions = await storage.listSessionsByTenant(tenantId);
-  const messageGroups = await Promise.all(sessions.map((session) => storage.listMessagesBySession(session.id)));
-  const messages = messageGroups.flat();
-  return {
-    items: aggregateMatchedContentSourceStats(messages)
-  };
+    requireAdminSession(event);
+    const tenantId = typeof getQuery$1(event).tenantId === 'string' ? String(getQuery$1(event).tenantId) : '';
+    if (!tenantId) {
+        throw createError({
+            statusCode: 400,
+            statusMessage: 'tenantId is required'
+        });
+    }
+    const storage = getStorage();
+    const sessions = await storage.listSessionsByTenant(tenantId);
+    const messageGroups = await Promise.all(sessions.map((session) => storage.listMessagesBySession(session.id)));
+    const messages = messageGroups.flat();
+    return {
+        items: aggregateMatchedContentSourceStats(messages)
+    };
 });
 
 const contentStats_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
@@ -3571,17 +3986,17 @@ const contentStats_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.define
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const leads_get$2 = defineEventHandler(async (event) => {
-  requireAdminSession(event);
-  const tenantId = typeof getQuery$1(event).tenantId === "string" ? String(getQuery$1(event).tenantId) : "";
-  if (!tenantId) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: "tenantId is required"
-    });
-  }
-  return {
-    items: await getStorage().listLeadsByTenant(tenantId)
-  };
+    requireAdminSession(event);
+    const tenantId = typeof getQuery$1(event).tenantId === 'string' ? String(getQuery$1(event).tenantId) : '';
+    if (!tenantId) {
+        throw createError({
+            statusCode: 400,
+            statusMessage: 'tenantId is required'
+        });
+    }
+    return {
+        items: await getStorage().listLeadsByTenant(tenantId)
+    };
 });
 
 const leads_get$3 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
@@ -3589,21 +4004,897 @@ const leads_get$3 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.definePropert
   default: leads_get$2
 }, Symbol.toStringTag, { value: 'Module' }));
 
-const login_post$2 = defineEventHandler(async (event) => {
-  var _a;
-  const body = await readBody(event);
-  const email = ((_a = body == null ? void 0 : body.email) == null ? void 0 : _a.trim()) || "";
-  const password = (body == null ? void 0 : body.password) || "";
-  if (!validateAdminCredentials(email, password)) {
-    throw createError({
-      statusCode: 401,
-      statusMessage: "Invalid credentials"
+const ENV_KEYS = {
+    'tenant-identity-service': 'TENANT_IDENTITY_SERVICE_URL',
+    'knowledge-indexing-service': 'KNOWLEDGE_INDEXING_SERVICE_URL',
+    'agent-runtime-service': 'AGENT_RUNTIME_SERVICE_URL',
+    'embed-delivery-service': 'EMBED_DELIVERY_SERVICE_URL'
+};
+function getServiceBaseUrl(service) {
+    var _a;
+    return ((_a = process.env[ENV_KEYS[service]]) === null || _a === void 0 ? void 0 : _a.trim()) || '';
+}
+
+function getMailOutboxPath() {
+    return process.env.CUSTOMER_BOT_MAIL_OUTBOX_FILE || resolve(process.cwd(), '.data/customer-bot-mail-outbox.json');
+}
+function getBaseUrl() {
+    return (process.env.CUSTOMER_BOT_PUBLIC_BASE_URL ||
+        process.env.CUSTOMER_BOT_STAGING_BASE_URL ||
+        'https://bot.aifactory.website').replace(/\/+$/, '');
+}
+function createTenantResetEmailPayload(input) {
+    const expiresAt = new Date(input.expiresAt).toLocaleString();
+    const subject = `【${input.tenantName}】租户后台重置码`;
+    const text = `租户：${input.tenantName}\n` +
+        `你的租户后台重置码是：${input.code}\n` +
+        `有效期至：${expiresAt}\n` +
+        `登录地址：${input.loginUrl}\n` +
+        `如果这不是你的操作，请忽略本邮件。`;
+    const html = `<p>租户：<strong>${input.tenantName}</strong></p>` +
+        `<p>你的租户后台重置码是：<strong>${input.code}</strong></p>` +
+        `<p>有效期至：${expiresAt}</p>` +
+        `<p>登录地址：<a href="${input.loginUrl}">${input.loginUrl}</a></p>` +
+        `<p>如果这不是你的操作，请忽略本邮件。</p>`;
+    return {
+        to: input.to,
+        subject,
+        text,
+        html
+    };
+}
+async function appendMailOutbox(filePath, record) {
+    let items = [];
+    try {
+        const raw = await readFile(filePath, 'utf8');
+        const parsed = JSON.parse(raw);
+        items = Array.isArray(parsed) ? parsed : [];
+    }
+    catch (error) {
+        const maybe = error;
+        if ((maybe === null || maybe === void 0 ? void 0 : maybe.code) !== 'ENOENT') {
+            throw error;
+        }
+    }
+    items.push(record);
+    await mkdir(dirname(filePath), { recursive: true });
+    await writeFile(filePath, JSON.stringify(items, null, 2), 'utf8');
+}
+async function sendByResend(payload) {
+    var _a, _b;
+    const apiKey = (_a = process.env.CUSTOMER_BOT_RESEND_API_KEY) === null || _a === void 0 ? void 0 : _a.trim();
+    const from = (_b = process.env.CUSTOMER_BOT_MAIL_FROM) === null || _b === void 0 ? void 0 : _b.trim();
+    if (!apiKey || !from) {
+        throw new Error('Resend mail is not configured');
+    }
+    const response = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${apiKey}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            from,
+            to: [payload.to],
+            subject: payload.subject,
+            html: payload.html,
+            text: payload.text
+        })
     });
-  }
-  setAdminSession(event);
-  return {
-    ok: true
-  };
+    if (!response.ok) {
+        throw new Error(`Resend send failed: ${response.status}`);
+    }
+}
+async function sendTenantResetEmail(input) {
+    var _a;
+    const payload = createTenantResetEmailPayload({
+        ...input,
+        loginUrl: input.loginUrl || `${getBaseUrl()}/tenant/login`
+    });
+    const provider = (_a = process.env.CUSTOMER_BOT_MAIL_PROVIDER) === null || _a === void 0 ? void 0 : _a.trim().toLowerCase();
+    const createdAt = Date.now();
+    if (provider === 'resend') {
+        await sendByResend(payload);
+        return {
+            delivered: true,
+            provider: 'resend',
+            previewCode: ''
+        };
+    }
+    await appendMailOutbox(getMailOutboxPath(), {
+        ...payload,
+        provider: 'outbox',
+        createdAt
+    });
+    return {
+        delivered: false,
+        provider: 'outbox',
+        previewCode: input.code
+    };
+}
+
+function hashPassword$1(password) {
+    return createHash('sha256').update(password).digest('hex');
+}
+function normalizeEmail(email) {
+    return email.trim().toLowerCase();
+}
+function generateInitialPassword() {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789';
+    let output = '';
+    for (let index = 0; index < 10; index += 1) {
+        output += chars[randomInt(0, chars.length)];
+    }
+    return output;
+}
+function generateResetCode() {
+    return String(randomInt(0, 1000000)).padStart(6, '0');
+}
+function buildFallbackEmail(tenant) {
+    return `${tenant.id}@tenant.local`;
+}
+async function createTenantLoginForTenant(input) {
+    var _a;
+    const now = (_a = input.now) !== null && _a !== void 0 ? _a : Date.now();
+    const email = normalizeEmail(input.tenant.contactEmail || buildFallbackEmail(input.tenant));
+    const existing = await input.storage.getTenantUserByEmail(email);
+    if (existing) {
+        return {
+            user: existing,
+            initialPassword: existing.temporaryPassword || ''
+        };
+    }
+    const initialPassword = generateInitialPassword();
+    const user = {
+        id: `tenant-user-${input.tenant.id}`,
+        tenantId: input.tenant.id,
+        email,
+        passwordHash: hashPassword$1(initialPassword),
+        temporaryPassword: initialPassword,
+        mustChangePassword: true,
+        status: 'active',
+        createdAt: now,
+        updatedAt: now
+    };
+    await input.storage.saveTenantUser(user);
+    return {
+        user,
+        initialPassword
+    };
+}
+async function verifyTenantPassword(email, password, storage) {
+    const user = await storage.getTenantUserByEmail(email);
+    if (!user || user.status !== 'active') {
+        return null;
+    }
+    return user.passwordHash === hashPassword$1(password) ? user : null;
+}
+async function issueTenantPasswordReset(input) {
+    var _a;
+    const user = await input.storage.getTenantUserByEmail(input.email);
+    if (!user) {
+        throw new Error('租户账号不存在');
+    }
+    const now = (_a = input.now) !== null && _a !== void 0 ? _a : Date.now();
+    const record = {
+        id: `tenant-reset-${user.id}-${now}`,
+        tenantUserId: user.id,
+        tenantId: user.tenantId,
+        email: user.email,
+        code: generateResetCode(),
+        expiresAt: now + 15 * 60 * 1000,
+        usedAt: 0,
+        createdAt: now
+    };
+    await input.storage.saveTenantPasswordReset(record);
+    return record;
+}
+async function resetTenantPassword(input) {
+    var _a;
+    const normalizedEmail = normalizeEmail(input.email);
+    const record = await input.storage.getTenantPasswordResetByCode(normalizedEmail, input.code.trim());
+    const now = (_a = input.now) !== null && _a !== void 0 ? _a : Date.now();
+    if (!record || record.usedAt || record.expiresAt < now) {
+        throw new Error('验证码无效或已过期');
+    }
+    const user = await input.storage.getTenantUserById(record.tenantUserId);
+    if (!user) {
+        throw new Error('租户账号不存在');
+    }
+    const updatedUser = {
+        ...user,
+        passwordHash: hashPassword$1(input.nextPassword),
+        temporaryPassword: '',
+        mustChangePassword: false,
+        updatedAt: now
+    };
+    const updatedReset = {
+        ...record,
+        usedAt: now
+    };
+    await input.storage.saveTenantUser(updatedUser);
+    await input.storage.saveTenantPasswordReset(updatedReset);
+    return updatedUser;
+}
+
+class StorageTenantIdentityRepositoryAdapter {
+    constructor(storage) {
+        this.storage = storage;
+    }
+    saveTenant(tenant) {
+        return this.storage.saveTenant(tenant);
+    }
+    getTenantById(tenantId) {
+        return this.storage.getTenantById(tenantId);
+    }
+    getTenantByEmbedKey(embedKey) {
+        return this.storage.getTenantByEmbedKey(embedKey);
+    }
+    listTenants() {
+        return this.storage.listTenants();
+    }
+    saveTenantUser(user) {
+        return this.storage.saveTenantUser(user);
+    }
+    getTenantUserByEmail(email) {
+        return this.storage.getTenantUserByEmail(email);
+    }
+    getTenantUserById(userId) {
+        return this.storage.getTenantUserById(userId);
+    }
+    listTenantUsersByTenant(tenantId) {
+        return this.storage.listTenantUsersByTenant(tenantId);
+    }
+}
+
+class AdminLoginUseCase {
+    constructor(validateCredentials) {
+        this.validateCredentials = validateCredentials;
+    }
+    execute(input) {
+        if (!this.validateCredentials(input.email.trim(), input.password)) {
+            throw new Error('Invalid credentials');
+        }
+        return {
+            ok: true
+        };
+    }
+}
+
+class GetTenantUseCase {
+    constructor(repository) {
+        this.repository = repository;
+    }
+    async execute(tenantId) {
+        const tenant = await this.repository.getTenantById(tenantId.trim());
+        if (!tenant || tenant.deletedAt) {
+            throw new Error('Tenant not found');
+        }
+        const tenantUsers = await this.repository.listTenantUsersByTenant(tenant.id);
+        return {
+            item: tenant,
+            tenantUsers
+        };
+    }
+}
+
+class ListTenantsUseCase {
+    constructor(repository) {
+        this.repository = repository;
+    }
+    async execute(input) {
+        const items = await this.repository.listTenants();
+        return {
+            items: (input === null || input === void 0 ? void 0 : input.includeDeleted) ? items : items.filter((item) => !item.deletedAt)
+        };
+    }
+}
+
+class UpdateTenantUseCase {
+    constructor(repository) {
+        this.repository = repository;
+    }
+    async execute(tenantId, body) {
+        var _a, _b, _c;
+        const existing = await this.repository.getTenantById(tenantId.trim());
+        if (!existing || existing.deletedAt) {
+            throw new Error('Tenant not found');
+        }
+        const updated = {
+            ...existing,
+            ...body,
+            llmEndpoint: body.llmEndpoint !== undefined ? ((_a = body.llmEndpoint) === null || _a === void 0 ? void 0 : _a.trim()) || '' : existing.llmEndpoint,
+            llmApiKey: body.llmApiKey !== undefined ? ((_b = body.llmApiKey) === null || _b === void 0 ? void 0 : _b.trim()) || '' : existing.llmApiKey,
+            llmModel: body.llmModel !== undefined ? ((_c = body.llmModel) === null || _c === void 0 ? void 0 : _c.trim()) || '' : existing.llmModel,
+            reuseAnsweredQuestions: body.reuseAnsweredQuestions !== undefined ? body.reuseAnsweredQuestions !== false : existing.reuseAnsweredQuestions,
+            ragSettings: normalizeTenantRagSettings({
+                ...existing.ragSettings,
+                ...body.ragSettings
+            }),
+            id: existing.id,
+            embedKey: existing.embedKey,
+            createdAt: existing.createdAt,
+            updatedAt: Date.now()
+        };
+        await this.repository.saveTenant(updated);
+        return {
+            ok: true,
+            item: updated
+        };
+    }
+}
+
+function nextTenantId() {
+    return `tenant-${Date.now()}`;
+}
+class CreateTenantUseCase {
+    constructor(repository, createTenantLogin) {
+        this.repository = repository;
+        this.createTenantLogin = createTenantLogin;
+    }
+    async execute(input) {
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
+        const now = Date.now();
+        const tenant = {
+            id: ((_a = input.id) === null || _a === void 0 ? void 0 : _a.trim()) || nextTenantId(),
+            name: ((_b = input.name) === null || _b === void 0 ? void 0 : _b.trim()) || 'New Tenant',
+            status: input.status === 'disabled' ? 'disabled' : 'active',
+            brandName: ((_c = input.brandName) === null || _c === void 0 ? void 0 : _c.trim()) || ((_d = input.name) === null || _d === void 0 ? void 0 : _d.trim()) || 'New Tenant',
+            themeColor: ((_e = input.themeColor) === null || _e === void 0 ? void 0 : _e.trim()) || '#118ab2',
+            contactPhone: ((_f = input.contactPhone) === null || _f === void 0 ? void 0 : _f.trim()) || '',
+            contactEmail: ((_g = input.contactEmail) === null || _g === void 0 ? void 0 : _g.trim()) || '',
+            contactAddress: ((_h = input.contactAddress) === null || _h === void 0 ? void 0 : _h.trim()) || '',
+            systemPrompt: ((_j = input.systemPrompt) === null || _j === void 0 ? void 0 : _j.trim()) || 'You are the tenant bot.',
+            llmEndpoint: ((_k = input.llmEndpoint) === null || _k === void 0 ? void 0 : _k.trim()) || '',
+            llmApiKey: ((_l = input.llmApiKey) === null || _l === void 0 ? void 0 : _l.trim()) || '',
+            llmModel: ((_m = input.llmModel) === null || _m === void 0 ? void 0 : _m.trim()) || '',
+            reuseAnsweredQuestions: input.reuseAnsweredQuestions !== false,
+            deletedAt: undefined,
+            embedKey: ((_o = input.embedKey) === null || _o === void 0 ? void 0 : _o.trim()) || `embed-${Math.random().toString(36).slice(2, 10)}`,
+            ragSettings: normalizeTenantRagSettings(input.ragSettings),
+            billingSubscription: (_p = input.billingSubscription) !== null && _p !== void 0 ? _p : {
+                planId: 'plan-basic',
+                startedAt: now,
+                notes: ''
+            },
+            contentConfig: input.contentConfig,
+            createdAt: now,
+            updatedAt: now
+        };
+        await this.repository.saveTenant(tenant);
+        const tenantLogin = await this.createTenantLogin({ tenant, now });
+        return {
+            ok: true,
+            item: tenant,
+            tenantLogin: {
+                email: tenantLogin.user.email,
+                initialPassword: tenantLogin.initialPassword,
+                mustChangePassword: tenantLogin.user.mustChangePassword
+            }
+        };
+    }
+}
+
+class DeleteTenantUseCase {
+    constructor(repository) {
+        this.repository = repository;
+    }
+    async execute(tenantId) {
+        const tenant = await this.repository.getTenantById(tenantId.trim());
+        if (!tenant || tenant.deletedAt) {
+            throw new Error('Tenant not found');
+        }
+        const updatedAt = Date.now();
+        await this.repository.saveTenant({
+            ...tenant,
+            status: 'disabled',
+            deletedAt: updatedAt,
+            updatedAt
+        });
+        return { ok: true };
+    }
+}
+
+class RestoreTenantUseCase {
+    constructor(repository) {
+        this.repository = repository;
+    }
+    async execute(tenantId) {
+        const tenant = await this.repository.getTenantById(tenantId.trim());
+        if (!tenant) {
+            throw new Error('Tenant not found');
+        }
+        await this.repository.saveTenant({
+            ...tenant,
+            status: 'active',
+            deletedAt: undefined,
+            updatedAt: Date.now()
+        });
+        return { ok: true };
+    }
+}
+
+function hashPassword(password) {
+    return createHash('sha256').update(password).digest('hex');
+}
+class ChangeTenantPasswordUseCase {
+    constructor(repository, verifyTenantPassword) {
+        this.repository = repository;
+        this.verifyTenantPassword = verifyTenantPassword;
+    }
+    async execute(input) {
+        if (!input.currentPassword || !input.nextPassword) {
+            throw new Error('currentPassword and nextPassword are required');
+        }
+        const user = await this.verifyTenantPassword(input.email, input.currentPassword);
+        if (!user || user.id !== input.tenantUserId || user.tenantId !== input.tenantId) {
+            throw new Error('Invalid credentials');
+        }
+        await this.repository.saveTenantUser({
+            ...user,
+            passwordHash: hashPassword(input.nextPassword),
+            temporaryPassword: '',
+            mustChangePassword: false,
+            updatedAt: Date.now()
+        });
+        return { ok: true };
+    }
+}
+class ResetTenantPasswordUseCase {
+    constructor(resetTenantPassword) {
+        this.resetTenantPassword = resetTenantPassword;
+    }
+    async execute(input) {
+        const user = await this.resetTenantPassword(input);
+        return {
+            ok: true,
+            user: {
+                tenantUserId: user.id,
+                email: user.email,
+                tenantId: user.tenantId,
+                mustChangePassword: user.mustChangePassword
+            }
+        };
+    }
+}
+
+class IssueTenantResetCodeUseCase {
+    constructor(repository, issueTenantPasswordReset, sendTenantResetEmail) {
+        this.repository = repository;
+        this.issueTenantPasswordReset = issueTenantPasswordReset;
+        this.sendTenantResetEmail = sendTenantResetEmail;
+    }
+    async execute(input) {
+        const tenant = await this.repository.getTenantById(input.tenantId.trim());
+        if (!tenant || tenant.deletedAt) {
+            throw new Error('Tenant not found');
+        }
+        const email = (input.email || tenant.contactEmail || '').trim();
+        if (!email) {
+            throw new Error('Tenant contact email is required');
+        }
+        const reset = await this.issueTenantPasswordReset({ email });
+        const sent = await this.sendTenantResetEmail({
+            to: reset.email,
+            code: reset.code,
+            expiresAt: reset.expiresAt,
+            tenantName: tenant.name,
+            loginUrl: input.loginUrl
+        });
+        return {
+            ok: true,
+            item: {
+                email: reset.email,
+                expiresAt: reset.expiresAt,
+                provider: sent.provider,
+                previewCode: sent.previewCode
+            }
+        };
+    }
+}
+
+class ListTenantUsersUseCase {
+    constructor(repository) {
+        this.repository = repository;
+    }
+    async execute(tenantId) {
+        return {
+            items: await this.repository.listTenantUsersByTenant(tenantId.trim())
+        };
+    }
+}
+class GetTenantMeUseCase {
+    constructor(repository) {
+        this.repository = repository;
+    }
+    async execute(input) {
+        const user = await this.repository.getTenantUserById(input.tenantUserId);
+        const tenant = await this.repository.getTenantById(input.tenantId);
+        if (!user || !tenant || user.status !== 'active' || tenant.deletedAt) {
+            throw new Error('Unauthorized');
+        }
+        return {
+            user,
+            tenant
+        };
+    }
+}
+
+class TenantUserLoginUseCase {
+    constructor(verifyTenantPassword) {
+        this.verifyTenantPassword = verifyTenantPassword;
+    }
+    async execute(input) {
+        const user = await this.verifyTenantPassword(input.email.trim(), input.password);
+        if (!user) {
+            throw new Error('Invalid credentials');
+        }
+        return {
+            ok: true,
+            user: {
+                tenantUserId: user.id,
+                email: user.email,
+                tenantId: user.tenantId,
+                mustChangePassword: user.mustChangePassword
+            }
+        };
+    }
+}
+
+class TenantIdentityApplication {
+    constructor(deps) {
+        this.deps = deps;
+    }
+    adminLogin(input) {
+        return new AdminLoginUseCase(this.deps.validateAdminCredentials).execute(input);
+    }
+    createTenant(input) {
+        return new CreateTenantUseCase(this.deps.repository, this.deps.createTenantLogin).execute(input);
+    }
+    listTenants(input) {
+        return new ListTenantsUseCase(this.deps.repository).execute(input);
+    }
+    getTenant(tenantId) {
+        return new GetTenantUseCase(this.deps.repository).execute(tenantId);
+    }
+    updateTenant(tenantId, input) {
+        return new UpdateTenantUseCase(this.deps.repository).execute(tenantId, input);
+    }
+    deleteTenant(tenantId) {
+        return new DeleteTenantUseCase(this.deps.repository).execute(tenantId);
+    }
+    restoreTenant(tenantId) {
+        return new RestoreTenantUseCase(this.deps.repository).execute(tenantId);
+    }
+    async tenantUserLogin(input) {
+        return new TenantUserLoginUseCase(this.deps.verifyTenantPassword).execute(input);
+    }
+    getTenantMe(input) {
+        return new GetTenantMeUseCase(this.deps.repository).execute(input);
+    }
+    listTenantUsers(tenantId) {
+        return new ListTenantUsersUseCase(this.deps.repository).execute(tenantId);
+    }
+    issueTenantResetCode(input) {
+        return new IssueTenantResetCodeUseCase(this.deps.repository, this.deps.issueTenantPasswordReset, this.deps.sendTenantResetEmail).execute(input);
+    }
+    changeTenantPassword(input) {
+        return new ChangeTenantPasswordUseCase(this.deps.repository, this.deps.verifyTenantPassword).execute(input);
+    }
+    resetTenantPassword(input) {
+        return new ResetTenantPasswordUseCase(this.deps.resetTenantPassword).execute(input);
+    }
+}
+
+function createTenantIdentityApplication(storage) {
+    const repository = new StorageTenantIdentityRepositoryAdapter(storage);
+    return new TenantIdentityApplication({
+        repository,
+        validateAdminCredentials,
+        createTenantLogin: ({ tenant, now }) => createTenantLoginForTenant({
+            tenant,
+            storage,
+            now
+        }),
+        verifyTenantPassword: (email, password) => verifyTenantPassword(email, password, storage),
+        issueTenantPasswordReset: ({ email }) => issueTenantPasswordReset({
+            email,
+            storage
+        }),
+        resetTenantPassword: (input) => resetTenantPassword({
+            ...input,
+            storage
+        }),
+        sendTenantResetEmail
+    });
+}
+
+class AdminAuthController {
+    constructor(application) {
+        this.application = application;
+    }
+    login(input) {
+        return this.application.adminLogin(input);
+    }
+}
+
+class TenantsController {
+    constructor(application) {
+        this.application = application;
+    }
+    list(input) {
+        return this.application.listTenants(input);
+    }
+    create(input) {
+        return this.application.createTenant(input);
+    }
+    get(tenantId) {
+        return this.application.getTenant(tenantId);
+    }
+    update(tenantId, input) {
+        return this.application.updateTenant(tenantId, input);
+    }
+    delete(tenantId) {
+        return this.application.deleteTenant(tenantId);
+    }
+    restore(tenantId) {
+        return this.application.restoreTenant(tenantId);
+    }
+    issueResetCode(input) {
+        return this.application.issueTenantResetCode(input);
+    }
+}
+
+class TenantUsersController {
+    constructor(application) {
+        this.application = application;
+    }
+    login(input) {
+        return this.application.tenantUserLogin(input);
+    }
+    me(input) {
+        return this.application.getTenantMe(input);
+    }
+    changePassword(input) {
+        return this.application.changeTenantPassword(input);
+    }
+    issueResetCode(input) {
+        return this.application.issueTenantResetCode(input);
+    }
+    resetPassword(input) {
+        return this.application.resetTenantPassword(input);
+    }
+}
+
+function createTenantIdentityHttpLayer(application) {
+    return {
+        adminAuth: new AdminAuthController(application),
+        tenants: new TenantsController(application),
+        tenantUsers: new TenantUsersController(application)
+    };
+}
+
+function createTenantIdentityHttpAdapter(storage) {
+    const application = createTenantIdentityApplication(storage);
+    return createTenantIdentityHttpLayer(application);
+}
+
+function trimTrailingSlash(value) {
+    return value.replace(/\/+$/, '');
+}
+function buildUrl(baseUrl, path) {
+    const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+    return `${trimTrailingSlash(baseUrl)}${normalizedPath}`;
+}
+async function requestJson(input) {
+    const fetcher = input.fetcher || fetch;
+    const response = await fetcher(buildUrl(input.baseUrl, input.path), {
+        method: input.method || 'GET',
+        headers: input.body !== undefined ? { 'Content-Type': 'application/json' } : undefined,
+        body: input.body !== undefined ? JSON.stringify(input.body) : undefined
+    });
+    if (!response.ok) {
+        throw new Error(`Remote gateway request failed: ${response.status}`);
+    }
+    return response.json();
+}
+async function requestText(input) {
+    const fetcher = input.fetcher || fetch;
+    const response = await fetcher(buildUrl(input.baseUrl, input.path), {
+        method: input.method || 'GET',
+        headers: input.body !== undefined ? { 'Content-Type': 'application/json' } : undefined,
+        body: input.body !== undefined ? JSON.stringify(input.body) : undefined
+    });
+    if (!response.ok) {
+        throw new Error(`Remote gateway request failed: ${response.status}`);
+    }
+    return {
+        text: await response.text(),
+        contentType: response.headers.get('content-type') || 'text/plain; charset=utf-8',
+        cacheControl: response.headers.get('cache-control') || ''
+    };
+}
+
+function createTenantIdentityGateway(input) {
+    const storage = 'saveTenant' in input ? input : input.storage;
+    const baseUrl = 'saveTenant' in input ? getServiceBaseUrl('tenant-identity-service') : input.baseUrl || getServiceBaseUrl('tenant-identity-service');
+    const fetcher = 'saveTenant' in input ? undefined : input.fetcher;
+    const http = createTenantIdentityHttpAdapter(storage);
+    return {
+        adminLogin(input) {
+            if (baseUrl) {
+                return requestJson({
+                    baseUrl,
+                    path: '/admin/login',
+                    method: 'POST',
+                    body: input,
+                    fetcher
+                });
+            }
+            return http.adminAuth.login(input);
+        },
+        listTenants(input) {
+            if (baseUrl) {
+                const suffix = (input === null || input === void 0 ? void 0 : input.includeDeleted) ? '?includeDeleted=1' : '';
+                return requestJson({
+                    baseUrl,
+                    path: `/tenants${suffix}`,
+                    fetcher
+                });
+            }
+            return http.tenants.list(input);
+        },
+        createTenant(input) {
+            if (baseUrl) {
+                return requestJson({
+                    baseUrl,
+                    path: '/tenants',
+                    method: 'POST',
+                    body: input,
+                    fetcher
+                });
+            }
+            return http.tenants.create(input);
+        },
+        getTenant(tenantId) {
+            if (baseUrl) {
+                return requestJson({
+                    baseUrl,
+                    path: `/tenants/${encodeURIComponent(tenantId)}`,
+                    fetcher
+                });
+            }
+            return http.tenants.get(tenantId);
+        },
+        updateTenant(tenantId, input) {
+            if (baseUrl) {
+                return requestJson({
+                    baseUrl,
+                    path: `/tenants/${encodeURIComponent(tenantId)}`,
+                    method: 'PUT',
+                    body: input,
+                    fetcher
+                });
+            }
+            return http.tenants.update(tenantId, input);
+        },
+        deleteTenant(tenantId) {
+            if (baseUrl) {
+                return requestJson({
+                    baseUrl,
+                    path: `/tenants/${encodeURIComponent(tenantId)}`,
+                    method: 'DELETE',
+                    fetcher
+                });
+            }
+            return http.tenants.delete(tenantId);
+        },
+        restoreTenant(tenantId) {
+            if (baseUrl) {
+                return requestJson({
+                    baseUrl,
+                    path: `/tenants/${encodeURIComponent(tenantId)}/restore`,
+                    method: 'POST',
+                    fetcher
+                });
+            }
+            return http.tenants.restore(tenantId);
+        },
+        issueTenantResetCode(input) {
+            if (baseUrl) {
+                return requestJson({
+                    baseUrl,
+                    path: `/tenants/${encodeURIComponent(input.tenantId)}/reset-code`,
+                    method: 'POST',
+                    body: { loginUrl: input.loginUrl },
+                    fetcher
+                });
+            }
+            return http.tenants.issueResetCode(input);
+        },
+        tenantUserLogin(input) {
+            if (baseUrl) {
+                return requestJson({
+                    baseUrl,
+                    path: '/tenant-users/login',
+                    method: 'POST',
+                    body: input,
+                    fetcher
+                });
+            }
+            return http.tenantUsers.login(input);
+        },
+        tenantMe(input) {
+            if (baseUrl) {
+                return requestJson({
+                    baseUrl,
+                    path: '/tenant-users/me',
+                    method: 'POST',
+                    body: input,
+                    fetcher
+                });
+            }
+            return http.tenantUsers.me(input);
+        },
+        changeTenantPassword(input) {
+            if (baseUrl) {
+                return requestJson({
+                    baseUrl,
+                    path: '/tenant-users/change-password',
+                    method: 'POST',
+                    body: input,
+                    fetcher
+                });
+            }
+            return http.tenantUsers.changePassword(input);
+        },
+        issueTenantUserResetCode(input) {
+            if (baseUrl) {
+                return requestJson({
+                    baseUrl,
+                    path: '/tenant-users/reset-code',
+                    method: 'POST',
+                    body: input,
+                    fetcher
+                });
+            }
+            return http.tenantUsers.issueResetCode(input);
+        },
+        resetTenantPassword(input) {
+            if (baseUrl) {
+                return requestJson({
+                    baseUrl,
+                    path: '/tenant-users/reset-password',
+                    method: 'POST',
+                    body: input,
+                    fetcher
+                });
+            }
+            return http.tenantUsers.resetPassword(input);
+        }
+    };
+}
+
+const login_post$2 = defineEventHandler(async (event) => {
+    var _a;
+    const body = await readBody(event);
+    const email = ((_a = body === null || body === void 0 ? void 0 : body.email) === null || _a === void 0 ? void 0 : _a.trim()) || '';
+    const password = (body === null || body === void 0 ? void 0 : body.password) || '';
+    try {
+        const gateway = createTenantIdentityGateway(getStorage());
+        const response = gateway.adminLogin({
+            email,
+            password
+        });
+        setAdminSession(event);
+        return response;
+    }
+    catch {
+        throw createError({
+            statusCode: 401,
+            statusMessage: 'Invalid credentials'
+        });
+    }
 });
 
 const login_post$3 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
@@ -3612,72 +4903,75 @@ const login_post$3 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProper
 }, Symbol.toStringTag, { value: 'Module' }));
 
 function buildAdminOverview(input) {
-  const tenantMap = new Map(input.tenants.map((tenant) => [tenant.id, tenant]));
-  const activeHits = Array.from(input.contentStatsByTenant.values()).flat().reduce((sum, item) => sum + item.hits, 0);
-  const recentlyActive = Array.from(
-    new Map(
-      input.sessions.sort((left, right) => right.lastMessageAt - left.lastMessageAt).map((session) => {
+    const tenantMap = new Map(input.tenants.map((tenant) => [tenant.id, tenant]));
+    const activeHits = Array.from(input.contentStatsByTenant.values()).flat().reduce((sum, item) => sum + item.hits, 0);
+    const recentlyActive = Array.from(new Map(input.sessions
+        .sort((left, right) => right.lastMessageAt - left.lastMessageAt)
+        .map((session) => {
         const tenant = tenantMap.get(session.tenantId);
         return [
-          session.tenantId,
-          {
-            tenantId: session.tenantId,
-            tenantName: (tenant == null ? void 0 : tenant.name) || session.tenantId,
-            lastMessageAt: session.lastMessageAt,
-            status: (tenant == null ? void 0 : tenant.status) || "active"
-          }
+            session.tenantId,
+            {
+                tenantId: session.tenantId,
+                tenantName: (tenant === null || tenant === void 0 ? void 0 : tenant.name) || session.tenantId,
+                lastMessageAt: session.lastMessageAt,
+                status: (tenant === null || tenant === void 0 ? void 0 : tenant.status) || 'active'
+            }
         ];
-      })
-    ).values()
-  ).slice(0, 6);
-  const priorityTenants = input.tenants.map((tenant) => {
-    var _a;
-    const latestBilling = input.billingSummaries.filter((item) => item.tenantId === tenant.id).sort((left, right) => right.month.localeCompare(left.month))[0];
-    const contentStats = (_a = input.contentStatsByTenant.get(tenant.id)) != null ? _a : [];
-    if (tenant.status === "disabled") {
-      return { tenantId: tenant.id, tenantName: tenant.name, reason: "\u79DF\u6237\u5DF2\u505C\u7528", status: tenant.status };
-    }
-    if (((latestBilling == null ? void 0 : latestBilling.billableTokens) || 0) > 0) {
-      return { tenantId: tenant.id, tenantName: tenant.name, reason: "\u5957\u9910\u5DF2\u4EA7\u751F\u8D85\u989D", status: tenant.status };
-    }
-    if (contentStats.length === 0) {
-      return { tenantId: tenant.id, tenantName: tenant.name, reason: "\u6682\u65E0\u8D44\u6599\u547D\u4E2D", status: tenant.status };
-    }
-    return null;
-  }).filter((item) => Boolean(item)).slice(0, 6);
-  return {
-    kpis: {
-      todaySessions: input.sessions.length,
-      todayLeads: input.leads.length,
-      activeContentHits: activeHits,
-      attentionTenants: priorityTenants.length
-    },
-    recentlyActive,
-    priorityTenants
-  };
+    })).values()).slice(0, 6);
+    const priorityTenants = input.tenants
+        .map((tenant) => {
+        var _a;
+        const latestBilling = input.billingSummaries
+            .filter((item) => item.tenantId === tenant.id)
+            .sort((left, right) => right.month.localeCompare(left.month))[0];
+        const contentStats = (_a = input.contentStatsByTenant.get(tenant.id)) !== null && _a !== void 0 ? _a : [];
+        if (tenant.status === 'disabled') {
+            return { tenantId: tenant.id, tenantName: tenant.name, reason: '租户已停用', status: tenant.status };
+        }
+        if (((latestBilling === null || latestBilling === void 0 ? void 0 : latestBilling.billableTokens) || 0) > 0) {
+            return { tenantId: tenant.id, tenantName: tenant.name, reason: '套餐已产生超额', status: tenant.status };
+        }
+        if (contentStats.length === 0) {
+            return { tenantId: tenant.id, tenantName: tenant.name, reason: '暂无资料命中', status: tenant.status };
+        }
+        return null;
+    })
+        .filter((item) => Boolean(item))
+        .slice(0, 6);
+    return {
+        kpis: {
+            todaySessions: input.sessions.length,
+            todayLeads: input.leads.length,
+            activeContentHits: activeHits,
+            attentionTenants: priorityTenants.length
+        },
+        recentlyActive,
+        priorityTenants
+    };
 }
 
 const overview_get$2 = defineEventHandler(async (event) => {
-  requireAdminSession(event);
-  const storage = getStorage();
-  const tenants = await storage.listTenants();
-  const sessions = (await Promise.all(tenants.map((tenant) => storage.listSessionsByTenant(tenant.id)))).flat();
-  const leads = (await Promise.all(tenants.map((tenant) => storage.listLeadsByTenant(tenant.id)))).flat();
-  const usageRecords = (await Promise.all(tenants.map((tenant) => storage.listUsageByTenant(tenant.id)))).flat();
-  const billingSummaries = buildMonthlyBillingSummary(usageRecords);
-  const contentStatsByTenant = /* @__PURE__ */ new Map();
-  for (const tenant of tenants) {
-    const tenantSessions = await storage.listSessionsByTenant(tenant.id);
-    const messageGroups = await Promise.all(tenantSessions.map((session) => storage.listMessagesBySession(session.id)));
-    contentStatsByTenant.set(tenant.id, aggregateMatchedContentSourceStats(messageGroups.flat()));
-  }
-  return buildAdminOverview({
-    tenants,
-    sessions,
-    leads,
-    billingSummaries,
-    contentStatsByTenant
-  });
+    requireAdminSession(event);
+    const storage = getStorage();
+    const tenants = await storage.listTenants();
+    const sessions = (await Promise.all(tenants.map((tenant) => storage.listSessionsByTenant(tenant.id)))).flat();
+    const leads = (await Promise.all(tenants.map((tenant) => storage.listLeadsByTenant(tenant.id)))).flat();
+    const usageRecords = (await Promise.all(tenants.map((tenant) => storage.listUsageByTenant(tenant.id)))).flat();
+    const billingSummaries = buildMonthlyBillingSummary(usageRecords);
+    const contentStatsByTenant = new Map();
+    for (const tenant of tenants) {
+        const tenantSessions = await storage.listSessionsByTenant(tenant.id);
+        const messageGroups = await Promise.all(tenantSessions.map((session) => storage.listMessagesBySession(session.id)));
+        contentStatsByTenant.set(tenant.id, aggregateMatchedContentSourceStats(messageGroups.flat()));
+    }
+    return buildAdminOverview({
+        tenants,
+        sessions,
+        leads,
+        billingSummaries,
+        contentStatsByTenant
+    });
 });
 
 const overview_get$3 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
@@ -3686,14 +4980,12 @@ const overview_get$3 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProp
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const tenants_get = defineEventHandler(async (event) => {
-  requireAdminSession(event);
-  const storage = getStorage();
-  const query = getQuery$1(event);
-  const includeDeleted = String(query.includeDeleted || "") === "1";
-  const items = await storage.listTenants();
-  return {
-    items: includeDeleted ? items : items.filter((item) => !item.deletedAt)
-  };
+    requireAdminSession(event);
+    const storage = getStorage();
+    const query = getQuery$1(event);
+    const includeDeleted = String(query.includeDeleted || '') === '1';
+    const gateway = createTenantIdentityGateway(storage);
+    return gateway.listTenants({ includeDeleted });
 });
 
 const tenants_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
@@ -3701,159 +4993,12 @@ const tenants_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.definePrope
   default: tenants_get
 }, Symbol.toStringTag, { value: 'Module' }));
 
-function hashPassword(password) {
-  return createHash("sha256").update(password).digest("hex");
-}
-function normalizeEmail(email) {
-  return email.trim().toLowerCase();
-}
-function generateInitialPassword() {
-  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789";
-  let output = "";
-  for (let index = 0; index < 10; index += 1) {
-    output += chars[randomInt(0, chars.length)];
-  }
-  return output;
-}
-function generateResetCode() {
-  return String(randomInt(0, 1e6)).padStart(6, "0");
-}
-function buildFallbackEmail(tenant) {
-  return `${tenant.id}@tenant.local`;
-}
-async function createTenantLoginForTenant(input) {
-  var _a;
-  const now = (_a = input.now) != null ? _a : Date.now();
-  const email = normalizeEmail(input.tenant.contactEmail || buildFallbackEmail(input.tenant));
-  const existing = await input.storage.getTenantUserByEmail(email);
-  if (existing) {
-    return {
-      user: existing,
-      initialPassword: existing.temporaryPassword || ""
-    };
-  }
-  const initialPassword = generateInitialPassword();
-  const user = {
-    id: `tenant-user-${input.tenant.id}`,
-    tenantId: input.tenant.id,
-    email,
-    passwordHash: hashPassword(initialPassword),
-    temporaryPassword: initialPassword,
-    mustChangePassword: true,
-    status: "active",
-    createdAt: now,
-    updatedAt: now
-  };
-  await input.storage.saveTenantUser(user);
-  return {
-    user,
-    initialPassword
-  };
-}
-async function verifyTenantPassword(email, password, storage) {
-  const user = await storage.getTenantUserByEmail(email);
-  if (!user || user.status !== "active") {
-    return null;
-  }
-  return user.passwordHash === hashPassword(password) ? user : null;
-}
-async function issueTenantPasswordReset(input) {
-  var _a;
-  const user = await input.storage.getTenantUserByEmail(input.email);
-  if (!user) {
-    throw new Error("\u79DF\u6237\u8D26\u53F7\u4E0D\u5B58\u5728");
-  }
-  const now = (_a = input.now) != null ? _a : Date.now();
-  const record = {
-    id: `tenant-reset-${user.id}-${now}`,
-    tenantUserId: user.id,
-    tenantId: user.tenantId,
-    email: user.email,
-    code: generateResetCode(),
-    expiresAt: now + 15 * 60 * 1e3,
-    usedAt: 0,
-    createdAt: now
-  };
-  await input.storage.saveTenantPasswordReset(record);
-  return record;
-}
-async function resetTenantPassword(input) {
-  var _a;
-  const normalizedEmail = normalizeEmail(input.email);
-  const record = await input.storage.getTenantPasswordResetByCode(normalizedEmail, input.code.trim());
-  const now = (_a = input.now) != null ? _a : Date.now();
-  if (!record || record.usedAt || record.expiresAt < now) {
-    throw new Error("\u9A8C\u8BC1\u7801\u65E0\u6548\u6216\u5DF2\u8FC7\u671F");
-  }
-  const user = await input.storage.getTenantUserById(record.tenantUserId);
-  if (!user) {
-    throw new Error("\u79DF\u6237\u8D26\u53F7\u4E0D\u5B58\u5728");
-  }
-  const updatedUser = {
-    ...user,
-    passwordHash: hashPassword(input.nextPassword),
-    temporaryPassword: "",
-    mustChangePassword: false,
-    updatedAt: now
-  };
-  const updatedReset = {
-    ...record,
-    usedAt: now
-  };
-  await input.storage.saveTenantUser(updatedUser);
-  await input.storage.saveTenantPasswordReset(updatedReset);
-  return updatedUser;
-}
-
-function nextTenantId() {
-  return `tenant-${Date.now()}`;
-}
 const tenants_post = defineEventHandler(async (event) => {
-  var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n;
-  requireAdminSession(event);
-  const body = await readBody(event);
-  const now = Date.now();
-  const tenant = {
-    id: ((_a = body.id) == null ? void 0 : _a.trim()) || nextTenantId(),
-    name: ((_b = body.name) == null ? void 0 : _b.trim()) || "New Tenant",
-    status: body.status === "disabled" ? "disabled" : "active",
-    brandName: ((_c = body.brandName) == null ? void 0 : _c.trim()) || ((_d = body.name) == null ? void 0 : _d.trim()) || "New Tenant",
-    themeColor: ((_e = body.themeColor) == null ? void 0 : _e.trim()) || "#118ab2",
-    contactPhone: ((_f = body.contactPhone) == null ? void 0 : _f.trim()) || "",
-    contactEmail: ((_g = body.contactEmail) == null ? void 0 : _g.trim()) || "",
-    contactAddress: ((_h = body.contactAddress) == null ? void 0 : _h.trim()) || "",
-    systemPrompt: ((_i = body.systemPrompt) == null ? void 0 : _i.trim()) || "You are the tenant bot.",
-    llmEndpoint: ((_j = body.llmEndpoint) == null ? void 0 : _j.trim()) || "",
-    llmApiKey: ((_k = body.llmApiKey) == null ? void 0 : _k.trim()) || "",
-    llmModel: ((_l = body.llmModel) == null ? void 0 : _l.trim()) || "",
-    reuseAnsweredQuestions: body.reuseAnsweredQuestions !== false,
-    deletedAt: void 0,
-    embedKey: ((_m = body.embedKey) == null ? void 0 : _m.trim()) || `embed-${Math.random().toString(36).slice(2, 10)}`,
-    billingSubscription: (_n = body.billingSubscription) != null ? _n : {
-      planId: "plan-basic",
-      startedAt: now,
-      notes: ""
-    },
-    contentConfig: body.contentConfig,
-    createdAt: now,
-    updatedAt: now
-  };
-  const storage = getStorage();
-  await storage.saveTenant(tenant);
-  const tenantLogin = await createTenantLoginForTenant({
-    tenant,
-    storage,
-    now
-  });
-  return {
-    ok: true,
-    item: tenant,
-    tenantLogin: {
-      email: tenantLogin.user.email,
-      initialPassword: tenantLogin.initialPassword,
-      mustChangePassword: tenantLogin.user.mustChangePassword
-    }
-  };
+    requireAdminSession(event);
+    const body = await readBody(event);
+    const storage = getStorage();
+    const gateway = createTenantIdentityGateway(storage);
+    return gateway.createTenant(body);
 });
 
 const tenants_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
@@ -3862,24 +5007,18 @@ const tenants_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProp
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const _tenantId__delete = defineEventHandler(async (event) => {
-  requireAdminSession(event);
-  const tenantId = getRouterParam(event, "tenantId") || "";
-  const storage = getStorage();
-  const tenant = await storage.getTenantById(tenantId);
-  if (!tenant || tenant.deletedAt) {
-    throw createError({
-      statusCode: 404,
-      statusMessage: "Tenant not found"
-    });
-  }
-  const updatedAt = Date.now();
-  await storage.saveTenant({
-    ...tenant,
-    status: "disabled",
-    deletedAt: updatedAt,
-    updatedAt
-  });
-  return { ok: true };
+    requireAdminSession(event);
+    const tenantId = getRouterParam(event, 'tenantId') || '';
+    try {
+        const gateway = createTenantIdentityGateway(getStorage());
+        return await gateway.deleteTenant(tenantId);
+    }
+    catch {
+        throw createError({
+            statusCode: 404,
+            statusMessage: 'Tenant not found'
+        });
+    }
 });
 
 const _tenantId__delete$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
@@ -3888,20 +5027,18 @@ const _tenantId__delete$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defin
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const _tenantId__get = defineEventHandler(async (event) => {
-  requireAdminSession(event);
-  const tenantId = getRouterParam(event, "tenantId") || "";
-  const storage = getStorage();
-  const tenant = await resolveTenant(tenantId, storage);
-  if (!tenant) {
-    throw createError({
-      statusCode: 404,
-      statusMessage: "Tenant not found"
-    });
-  }
-  return {
-    item: tenant,
-    tenantUsers: await storage.listTenantUsersByTenant(tenant.id)
-  };
+    requireAdminSession(event);
+    const tenantId = getRouterParam(event, 'tenantId') || '';
+    try {
+        const gateway = createTenantIdentityGateway(getStorage());
+        return gateway.getTenant(tenantId);
+    }
+    catch {
+        throw createError({
+            statusCode: 404,
+            statusMessage: 'Tenant not found'
+        });
+    }
 });
 
 const _tenantId__get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
@@ -3910,35 +5047,19 @@ const _tenantId__get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.definePr
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const _tenantId__put = defineEventHandler(async (event) => {
-  var _a, _b, _c;
-  requireAdminSession(event);
-  const tenantIdentifier = getRouterParam(event, "tenantId") || "";
-  const storage = getStorage();
-  const existing = await resolveTenant(tenantIdentifier, storage);
-  if (!existing) {
-    throw createError({
-      statusCode: 404,
-      statusMessage: "Tenant not found"
-    });
-  }
-  const body = await readBody(event);
-  const updated = {
-    ...existing,
-    ...body,
-    llmEndpoint: body.llmEndpoint !== void 0 ? ((_a = body.llmEndpoint) == null ? void 0 : _a.trim()) || "" : existing.llmEndpoint,
-    llmApiKey: body.llmApiKey !== void 0 ? ((_b = body.llmApiKey) == null ? void 0 : _b.trim()) || "" : existing.llmApiKey,
-    llmModel: body.llmModel !== void 0 ? ((_c = body.llmModel) == null ? void 0 : _c.trim()) || "" : existing.llmModel,
-    reuseAnsweredQuestions: body.reuseAnsweredQuestions !== void 0 ? body.reuseAnsweredQuestions !== false : existing.reuseAnsweredQuestions,
-    id: existing.id,
-    embedKey: existing.embedKey,
-    createdAt: existing.createdAt,
-    updatedAt: Date.now()
-  };
-  await storage.saveTenant(updated);
-  return {
-    ok: true,
-    item: updated
-  };
+    requireAdminSession(event);
+    const tenantIdentifier = getRouterParam(event, 'tenantId') || '';
+    const body = await readBody(event);
+    try {
+        const gateway = createTenantIdentityGateway(getStorage());
+        return gateway.updateTenant(tenantIdentifier, body);
+    }
+    catch {
+        throw createError({
+            statusCode: 404,
+            statusMessage: 'Tenant not found'
+        });
+    }
 });
 
 const _tenantId__put$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
@@ -3946,136 +5067,1387 @@ const _tenantId__put$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.definePr
   default: _tenantId__put
 }, Symbol.toStringTag, { value: 'Module' }));
 
-function getMailOutboxPath() {
-  return process.env.CUSTOMER_BOT_MAIL_OUTBOX_FILE || resolve(process.cwd(), ".data/customer-bot-mail-outbox.json");
-}
-function getBaseUrl() {
-  return (process.env.CUSTOMER_BOT_PUBLIC_BASE_URL || process.env.CUSTOMER_BOT_STAGING_BASE_URL || "https://bot.aifactory.website").replace(/\/+$/, "");
-}
-function createTenantResetEmailPayload(input) {
-  const expiresAt = new Date(input.expiresAt).toLocaleString();
-  const subject = `\u3010${input.tenantName}\u3011\u79DF\u6237\u540E\u53F0\u91CD\u7F6E\u7801`;
-  const text = `\u79DF\u6237\uFF1A${input.tenantName}
-\u4F60\u7684\u79DF\u6237\u540E\u53F0\u91CD\u7F6E\u7801\u662F\uFF1A${input.code}
-\u6709\u6548\u671F\u81F3\uFF1A${expiresAt}
-\u767B\u5F55\u5730\u5740\uFF1A${input.loginUrl}
-\u5982\u679C\u8FD9\u4E0D\u662F\u4F60\u7684\u64CD\u4F5C\uFF0C\u8BF7\u5FFD\u7565\u672C\u90AE\u4EF6\u3002`;
-  const html = `<p>\u79DF\u6237\uFF1A<strong>${input.tenantName}</strong></p><p>\u4F60\u7684\u79DF\u6237\u540E\u53F0\u91CD\u7F6E\u7801\u662F\uFF1A<strong>${input.code}</strong></p><p>\u6709\u6548\u671F\u81F3\uFF1A${expiresAt}</p><p>\u767B\u5F55\u5730\u5740\uFF1A<a href="${input.loginUrl}">${input.loginUrl}</a></p><p>\u5982\u679C\u8FD9\u4E0D\u662F\u4F60\u7684\u64CD\u4F5C\uFF0C\u8BF7\u5FFD\u7565\u672C\u90AE\u4EF6\u3002</p>`;
-  return {
-    to: input.to,
-    subject,
-    text,
-    html
-  };
-}
-async function appendMailOutbox(filePath, record) {
-  let items = [];
-  try {
-    const raw = await readFile(filePath, "utf8");
-    const parsed = JSON.parse(raw);
-    items = Array.isArray(parsed) ? parsed : [];
-  } catch (error) {
-    const maybe = error;
-    if ((maybe == null ? void 0 : maybe.code) !== "ENOENT") {
-      throw error;
-    }
-  }
-  items.push(record);
-  await mkdir(dirname(filePath), { recursive: true });
-  await writeFile(filePath, JSON.stringify(items, null, 2), "utf8");
-}
-async function sendByResend(payload) {
-  var _a, _b;
-  const apiKey = (_a = process.env.CUSTOMER_BOT_RESEND_API_KEY) == null ? void 0 : _a.trim();
-  const from = (_b = process.env.CUSTOMER_BOT_MAIL_FROM) == null ? void 0 : _b.trim();
-  if (!apiKey || !from) {
-    throw new Error("Resend mail is not configured");
-  }
-  const response = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      from,
-      to: [payload.to],
-      subject: payload.subject,
-      html: payload.html,
-      text: payload.text
-    })
-  });
-  if (!response.ok) {
-    throw new Error(`Resend send failed: ${response.status}`);
-  }
-}
-async function sendTenantResetEmail(input) {
-  var _a;
-  const payload = createTenantResetEmailPayload({
-    ...input,
-    loginUrl: input.loginUrl || `${getBaseUrl()}/tenant/login`
-  });
-  const provider = (_a = process.env.CUSTOMER_BOT_MAIL_PROVIDER) == null ? void 0 : _a.trim().toLowerCase();
-  const createdAt = Date.now();
-  if (provider === "resend") {
-    await sendByResend(payload);
+function normalizeDocument(input) {
+    var _a;
     return {
-      delivered: true,
-      provider: "resend",
-      previewCode: ""
+        externalId: input.externalId,
+        title: input.title.trim(),
+        mimeType: input.mimeType.trim(),
+        sourceUri: input.sourceUri.trim(),
+        contentText: input.contentText.replace(/\r\n/g, '\n').trim(),
+        metadata: structuredClone((_a = input.metadata) !== null && _a !== void 0 ? _a : {})
     };
-  }
-  await appendMailOutbox(getMailOutboxPath(), {
-    ...payload,
-    provider: "outbox",
-    createdAt
-  });
-  return {
-    delivered: false,
-    provider: "outbox",
-    previewCode: input.code
-  };
+}
+function createContentHash(contentText) {
+    return createHash('sha256').update(contentText).digest('hex');
 }
 
-const resetCode_post$2 = defineEventHandler(async (event) => {
-  var _a, _b;
-  requireAdminSession(event);
-  const tenantId = ((_a = getRouterParam(event, "tenantId")) == null ? void 0 : _a.trim()) || "";
-  const storage = getStorage();
-  const tenant = await resolveTenant(tenantId, storage);
-  if (!tenant) {
-    throw createError({
-      statusCode: 404,
-      statusMessage: "Tenant not found"
-    });
-  }
-  const email = (_b = tenant.contactEmail) == null ? void 0 : _b.trim();
-  if (!email) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: "Tenant contact email is required"
-    });
-  }
-  const reset = await issueTenantPasswordReset({
-    email,
-    storage
-  });
-  const sent = await sendTenantResetEmail({
-    to: reset.email,
-    code: reset.code,
-    expiresAt: reset.expiresAt,
-    tenantName: tenant.name,
-    loginUrl: `${(process.env.CUSTOMER_BOT_PUBLIC_BASE_URL || "https://bot.aifactory.website").replace(/\/+$/, "")}/tenant/login`
-  });
-  return {
-    ok: true,
-    item: {
-      email: reset.email,
-      expiresAt: reset.expiresAt,
-      provider: sent.provider,
-      previewCode: sent.previewCode
+function normalizeTemplateLines(value) {
+    return (value || '')
+        .split(/\r?\n/)
+        .map((item) => item.trim())
+        .filter(Boolean);
+}
+function summarizeContent(value) {
+    return value.replace(/\s+/g, ' ').trim().slice(0, 220);
+}
+function extractTemplateValue(label, document) {
+    var _a, _b, _c, _d;
+    const normalized = label.toLowerCase();
+    const content = summarizeContent(document.contentText);
+    if (normalized.includes('标题') || normalized.includes('产品名称') || normalized.includes('名称')) {
+        return document.title;
     }
-  };
+    if (normalized.includes('来源')) {
+        return document.sourceUri;
+    }
+    if (normalized.includes('摘要') || normalized.includes('关键') || normalized.includes('场景')) {
+        return content;
+    }
+    if (normalized.includes('标准')) {
+        return ((_a = document.contentText.match(/\b(?:GB|DIN|ISO|ANSI)[A-Z0-9-]*/i)) === null || _a === void 0 ? void 0 : _a[0]) || content;
+    }
+    if (normalized.includes('材质')) {
+        return ((_b = document.contentText.match(/\b(?:304|316|35K|45#|SCM435|不锈钢|碳钢|合金钢)\b/i)) === null || _b === void 0 ? void 0 : _b[0]) || content;
+    }
+    if (normalized.includes('等级')) {
+        return ((_c = document.contentText.match(/\b(?:4\.8|6\.8|8\.8|10\.9|12\.9)\b/)) === null || _c === void 0 ? void 0 : _c[0]) || content;
+    }
+    if (normalized.includes('规格') || normalized.includes('尺寸')) {
+        return ((_d = document.contentText.match(/\bM\d+(?:[xX*]\d+)?\b/i)) === null || _d === void 0 ? void 0 : _d[0]) || content;
+    }
+    return content;
+}
+function buildStructuredPrelude(document, structureTemplate) {
+    const lines = normalizeTemplateLines(structureTemplate);
+    if (!lines.length) {
+        return '';
+    }
+    return lines.map((label) => `${label}：${extractTemplateValue(label, document)}`).join('\n');
+}
+function chunkDocument(document, options = {}) {
+    var _a, _b;
+    const maxCharacters = (_a = options.maxCharacters) !== null && _a !== void 0 ? _a : 500;
+    const overlapCharacters = Math.max(0, (_b = options.overlapCharacters) !== null && _b !== void 0 ? _b : 0);
+    const structuredPrelude = buildStructuredPrelude(document, options.structureTemplate);
+    const contentText = structuredPrelude ? `${structuredPrelude}\n\n${document.contentText}` : document.contentText;
+    const segments = contentText
+        .split(/\n{2,}/)
+        .map((segment) => segment.replace(/\s+/g, ' ').trim())
+        .filter(Boolean);
+    const chunks = [];
+    const sourceSegments = segments.length ? segments : [document.contentText.trim()].filter(Boolean);
+    for (const segment of sourceSegments) {
+        if (segment.length <= maxCharacters) {
+            chunks.push({
+                content: segment,
+                chunkIndex: chunks.length,
+                tokenCount: Math.max(1, Math.ceil(segment.length / 4)),
+                metadata: {
+                    title: document.title,
+                    sourceUri: document.sourceUri
+                }
+            });
+            continue;
+        }
+        const step = Math.max(1, maxCharacters - overlapCharacters);
+        for (let index = 0; index < segment.length; index += step) {
+            const slice = segment.slice(index, index + maxCharacters).trim();
+            if (!slice) {
+                continue;
+            }
+            chunks.push({
+                content: slice,
+                chunkIndex: chunks.length,
+                tokenCount: Math.max(1, Math.ceil(slice.length / 4)),
+                metadata: {
+                    title: document.title,
+                    sourceUri: document.sourceUri
+                }
+            });
+        }
+    }
+    return chunks;
+}
+
+function createDeterministicEmbedding(value) {
+    const digest = createHash('sha256').update(value).digest();
+    return Array.from(digest.slice(0, 8)).map((item) => Number((item / 255).toFixed(6)));
+}
+async function embedChunks(chunks, embedder) {
+    const vectors = embedder
+        ? await embedder.embedDocuments(chunks.map((chunk) => chunk.content))
+        : chunks.map((chunk) => createDeterministicEmbedding(chunk.content));
+    return chunks.map((chunk, index) => {
+        var _a;
+        return ({
+            ...chunk,
+            embedding: (_a = vectors[index]) !== null && _a !== void 0 ? _a : []
+        });
+    });
+}
+
+const customStart = '<!-- CUSTOM:START -->';
+const customEnd = '<!-- CUSTOM:END -->';
+const generatedStart = '<!-- GENERATED:START -->';
+const generatedEnd = '<!-- GENERATED:END -->';
+function extractSection(content, start, end) {
+    if (!content) {
+        return '';
+    }
+    const startIndex = content.indexOf(start);
+    const endIndex = content.indexOf(end);
+    if (startIndex < 0 || endIndex < 0 || endIndex <= startIndex) {
+        return '';
+    }
+    return content.slice(startIndex + start.length, endIndex).trim();
+}
+function renderAgentDoc(input) {
+    const preservedCustom = extractSection(input.existingContent, customStart, customEnd);
+    const customBody = preservedCustom || '请在这里补充人工维护的说明。';
+    return [
+        `# ${input.title}`,
+        '',
+        input.description,
+        '',
+        '说明：本文件可编辑。重新导入资料时，会刷新自动生成区块，但会保留“自定义补充”区块内容。',
+        '',
+        customStart,
+        customBody,
+        customEnd,
+        '',
+        generatedStart,
+        input.generatedBody.trim(),
+        generatedEnd,
+        ''
+    ].join('\n');
+}
+
+const defaultDocNames = ['AGENTS.md', 'BOOTSTRAP.md', 'HEARTBEAT.md', 'IDENTITY.md', 'SOUL.md', 'USER.md', 'TOOLS.md'];
+async function readExistingContent(path) {
+    try {
+        return await readFile(path, 'utf8');
+    }
+    catch {
+        return undefined;
+    }
+}
+function summarizeDocuments(documents) {
+    return documents.slice(0, 8).map((document, index) => {
+        const snippet = document.contentText.replace(/\s+/g, ' ').slice(0, 120);
+        return `${index + 1}. ${document.title}：${snippet || '暂无正文摘录'}`;
+    });
+}
+function buildGeneratedSections(input) {
+    const summaries = summarizeDocuments(input.documents);
+    const sourceCount = input.documents.length;
+    const updatedAt = new Date(input.generatedAt).toLocaleString('zh-CN', { hour12: false });
+    return {
+        'AGENTS.md': [
+            '## 职责',
+            `- 当前 agent 服务于租户 ${input.tenantId}。`,
+            '- 回答时优先基于已导入资料，不应脱离资料编造事实。',
+            '- 对价格类问题应优先依赖结构化数据，不应自由估价。',
+            '',
+            '## 当前资料摘要',
+            ...summaries
+        ].join('\n'),
+        'BOOTSTRAP.md': [
+            '## 初始化顺序',
+            '1. 读取租户基础配置',
+            '2. 加载已导入文档和索引状态',
+            '3. 启用 FAQ / 价格结构化直达能力',
+            '4. 启用 RAG 检索能力',
+            '5. 对未命中的非价格问题启用共享模型兜底'
+        ].join('\n'),
+        'HEARTBEAT.md': [
+            '## 当前状态',
+            `- 最近生成时间：${updatedAt}`,
+            `- 当前已导入文档数：${sourceCount}`,
+            '- 应定期检查资料同步、索引状态和失败任务。',
+            '- 如资料更新，应重新执行导入以刷新自动生成区块。'
+        ].join('\n'),
+        'IDENTITY.md': [
+            '## 身份',
+            `- 租户标识：${input.tenantId}`,
+            '- 该 agent 代表当前租户的业务身份进行回答。',
+            '- 回答要保持专业、简洁、可执行。'
+        ].join('\n'),
+        'SOUL.md': [
+            '## 风格',
+            '- 使用中文编写。',
+            '- 语气专业、克制，不夸张承诺。',
+            '- 不编造资料中不存在的产品参数、价格或交付承诺。'
+        ].join('\n'),
+        'USER.md': [
+            '## 用户画像',
+            '- 用户通常会咨询产品、方案、报价、交付、能力范围等问题。',
+            '- 如当前资料不能直接命中，应明确说明并提示进一步确认。',
+            '',
+            '## 当前高优先级资料',
+            ...summaries
+        ].join('\n'),
+        'TOOLS.md': [
+            '## 能力清单',
+            '- 结构化 FAQ / 标准回复',
+            '- 结构化价格与产品参数查询',
+            '- 基于导入资料的 RAG 检索与引用',
+            '- 非价格未命中时的平台共享模型兜底',
+            '',
+            '## 当前资料源规模',
+            `- 已导入文档数：${sourceCount}`
+        ].join('\n')
+    };
+}
+async function generateAgentDocBundle(input) {
+    var _a, _b;
+    const generatedAt = (_a = input.generatedAt) !== null && _a !== void 0 ? _a : Date.now();
+    const outputDir = (_b = input.outputRoot) !== null && _b !== void 0 ? _b : join(process.cwd(), '.data', 'agent-docs', input.tenantId, 'latest');
+    const sections = buildGeneratedSections({
+        tenantId: input.tenantId,
+        documents: input.documents,
+        generatedAt
+    });
+    await mkdir(outputDir, { recursive: true });
+    for (const fileName of defaultDocNames) {
+        const fullPath = join(outputDir, fileName);
+        const existingContent = await readExistingContent(fullPath);
+        const rendered = renderAgentDoc({
+            title: fileName,
+            description: `该文件面向租户 ${input.tenantId} 的 agent 运行说明。`,
+            generatedBody: sections[fileName],
+            existingContent
+        });
+        await writeFile(fullPath, rendered, 'utf8');
+    }
+    return {
+        outputDir,
+        files: [...defaultDocNames]
+    };
+}
+
+function nextJobId(prefix = 'ingestion-job') {
+    return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+}
+function createQueuedIngestionJob(input) {
+    return {
+        id: nextJobId(),
+        tenantId: input.tenantId,
+        dataSourceId: input.dataSourceId,
+        triggerMode: input.triggerMode,
+        status: 'queued',
+        stats: {}
+    };
+}
+function markJobRunning(job, now) {
+    return {
+        ...job,
+        status: 'running',
+        startedAt: now
+    };
+}
+function markJobSucceeded(job, now, stats) {
+    return {
+        ...job,
+        status: 'succeeded',
+        finishedAt: now,
+        stats
+    };
+}
+function markJobFailed(job, now, errorMessage) {
+    return {
+        ...job,
+        status: 'failed',
+        finishedAt: now,
+        errorMessage
+    };
+}
+
+function nextDocumentId(prefix = 'document') {
+    return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+}
+function nextChunkId(prefix = 'chunk') {
+    return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+}
+function toDocumentRecord(input) {
+    const hash = createContentHash(input.document.contentText);
+    return {
+        id: nextDocumentId(),
+        tenantId: input.tenantId,
+        dataSourceId: input.dataSourceId,
+        externalId: input.document.externalId,
+        title: input.document.title,
+        mimeType: input.document.mimeType,
+        sourceUri: input.document.sourceUri,
+        contentText: input.document.contentText,
+        metadata: input.document.metadata,
+        contentHash: hash,
+        versionHash: hash,
+        createdAt: input.now,
+        updatedAt: input.now
+    };
+}
+function toChunkRecords(input) {
+    return input.chunks.map((chunk) => ({
+        id: nextChunkId(),
+        tenantId: input.tenantId,
+        documentId: input.documentId,
+        chunkIndex: chunk.chunkIndex,
+        content: chunk.content,
+        tokenCount: chunk.tokenCount,
+        metadata: chunk.metadata,
+        embedding: chunk.embedding,
+        createdAt: input.now
+    }));
+}
+async function executeIngestionJob(input) {
+    var _a;
+    const now = (_a = input.now) !== null && _a !== void 0 ? _a : Date.now();
+    let job = createQueuedIngestionJob({
+        tenantId: input.tenantId,
+        dataSourceId: input.dataSourceId,
+        triggerMode: input.triggerMode
+    });
+    await input.repository.saveIngestionJob(job);
+    try {
+        job = markJobRunning(job, now);
+        await input.repository.saveIngestionJob(job);
+        const normalizedDocuments = await input.loadDocuments();
+        const documentRecords = [];
+        const chunkRecords = [];
+        for (const document of normalizedDocuments) {
+            const documentRecord = toDocumentRecord({
+                tenantId: input.tenantId,
+                dataSourceId: input.dataSourceId,
+                document,
+                now
+            });
+            await input.repository.saveDocument(documentRecord);
+            documentRecords.push(documentRecord);
+            const embeddedChunks = await embedChunks(chunkDocument(document, input.chunking), input.embedder);
+            const nextChunkRecords = toChunkRecords({
+                tenantId: input.tenantId,
+                documentId: documentRecord.id,
+                chunks: embeddedChunks,
+                now
+            });
+            await input.repository.replaceDocumentChunks(documentRecord.id, nextChunkRecords);
+            chunkRecords.push(...nextChunkRecords);
+        }
+        job = markJobSucceeded(job, now, {
+            documentCount: documentRecords.length,
+            chunkCount: chunkRecords.length
+        });
+        await input.repository.saveIngestionJob(job);
+        await generateAgentDocBundle({
+            tenantId: input.tenantId,
+            documents: normalizedDocuments,
+            generatedAt: now
+        });
+        return {
+            job,
+            documents: documentRecords,
+            chunks: chunkRecords,
+            documentCount: documentRecords.length,
+            chunkCount: chunkRecords.length
+        };
+    }
+    catch (error) {
+        job = markJobFailed(job, now, error instanceof Error ? error.message : 'Ingestion failed');
+        await input.repository.saveIngestionJob(job);
+        throw error;
+    }
+}
+
+const assetRoot = join(process.cwd(), '.data', 'source-assets');
+function sanitizeSegment(value) {
+    const trimmed = value.trim();
+    const fallback = trimmed || 'asset';
+    return fallback.replace(/[^a-zA-Z0-9._-]+/g, '-');
+}
+async function saveTenantAsset(input) {
+    const safeTenantId = sanitizeSegment(input.tenantId);
+    const extension = extname(input.fileName);
+    const baseName = basename(input.fileName, extension);
+    const safeFileName = `${sanitizeSegment(baseName)}${extension || ''}`;
+    const tenantDir = join(assetRoot, safeTenantId);
+    await mkdir(tenantDir, { recursive: true });
+    const assetPath = join(tenantDir, safeFileName);
+    await writeFile(assetPath, input.contents);
+    return {
+        fileName: safeFileName,
+        assetPath,
+        relativePath: join('.data', 'source-assets', safeTenantId, safeFileName)
+    };
+}
+async function readTenantAsset(assetPath) {
+    return readFile(assetPath);
+}
+
+function getFileStem(fileName) {
+    const extension = extname(fileName);
+    return basename(fileName, extension);
+}
+function buildSourceUri(input) {
+    return `asset://${input.tenantId}/${input.fileName}`;
+}
+function parseCsvText(content) {
+    const rows = content
+        .split(/\r?\n/)
+        .map((row) => row.trim())
+        .filter(Boolean);
+    if (rows.length === 0) {
+        return '';
+    }
+    const header = rows[0].split(',').map((item) => item.trim());
+    const body = rows.slice(1);
+    if (header.length <= 1 || body.length === 0) {
+        return rows.join('\n');
+    }
+    return body
+        .map((row) => {
+        const values = row.split(',').map((item) => item.trim());
+        return header.map((key, index) => { var _a; return `${key}: ${(_a = values[index]) !== null && _a !== void 0 ? _a : ''}`; }).join('\n');
+    })
+        .join('\n\n');
+}
+async function parseDocxAsset(input) {
+    const { importOptionalModule } = await Promise.resolve().then(function () { return optionalModule; });
+    const mammoth = await importOptionalModule('mammoth', 'npm install mammoth');
+    const result = await mammoth.extractRawText({ path: input.assetPath });
+    return [
+        normalizeDocument({
+            title: getFileStem(input.fileName),
+            mimeType: input.mimeType,
+            sourceUri: buildSourceUri(input),
+            contentText: result.value,
+            metadata: {
+                fileName: input.fileName,
+                parser: 'mammoth'
+            }
+        })
+    ];
+}
+async function parseSpreadsheetAsset(input) {
+    const { importOptionalModule } = await Promise.resolve().then(function () { return optionalModule; });
+    const xlsx = await importOptionalModule('xlsx', 'npm install xlsx');
+    const workbook = xlsx.readFile(input.assetPath);
+    return workbook.SheetNames.map((sheetName) => {
+        const worksheet = workbook.Sheets[sheetName];
+        const rows = xlsx.utils.sheet_to_json(worksheet, {
+            header: 1,
+            blankrows: false
+        });
+        const contentText = rows
+            .map((row) => row.map((cell) => String(cell !== null && cell !== void 0 ? cell : '')).join(' | ').trim())
+            .filter(Boolean)
+            .join('\n');
+        return normalizeDocument({
+            title: `${getFileStem(input.fileName)} / ${sheetName}`,
+            mimeType: input.mimeType,
+            sourceUri: buildSourceUri(input),
+            contentText,
+            metadata: {
+                fileName: input.fileName,
+                sheetName,
+                parser: 'xlsx'
+            }
+        });
+    });
+}
+async function parseUploadedAsset(input) {
+    const assetBuffer = await readTenantAsset(input.assetPath);
+    const extension = extname(input.fileName).toLowerCase();
+    if (extension === '.csv' || input.mimeType === 'text/csv') {
+        return [
+            normalizeDocument({
+                title: getFileStem(input.fileName),
+                mimeType: input.mimeType || 'text/csv',
+                sourceUri: buildSourceUri(input),
+                contentText: parseCsvText(assetBuffer.toString('utf8')),
+                metadata: {
+                    fileName: input.fileName,
+                    parser: 'csv'
+                }
+            })
+        ];
+    }
+    if (extension === '.xlsx' || extension === '.xls') {
+        return parseSpreadsheetAsset(input);
+    }
+    if (extension === '.docx') {
+        return parseDocxAsset(input);
+    }
+    return [
+        normalizeDocument({
+            title: getFileStem(input.fileName),
+            mimeType: input.mimeType || 'text/plain',
+            sourceUri: buildSourceUri(input),
+            contentText: assetBuffer.toString('utf8'),
+            metadata: {
+                fileName: input.fileName,
+                parser: 'plain-text'
+            }
+        })
+    ];
+}
+
+function isAllowedUrl(url, allowedDomains) {
+    const hostname = new URL(url).hostname.toLowerCase();
+    return allowedDomains.some((domain) => hostname === domain.toLowerCase() || hostname.endsWith(`.${domain.toLowerCase()}`));
+}
+function extractTitle(html) {
+    var _a;
+    const match = html.match(/<title[^>]*>(.*?)<\/title>/is);
+    return ((_a = match === null || match === void 0 ? void 0 : match[1]) === null || _a === void 0 ? void 0 : _a.replace(/\s+/g, ' ').trim()) || 'Untitled Page';
+}
+function stripHtml(html) {
+    return html
+        .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+        .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+        .replace(/<[^>]+>/g, ' ')
+        .replace(/&nbsp;/gi, ' ')
+        .replace(/&amp;/gi, '&')
+        .replace(/\s+/g, ' ')
+        .trim();
+}
+async function extractWebsiteDocuments(input) {
+    var _a;
+    if (input.maxPages <= 0 || !isAllowedUrl(input.startUrl, input.allowedDomains)) {
+        return [];
+    }
+    const fetcher = (_a = input.fetcher) !== null && _a !== void 0 ? _a : fetch;
+    const response = await fetcher(input.startUrl);
+    if (!response.ok) {
+        return [];
+    }
+    const html = await response.text();
+    return [
+        normalizeDocument({
+            title: extractTitle(html),
+            mimeType: 'text/html',
+            sourceUri: input.startUrl,
+            contentText: stripHtml(html),
+            metadata: {
+                parser: 'webpage-basic',
+                startUrl: input.startUrl
+            }
+        })
+    ];
+}
+
+async function loadMessagesFromImap(_input) {
+    const { importOptionalModule } = await Promise.resolve().then(function () { return optionalModule; });
+    const { ImapFlow } = await importOptionalModule('imapflow', 'npm install imapflow');
+    throw new Error('Real IMAP loading is not implemented yet');
+}
+async function extractImapDocuments(input) {
+    const messages = input.loadMessages ? await input.loadMessages() : await loadMessagesFromImap();
+    return messages.flatMap((message) => {
+        var _a;
+        const bodyDocument = normalizeDocument({
+            externalId: message.id,
+            title: message.subject.trim() || 'Untitled Email',
+            mimeType: 'message/rfc822',
+            sourceUri: `imap://${input.mailbox}/${message.id}`,
+            contentText: message.bodyText,
+            metadata: {
+                parser: 'imap-basic',
+                from: message.from,
+                mailbox: input.mailbox,
+                receivedAt: message.receivedAt
+            }
+        });
+        const attachmentDocuments = ((_a = message.attachments) !== null && _a !== void 0 ? _a : [])
+            .filter((attachment) => { var _a; return (_a = attachment.contentText) === null || _a === void 0 ? void 0 : _a.trim(); })
+            .map((attachment, index) => normalizeDocument({
+            externalId: `${message.id}:attachment:${index + 1}`,
+            title: `${message.subject} / ${attachment.fileName}`,
+            mimeType: attachment.mimeType,
+            sourceUri: `imap://${input.mailbox}/${message.id}/${attachment.fileName}`,
+            contentText: attachment.contentText || '',
+            metadata: {
+                parser: 'imap-attachment',
+                from: message.from,
+                mailbox: input.mailbox,
+                receivedAt: message.receivedAt
+            }
+        }));
+        return [bodyDocument, ...attachmentDocuments];
+    });
+}
+
+function readStringConfig(config, key) {
+    const value = config[key];
+    return typeof value === 'string' ? value.trim() : '';
+}
+function readStringArrayConfig(config, key) {
+    const value = config[key];
+    return Array.isArray(value) ? value.map((item) => String(item).trim()).filter(Boolean) : [];
+}
+function readNumberConfig(config, key, fallback) {
+    const value = config[key];
+    return typeof value === 'number' && Number.isFinite(value) ? value : fallback;
+}
+function createSourceDocumentLoader(source) {
+    if (source.type === 'file') {
+        return () => parseUploadedAsset({
+            tenantId: source.tenantId,
+            assetPath: readStringConfig(source.config, 'assetPath'),
+            fileName: readStringConfig(source.config, 'fileName'),
+            mimeType: readStringConfig(source.config, 'mimeType')
+        });
+    }
+    if (source.type === 'webpage') {
+        return () => extractWebsiteDocuments({
+            startUrl: readStringConfig(source.config, 'startUrl'),
+            allowedDomains: readStringArrayConfig(source.config, 'allowedDomains'),
+            maxPages: readNumberConfig(source.config, 'maxPages', 1)
+        });
+    }
+    return () => extractImapDocuments({
+        host: readStringConfig(source.config, 'host'),
+        port: readNumberConfig(source.config, 'port', 993),
+        secure: source.config.secure !== false,
+        username: readStringConfig(source.config, 'username'),
+        password: readStringConfig(source.config, 'password'),
+        mailbox: readStringConfig(source.config, 'mailbox') || 'INBOX'
+    });
+}
+
+const AGENT_DOC_FILE_NAMES = ['AGENTS.md', 'BOOTSTRAP.md', 'HEARTBEAT.md', 'IDENTITY.md', 'SOUL.md', 'USER.md', 'TOOLS.md'];
+function ensureAllowedFileName(fileName) {
+    const normalized = basename(fileName);
+    if (AGENT_DOC_FILE_NAMES.includes(normalized)) {
+        return normalized;
+    }
+    throw new Error('Unsupported agent doc file name');
+}
+function getAgentDocDirectory(tenantId) {
+    return join(process.cwd(), '.data', 'agent-docs', tenantId, 'latest');
+}
+async function listAgentDocFiles(tenantId) {
+    const directory = getAgentDocDirectory(tenantId);
+    try {
+        const files = await readdir(directory);
+        return files.filter((fileName) => AGENT_DOC_FILE_NAMES.includes(fileName)).sort();
+    }
+    catch {
+        return [];
+    }
+}
+async function readAgentDocFile(tenantId, fileName) {
+    const allowedFileName = ensureAllowedFileName(fileName);
+    return readFile(join(getAgentDocDirectory(tenantId), allowedFileName), 'utf8');
+}
+async function writeAgentDocFile(input) {
+    const allowedFileName = ensureAllowedFileName(input.fileName);
+    const directory = getAgentDocDirectory(input.tenantId);
+    await mkdir(directory, { recursive: true });
+    await writeFile(join(directory, allowedFileName), input.content, 'utf8');
+}
+
+class LocalAgentDocsGateway {
+    async list(tenantId) {
+        const files = await listAgentDocFiles(tenantId);
+        return Promise.all(files.map(async (fileName) => ({
+            fileName,
+            content: await readAgentDocFile(tenantId, fileName)
+        })));
+    }
+    save(input) {
+        return writeAgentDocFile(input);
+    }
+}
+
+class RagRepositoryKnowledgeIndexingAdapter {
+    constructor(repository) {
+        this.repository = repository;
+    }
+    saveDataSource(record) {
+        return this.repository.saveDataSource(record);
+    }
+    getDataSourceById(dataSourceId) {
+        return this.repository.getDataSourceById(dataSourceId);
+    }
+    listDataSourcesByTenant(tenantId) {
+        return this.repository.listDataSourcesByTenant(tenantId);
+    }
+    saveIngestionJob(record) {
+        return this.repository.saveIngestionJob(record);
+    }
+    getIngestionJobById(jobId) {
+        return this.repository.getIngestionJobById(jobId);
+    }
+    listIngestionJobsByTenant(tenantId) {
+        return this.repository.listIngestionJobsByTenant(tenantId);
+    }
+    listSourceDocumentsByTenant(tenantId) {
+        return this.repository.listDocumentsByTenant(tenantId);
+    }
+    async countDocumentChunksByTenant(tenantId) {
+        const documents = await this.repository.listDocumentsByTenant(tenantId);
+        let total = 0;
+        for (const document of documents) {
+            const chunks = await this.repository.listChunksByDocument(document.id);
+            total += chunks.length;
+        }
+        return total;
+    }
+}
+
+class ListSourcesUseCase {
+    constructor(repository) {
+        this.repository = repository;
+    }
+    async execute(tenantId) {
+        return {
+            items: await this.repository.listDataSourcesByTenant(tenantId.trim())
+        };
+    }
+}
+
+function nextSourceId() {
+    return `source-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+}
+class CreateSourceUseCase {
+    constructor(repository) {
+        this.repository = repository;
+    }
+    async execute(input) {
+        var _a, _b;
+        const now = Date.now();
+        const source = {
+            id: nextSourceId(),
+            tenantId: input.tenantId,
+            type: input.type,
+            status: 'active',
+            syncMode: input.syncMode,
+            scheduleCron: ((_a = input.scheduleCron) === null || _a === void 0 ? void 0 : _a.trim()) || '',
+            config: (_b = input.config) !== null && _b !== void 0 ? _b : {},
+            lastSyncedAt: undefined,
+            createdAt: now,
+            updatedAt: now
+        };
+        await this.repository.saveDataSource(source);
+        return { ok: true, item: source };
+    }
+}
+
+class DisableSourceUseCase {
+    constructor(repository) {
+        this.repository = repository;
+    }
+    async execute(input) {
+        const current = await this.repository.getDataSourceById(input.sourceId);
+        if (!current || current.tenantId !== input.tenantId) {
+            throw new Error('Source not found');
+        }
+        const updated = {
+            ...current,
+            status: 'disabled',
+            updatedAt: Date.now()
+        };
+        await this.repository.saveDataSource(updated);
+        return { ok: true, item: updated };
+    }
+}
+
+class UpdateSourceUseCase {
+    constructor(repository) {
+        this.repository = repository;
+    }
+    async execute(input) {
+        var _a, _b, _c;
+        const current = await this.repository.getDataSourceById(input.sourceId);
+        if (!current || current.tenantId !== input.tenantId) {
+            throw new Error('Source not found');
+        }
+        const updated = {
+            ...current,
+            type: input.type || current.type,
+            status: input.status || current.status,
+            syncMode: input.syncMode || current.syncMode,
+            scheduleCron: (_b = (_a = input.scheduleCron) === null || _a === void 0 ? void 0 : _a.trim()) !== null && _b !== void 0 ? _b : current.scheduleCron,
+            config: (_c = input.config) !== null && _c !== void 0 ? _c : current.config,
+            updatedAt: Date.now()
+        };
+        await this.repository.saveDataSource(updated);
+        return {
+            ok: true,
+            item: updated
+        };
+    }
+}
+
+class UploadSourceAssetUseCase {
+    constructor(repository, assetStore) {
+        this.repository = repository;
+        this.assetStore = assetStore;
+    }
+    async execute(input) {
+        const current = await this.repository.getDataSourceById(input.sourceId);
+        if (!current || current.tenantId !== input.tenantId) {
+            throw new Error('Source not found');
+        }
+        const asset = await this.assetStore.save({
+            tenantId: input.tenantId,
+            fileName: input.fileName,
+            contents: Buffer$1.from(input.base64Data, 'base64')
+        });
+        const updated = {
+            ...current,
+            type: 'file',
+            config: {
+                ...current.config,
+                assetPath: asset.assetPath,
+                relativePath: asset.relativePath,
+                fileName: asset.fileName,
+                mimeType: input.mimeType || 'application/octet-stream'
+            },
+            updatedAt: Date.now()
+        };
+        await this.repository.saveDataSource(updated);
+        return {
+            ok: true,
+            item: updated,
+            asset
+        };
+    }
+}
+
+class ListJobsUseCase {
+    constructor(repository) {
+        this.repository = repository;
+    }
+    async execute(tenantId) {
+        const items = await this.repository.listIngestionJobsByTenant(tenantId.trim());
+        return {
+            items: items.sort((left, right) => {
+                var _a, _b, _c, _d;
+                const leftTime = (_b = (_a = left.finishedAt) !== null && _a !== void 0 ? _a : left.startedAt) !== null && _b !== void 0 ? _b : 0;
+                const rightTime = (_d = (_c = right.finishedAt) !== null && _c !== void 0 ? _c : right.startedAt) !== null && _d !== void 0 ? _d : 0;
+                return rightTime - leftTime;
+            })
+        };
+    }
+}
+
+class ListAgentDocsUseCase {
+    constructor(gateway) {
+        this.gateway = gateway;
+    }
+    async execute(tenantId) {
+        return {
+            items: await this.gateway.list(tenantId.trim())
+        };
+    }
+}
+class SaveAgentDocUseCase {
+    constructor(gateway) {
+        this.gateway = gateway;
+    }
+    async execute(input) {
+        await this.gateway.save(input);
+        return { ok: true };
+    }
+}
+
+class KnowledgeIndexingApplication {
+    constructor(deps) {
+        this.deps = deps;
+    }
+    listSources(tenantId) {
+        return new ListSourcesUseCase(this.deps.repository).execute(tenantId);
+    }
+    createSource(input) {
+        return new CreateSourceUseCase(this.deps.repository).execute(input);
+    }
+    disableSource(input) {
+        return new DisableSourceUseCase(this.deps.repository).execute(input);
+    }
+    updateSource(input) {
+        return new UpdateSourceUseCase(this.deps.repository).execute(input);
+    }
+    uploadSourceAsset(input) {
+        return new UploadSourceAssetUseCase(this.deps.repository, this.deps.sourceAssetStore).execute(input);
+    }
+    listJobs(tenantId) {
+        return new ListJobsUseCase(this.deps.repository).execute(tenantId);
+    }
+    async getIndexStats(tenantId) {
+        const [jobs, documents, chunkCount] = await Promise.all([
+            this.deps.repository.listIngestionJobsByTenant(tenantId),
+            this.deps.repository.listSourceDocumentsByTenant(tenantId),
+            this.deps.repository.countDocumentChunksByTenant(tenantId)
+        ]);
+        const lastSuccessfulSyncAt = jobs
+            .filter((item) => item.status === 'succeeded')
+            .map((item) => { var _a, _b; return (_b = (_a = item.finishedAt) !== null && _a !== void 0 ? _a : item.startedAt) !== null && _b !== void 0 ? _b : 0; })
+            .sort((left, right) => right - left)[0];
+        return {
+            documentCount: documents.length,
+            chunkCount,
+            lastSuccessfulSyncAt: lastSuccessfulSyncAt || undefined
+        };
+    }
+    listAgentDocs(tenantId) {
+        return new ListAgentDocsUseCase(this.deps.agentDocsGateway).execute(tenantId);
+    }
+    saveAgentDoc(input) {
+        return new SaveAgentDocUseCase(this.deps.agentDocsGateway).execute(input);
+    }
+    async triggerSourceSync(input) {
+        const result = await this.deps.triggerSync({
+            tenantId: input.tenantId,
+            sourceId: input.sourceId,
+            triggerMode: 'manual'
+        });
+        return {
+            ok: true,
+            item: result.item,
+            documentCount: result.documentCount,
+            chunkCount: result.chunkCount
+        };
+    }
+    async retryJob(input) {
+        const job = await this.deps.repository.getIngestionJobById(input.jobId);
+        if (!job || job.tenantId !== input.tenantId) {
+            throw new Error('Job not found');
+        }
+        const result = await this.deps.triggerSync({
+            tenantId: input.tenantId,
+            sourceId: job.dataSourceId,
+            triggerMode: 'retry'
+        });
+        return {
+            ok: true,
+            item: result.item,
+            documentCount: result.documentCount,
+            chunkCount: result.chunkCount
+        };
+    }
+    async reindexAll(tenantId) {
+        const sources = await this.deps.repository.listDataSourcesByTenant(tenantId);
+        const activeSources = sources.filter((item) => item.status === 'active');
+        const jobs = [];
+        const failures = [];
+        let documentCount = 0;
+        let chunkCount = 0;
+        for (const source of activeSources) {
+            try {
+                const result = await this.deps.triggerSync({
+                    tenantId,
+                    sourceId: source.id,
+                    triggerMode: 'manual'
+                });
+                jobs.push(result.item);
+                documentCount += result.documentCount;
+                chunkCount += result.chunkCount;
+            }
+            catch (error) {
+                failures.push({
+                    sourceId: source.id,
+                    message: error instanceof Error ? error.message : 'Reindex failed'
+                });
+            }
+        }
+        return {
+            ok: true,
+            triggeredSourceCount: activeSources.length,
+            successCount: jobs.length,
+            failureCount: failures.length,
+            documentCount,
+            chunkCount,
+            jobs,
+            failures
+        };
+    }
+}
+
+function createKnowledgeIndexingApplication(repository) {
+    const adapter = new RagRepositoryKnowledgeIndexingAdapter(repository);
+    const agentDocsGateway = new LocalAgentDocsGateway();
+    return new KnowledgeIndexingApplication({
+        repository: adapter,
+        agentDocsGateway,
+        sourceAssetStore: {
+            save: (input) => saveTenantAsset(input)
+        },
+        triggerSync: async ({ tenantId, sourceId, triggerMode }) => {
+            const source = await repository.getDataSourceById(sourceId);
+            if (!source || source.tenantId !== tenantId) {
+                throw new Error('Source not found');
+            }
+            if (source.status === 'disabled') {
+                throw new Error('Source is disabled');
+            }
+            const tenant = await getStorage().getTenantById(tenantId);
+            const ragSettings = normalizeTenantRagSettings(tenant === null || tenant === void 0 ? void 0 : tenant.ragSettings);
+            const result = await executeIngestionJob({
+                tenantId,
+                dataSourceId: source.id,
+                triggerMode,
+                repository,
+                loadDocuments: createSourceDocumentLoader(source),
+                chunking: {
+                    maxCharacters: ragSettings.chunkSize,
+                    overlapCharacters: ragSettings.chunkOverlap,
+                    structureTemplate: ragSettings.ingestionStructureTemplate
+                }
+            });
+            await repository.saveDataSource({
+                ...source,
+                lastSyncedAt: Date.now(),
+                updatedAt: Date.now()
+            });
+            return {
+                item: result.job,
+                documentCount: result.documentCount,
+                chunkCount: result.chunkCount
+            };
+        }
+    });
+}
+
+class SourcesController {
+    constructor(application) {
+        this.application = application;
+    }
+    list(tenantId) {
+        return this.application.listSources(tenantId);
+    }
+    create(input) {
+        return this.application.createSource(input);
+    }
+    disable(input) {
+        return this.application.disableSource(input);
+    }
+    update(input) {
+        return this.application.updateSource(input);
+    }
+    upload(input) {
+        return this.application.uploadSourceAsset(input);
+    }
+    sync(input) {
+        return this.application.triggerSourceSync(input);
+    }
+}
+
+class JobsController {
+    constructor(application) {
+        this.application = application;
+    }
+    list(tenantId) {
+        return this.application.listJobs(tenantId);
+    }
+    stats(tenantId) {
+        return this.application.getIndexStats(tenantId);
+    }
+    retry(input) {
+        return this.application.retryJob(input);
+    }
+    reindexAll(input) {
+        return this.application.reindexAll(input.tenantId);
+    }
+}
+
+class AgentDocsController {
+    constructor(application) {
+        this.application = application;
+    }
+    list(tenantId) {
+        return this.application.listAgentDocs(tenantId);
+    }
+    save(input) {
+        return this.application.saveAgentDoc(input);
+    }
+}
+
+function createKnowledgeIndexingHttpLayer(application) {
+    return {
+        sources: new SourcesController(application),
+        jobs: new JobsController(application),
+        agentDocs: new AgentDocsController(application)
+    };
+}
+
+function createKnowledgeIndexingHttpAdapter(repository) {
+    const application = createKnowledgeIndexingApplication(repository);
+    return createKnowledgeIndexingHttpLayer(application);
+}
+
+function createKnowledgeIndexingGateway(input) {
+    const repository = 'saveDataSource' in input ? input : input.repository;
+    const baseUrl = 'saveDataSource' in input ? getServiceBaseUrl('knowledge-indexing-service') : input.baseUrl || getServiceBaseUrl('knowledge-indexing-service');
+    const fetcher = 'saveDataSource' in input ? undefined : input.fetcher;
+    const http = createKnowledgeIndexingHttpAdapter(repository);
+    return {
+        listSources(tenantId) {
+            if (baseUrl) {
+                return requestJson({
+                    baseUrl,
+                    path: `/sources?tenantId=${encodeURIComponent(tenantId)}`,
+                    fetcher
+                });
+            }
+            return http.sources.list(tenantId);
+        },
+        createSource(input) {
+            if (baseUrl) {
+                return requestJson({
+                    baseUrl,
+                    path: '/sources',
+                    method: 'POST',
+                    body: input,
+                    fetcher
+                });
+            }
+            return http.sources.create(input);
+        },
+        disableSource(input) {
+            if (baseUrl) {
+                return requestJson({
+                    baseUrl,
+                    path: `/sources/${encodeURIComponent(input.sourceId)}?tenantId=${encodeURIComponent(input.tenantId)}`,
+                    method: 'DELETE',
+                    fetcher
+                });
+            }
+            return http.sources.disable(input);
+        },
+        updateSource(input) {
+            if (baseUrl) {
+                return requestJson({
+                    baseUrl,
+                    path: `/sources/${encodeURIComponent(input.sourceId)}`,
+                    method: 'PUT',
+                    body: input,
+                    fetcher
+                });
+            }
+            return http.sources.update(input);
+        },
+        uploadSourceAsset(input) {
+            if (baseUrl) {
+                return requestJson({
+                    baseUrl,
+                    path: `/sources/${encodeURIComponent(input.sourceId)}/upload`,
+                    method: 'POST',
+                    body: input,
+                    fetcher
+                });
+            }
+            return http.sources.upload(input);
+        },
+        syncSource(input) {
+            if (baseUrl) {
+                return requestJson({
+                    baseUrl,
+                    path: `/sources/${encodeURIComponent(input.sourceId)}/sync`,
+                    method: 'POST',
+                    body: input,
+                    fetcher
+                });
+            }
+            return http.sources.sync(input);
+        },
+        listJobs(tenantId) {
+            if (baseUrl) {
+                return requestJson({
+                    baseUrl,
+                    path: `/jobs?tenantId=${encodeURIComponent(tenantId)}`,
+                    fetcher
+                });
+            }
+            return http.jobs.list(tenantId);
+        },
+        getIndexStats(tenantId) {
+            if (baseUrl) {
+                return requestJson({
+                    baseUrl,
+                    path: `/jobs/stats?tenantId=${encodeURIComponent(tenantId)}`,
+                    fetcher
+                });
+            }
+            return http.jobs.stats(tenantId);
+        },
+        retryJob(input) {
+            if (baseUrl) {
+                return requestJson({
+                    baseUrl,
+                    path: `/jobs/${encodeURIComponent(input.jobId)}/retry`,
+                    method: 'POST',
+                    body: input,
+                    fetcher
+                });
+            }
+            return http.jobs.retry(input);
+        },
+        reindexAll(input) {
+            if (baseUrl) {
+                return requestJson({
+                    baseUrl,
+                    path: '/jobs/reindex-all',
+                    method: 'POST',
+                    body: input,
+                    fetcher
+                });
+            }
+            return http.jobs.reindexAll(input);
+        },
+        listAgentDocs(tenantId) {
+            if (baseUrl) {
+                return requestJson({
+                    baseUrl,
+                    path: `/agent-docs?tenantId=${encodeURIComponent(tenantId)}`,
+                    fetcher
+                });
+            }
+            return http.agentDocs.list(tenantId);
+        },
+        saveAgentDoc(input) {
+            if (baseUrl) {
+                return requestJson({
+                    baseUrl,
+                    path: `/agent-docs/${encodeURIComponent(input.fileName)}`,
+                    method: 'PUT',
+                    body: input,
+                    fetcher
+                });
+            }
+            return http.agentDocs.save(input);
+        }
+    };
+}
+
+const agentDocs_get = defineEventHandler(async (event) => {
+    var _a;
+    requireAdminSession(event);
+    const tenantId = ((_a = getRouterParam(event, 'tenantId')) === null || _a === void 0 ? void 0 : _a.trim()) || '';
+    if (!tenantId) {
+        throw createError({ statusCode: 400, statusMessage: 'tenantId is required' });
+    }
+    const gateway = createKnowledgeIndexingGateway(getRagRepository());
+    return gateway.listAgentDocs(tenantId);
+});
+
+const agentDocs_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: agentDocs_get
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const _fileName__put = defineEventHandler(async (event) => {
+    var _a, _b;
+    requireAdminSession(event);
+    const tenantId = ((_a = getRouterParam(event, 'tenantId')) === null || _a === void 0 ? void 0 : _a.trim()) || '';
+    const fileName = ((_b = getRouterParam(event, 'fileName')) === null || _b === void 0 ? void 0 : _b.trim()) || '';
+    if (!tenantId || !fileName) {
+        throw createError({ statusCode: 400, statusMessage: 'tenantId and fileName are required' });
+    }
+    const body = await readBody(event);
+    if (typeof body.content !== 'string') {
+        throw createError({ statusCode: 400, statusMessage: 'content is required' });
+    }
+    const gateway = createKnowledgeIndexingGateway(getRagRepository());
+    return gateway.saveAgentDoc({
+        tenantId,
+        fileName,
+        content: body.content
+    });
+});
+
+const _fileName__put$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: _fileName__put
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const indexStats_get = defineEventHandler(async (event) => {
+    var _a;
+    requireAdminSession(event);
+    const tenantId = ((_a = getRouterParam(event, 'tenantId')) === null || _a === void 0 ? void 0 : _a.trim()) || '';
+    if (!tenantId) {
+        throw createError({ statusCode: 400, statusMessage: 'tenantId is required' });
+    }
+    const gateway = createKnowledgeIndexingGateway(getRagRepository());
+    return gateway.getIndexStats(tenantId);
+});
+
+const indexStats_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: indexStats_get
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const jobs_get = defineEventHandler(async (event) => {
+    var _a;
+    requireAdminSession(event);
+    const tenantId = ((_a = getRouterParam(event, 'tenantId')) === null || _a === void 0 ? void 0 : _a.trim()) || '';
+    if (!tenantId) {
+        throw createError({ statusCode: 400, statusMessage: 'tenantId is required' });
+    }
+    const gateway = createKnowledgeIndexingGateway(getRagRepository());
+    return gateway.listJobs(tenantId);
+});
+
+const jobs_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: jobs_get
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const retry_post = defineEventHandler(async (event) => {
+    var _a, _b;
+    requireAdminSession(event);
+    const tenantId = ((_a = getRouterParam(event, 'tenantId')) === null || _a === void 0 ? void 0 : _a.trim()) || '';
+    const jobId = ((_b = getRouterParam(event, 'jobId')) === null || _b === void 0 ? void 0 : _b.trim()) || '';
+    if (!tenantId || !jobId) {
+        throw createError({ statusCode: 400, statusMessage: 'tenantId and jobId are required' });
+    }
+    const gateway = createKnowledgeIndexingGateway(getRagRepository());
+    return gateway.retryJob({
+        tenantId,
+        jobId
+    });
+});
+
+const retry_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: retry_post
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const reindex_post = defineEventHandler(async (event) => {
+    var _a;
+    requireAdminSession(event);
+    const tenantId = ((_a = getRouterParam(event, 'tenantId')) === null || _a === void 0 ? void 0 : _a.trim()) || '';
+    if (!tenantId) {
+        throw createError({ statusCode: 400, statusMessage: 'tenantId is required' });
+    }
+    const gateway = createKnowledgeIndexingGateway(getRagRepository());
+    return gateway.reindexAll({ tenantId });
+});
+
+const reindex_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: reindex_post
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const resetCode_post$2 = defineEventHandler(async (event) => {
+    var _a;
+    requireAdminSession(event);
+    const tenantId = ((_a = getRouterParam(event, 'tenantId')) === null || _a === void 0 ? void 0 : _a.trim()) || '';
+    try {
+        const gateway = createTenantIdentityGateway(getStorage());
+        return await gateway.issueTenantResetCode({
+            tenantId,
+            loginUrl: `${(process.env.CUSTOMER_BOT_PUBLIC_BASE_URL || 'https://bot.aifactory.website').replace(/\/+$/, '')}/tenant/login`
+        });
+    }
+    catch (error) {
+        const message = error instanceof Error ? error.message : 'Tenant not found';
+        throw createError({
+            statusCode: message.includes('required') ? 400 : 404,
+            statusMessage: message
+        });
+    }
 });
 
 const resetCode_post$3 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
@@ -4084,23 +6456,18 @@ const resetCode_post$3 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.definePr
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const restore_post = defineEventHandler(async (event) => {
-  requireAdminSession(event);
-  const tenantId = getRouterParam(event, "tenantId") || "";
-  const storage = getStorage();
-  const tenant = await storage.getTenantById(tenantId);
-  if (!tenant) {
-    throw createError({
-      statusCode: 404,
-      statusMessage: "Tenant not found"
-    });
-  }
-  await storage.saveTenant({
-    ...tenant,
-    status: "active",
-    deletedAt: void 0,
-    updatedAt: Date.now()
-  });
-  return { ok: true };
+    requireAdminSession(event);
+    const tenantId = getRouterParam(event, 'tenantId') || '';
+    try {
+        const gateway = createTenantIdentityGateway(getStorage());
+        return await gateway.restoreTenant(tenantId);
+    }
+    catch {
+        throw createError({
+            statusCode: 404,
+            statusMessage: 'Tenant not found'
+        });
+    }
 });
 
 const restore_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
@@ -4108,142 +6475,283 @@ const restore_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProp
   default: restore_post
 }, Symbol.toStringTag, { value: 'Module' }));
 
-const TRAINING_PROVIDER = "training-simulator";
+const sources_get = defineEventHandler(async (event) => {
+    var _a;
+    requireAdminSession(event);
+    const tenantId = ((_a = getRouterParam(event, 'tenantId')) === null || _a === void 0 ? void 0 : _a.trim()) || '';
+    if (!tenantId) {
+        throw createError({ statusCode: 400, statusMessage: 'tenantId is required' });
+    }
+    const gateway = createKnowledgeIndexingGateway(getRagRepository());
+    return gateway.listSources(tenantId);
+});
+
+const sources_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: sources_get
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const sources_post = defineEventHandler(async (event) => {
+    var _a, _b, _c;
+    requireAdminSession(event);
+    const tenantId = ((_a = getRouterParam(event, 'tenantId')) === null || _a === void 0 ? void 0 : _a.trim()) || '';
+    if (!tenantId) {
+        throw createError({ statusCode: 400, statusMessage: 'tenantId is required' });
+    }
+    const body = await readBody(event);
+    const gateway = createKnowledgeIndexingGateway(getRagRepository());
+    return gateway.createSource({
+        tenantId,
+        type: body.type || 'file',
+        syncMode: body.syncMode || 'manual',
+        scheduleCron: ((_b = body.scheduleCron) === null || _b === void 0 ? void 0 : _b.trim()) || '',
+        config: (_c = body.config) !== null && _c !== void 0 ? _c : {}
+    });
+});
+
+const sources_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: sources_post
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const _sourceId__delete = defineEventHandler(async (event) => {
+    var _a, _b;
+    requireAdminSession(event);
+    const tenantId = ((_a = getRouterParam(event, 'tenantId')) === null || _a === void 0 ? void 0 : _a.trim()) || '';
+    const sourceId = ((_b = getRouterParam(event, 'sourceId')) === null || _b === void 0 ? void 0 : _b.trim()) || '';
+    if (!tenantId || !sourceId) {
+        throw createError({ statusCode: 400, statusMessage: 'tenantId and sourceId are required' });
+    }
+    const gateway = createKnowledgeIndexingGateway(getRagRepository());
+    return gateway.disableSource({
+        tenantId,
+        sourceId
+    });
+});
+
+const _sourceId__delete$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: _sourceId__delete
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const _sourceId__put = defineEventHandler(async (event) => {
+    var _a, _b, _c;
+    requireAdminSession(event);
+    const tenantId = ((_a = getRouterParam(event, 'tenantId')) === null || _a === void 0 ? void 0 : _a.trim()) || '';
+    const sourceId = ((_b = getRouterParam(event, 'sourceId')) === null || _b === void 0 ? void 0 : _b.trim()) || '';
+    if (!tenantId || !sourceId) {
+        throw createError({ statusCode: 400, statusMessage: 'tenantId and sourceId are required' });
+    }
+    const body = await readBody(event);
+    const gateway = createKnowledgeIndexingGateway(getRagRepository());
+    return gateway.updateSource({
+        tenantId,
+        sourceId,
+        type: body.type,
+        status: body.status,
+        syncMode: body.syncMode,
+        scheduleCron: (_c = body.scheduleCron) === null || _c === void 0 ? void 0 : _c.trim(),
+        config: body.config
+    });
+});
+
+const _sourceId__put$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: _sourceId__put
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const sync_post = defineEventHandler(async (event) => {
+    var _a, _b;
+    requireAdminSession(event);
+    const tenantId = ((_a = getRouterParam(event, 'tenantId')) === null || _a === void 0 ? void 0 : _a.trim()) || '';
+    const sourceId = ((_b = getRouterParam(event, 'sourceId')) === null || _b === void 0 ? void 0 : _b.trim()) || '';
+    if (!tenantId || !sourceId) {
+        throw createError({ statusCode: 400, statusMessage: 'tenantId and sourceId are required' });
+    }
+    try {
+        const gateway = createKnowledgeIndexingGateway(getRagRepository());
+        return await gateway.syncSource({
+            tenantId,
+            sourceId
+        });
+    }
+    catch (error) {
+        error instanceof Error ? error.message : 'Source not found';
+        throw createError({ statusCode: 404, statusMessage: 'Source not found' });
+    }
+});
+
+const sync_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: sync_post
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const upload_post = defineEventHandler(async (event) => {
+    var _a, _b, _c, _d, _e;
+    requireAdminSession(event);
+    const tenantId = ((_a = getRouterParam(event, 'tenantId')) === null || _a === void 0 ? void 0 : _a.trim()) || '';
+    const sourceId = ((_b = getRouterParam(event, 'sourceId')) === null || _b === void 0 ? void 0 : _b.trim()) || '';
+    if (!tenantId || !sourceId) {
+        throw createError({ statusCode: 400, statusMessage: 'tenantId and sourceId are required' });
+    }
+    const body = await readBody(event);
+    const fileName = ((_c = body.fileName) === null || _c === void 0 ? void 0 : _c.trim()) || '';
+    const base64Data = ((_d = body.base64Data) === null || _d === void 0 ? void 0 : _d.trim()) || '';
+    if (!fileName || !base64Data) {
+        throw createError({ statusCode: 400, statusMessage: 'fileName and base64Data are required' });
+    }
+    const gateway = createKnowledgeIndexingGateway(getRagRepository());
+    return gateway.uploadSourceAsset({
+        tenantId,
+        sourceId,
+        fileName,
+        mimeType: ((_e = body.mimeType) === null || _e === void 0 ? void 0 : _e.trim()) || 'application/octet-stream',
+        base64Data
+    });
+});
+
+const upload_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: upload_post
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const TRAINING_PROVIDER = 'training-simulator';
 function listTrainingRuns(records) {
-  return records.filter((item) => item.provider === TRAINING_PROVIDER).sort((left, right) => right.createdAt - left.createdAt).map((item) => ({
-    id: item.id,
-    sessionId: item.sessionId,
-    provider: item.provider,
-    model: item.model,
-    inputTokens: item.inputTokens,
-    outputTokens: item.outputTokens,
-    totalTokens: item.totalTokens,
-    amount: item.amount,
-    status: item.status,
-    createdAt: item.createdAt
-  }));
+    return records
+        .filter((item) => item.provider === TRAINING_PROVIDER)
+        .sort((left, right) => right.createdAt - left.createdAt)
+        .map((item) => ({
+        id: item.id,
+        sessionId: item.sessionId,
+        provider: item.provider,
+        model: item.model,
+        inputTokens: item.inputTokens,
+        outputTokens: item.outputTokens,
+        totalTokens: item.totalTokens,
+        amount: item.amount,
+        status: item.status,
+        createdAt: item.createdAt
+    }));
 }
 
 const TRAINING_COST_PER_THOUSAND_TOKENS = 0.12;
-const TRAINING_MODEL = "training-indexer-v1";
+const TRAINING_MODEL = 'training-indexer-v1';
 function buildTrainingCorpus(tenant) {
-  var _a, _b, _c, _d, _e;
-  const content = tenant.contentConfig;
-  if (!content) {
-    return [];
-  }
-  const enabledSources = ((_a = content.contentSources) != null ? _a : []).filter((item) => item.enabled !== false);
-  const sourceTexts = enabledSources.map(
-    (item) => {
-      var _a2;
-      return [item.title, item.summary, item.content, item.sourceLabel, item.sourceUrl, ...(_a2 = item.tags) != null ? _a2 : []].filter(Boolean).join("\n");
+    var _a, _b, _c, _d, _e;
+    const content = tenant.contentConfig;
+    if (!content) {
+        return [];
     }
-  );
-  const knowledgeTexts = ((_b = content.knowledgeEntries) != null ? _b : []).map(
-    (item) => [
-      item.title,
-      item.oneLiner,
-      item.whatIs,
-      item.source,
-      ...item.keywords,
-      ...item.problems,
-      ...item.workflow,
-      ...item.scenarios,
-      ...item.outcomes
-    ].filter(Boolean).join("\n")
-  );
-  const articleTexts = ((_c = content.articles) != null ? _c : []).map((item) => [item.title, item.category, item.summary].filter(Boolean).join("\n"));
-  const productTexts = ((_d = content.products) != null ? _d : []).map(
-    (item) => {
-      var _a2;
-      return [item.name, item.category, item.summary, item.priceText, ...((_a2 = item.parameters) != null ? _a2 : []).map((param) => `${param.label}:${param.value}`)].filter(Boolean).join("\n");
-    }
-  );
-  const serviceTexts = ((_e = content.consultingServices) != null ? _e : []).map(
-    (item) => [item.name, item.category, item.introduction, item.price, item.negotiable ? "negotiable" : "fixed"].filter(Boolean).join("\n")
-  );
-  return [...sourceTexts, ...knowledgeTexts, ...articleTexts, ...productTexts, ...serviceTexts].map((item) => item.trim()).filter(Boolean);
+    const enabledSources = ((_a = content.contentSources) !== null && _a !== void 0 ? _a : []).filter((item) => item.enabled !== false);
+    const sourceTexts = enabledSources.map((item) => { var _a; return [item.title, item.summary, item.content, item.sourceLabel, item.sourceUrl, ...((_a = item.tags) !== null && _a !== void 0 ? _a : [])].filter(Boolean).join('\n'); });
+    const knowledgeTexts = ((_b = content.knowledgeEntries) !== null && _b !== void 0 ? _b : []).map((item) => [
+        item.title,
+        item.oneLiner,
+        item.whatIs,
+        item.source,
+        ...item.keywords,
+        ...item.problems,
+        ...item.workflow,
+        ...item.scenarios,
+        ...item.outcomes
+    ]
+        .filter(Boolean)
+        .join('\n'));
+    const articleTexts = ((_c = content.articles) !== null && _c !== void 0 ? _c : []).map((item) => [item.title, item.category, item.summary].filter(Boolean).join('\n'));
+    const productTexts = ((_d = content.products) !== null && _d !== void 0 ? _d : []).map((item) => {
+        var _a;
+        return [item.name, item.category, item.summary, item.priceText, ...((_a = item.parameters) !== null && _a !== void 0 ? _a : []).map((param) => `${param.label}:${param.value}`)]
+            .filter(Boolean)
+            .join('\n');
+    });
+    const serviceTexts = ((_e = content.consultingServices) !== null && _e !== void 0 ? _e : []).map((item) => [item.name, item.category, item.introduction, item.price, item.negotiable ? 'negotiable' : 'fixed']
+        .filter(Boolean)
+        .join('\n'));
+    return [...sourceTexts, ...knowledgeTexts, ...articleTexts, ...productTexts, ...serviceTexts]
+        .map((item) => item.trim())
+        .filter(Boolean);
 }
 function toMoney(value) {
-  return value.toFixed(2);
+    return value.toFixed(2);
 }
 function estimateTrainingRun(tenant) {
-  var _a, _b, _c;
-  const corpus = buildTrainingCorpus(tenant);
-  const sourceCount = (_c = (_b = (_a = tenant.contentConfig) == null ? void 0 : _a.contentSources) == null ? void 0 : _b.filter((item) => item.enabled !== false).length) != null ? _c : 0;
-  if (!corpus.length) {
-    throw new Error("\u5F53\u524D\u79DF\u6237\u6CA1\u6709\u53EF\u8BAD\u7EC3\u5185\u5BB9\uFF0C\u8BF7\u5148\u6DFB\u52A0\u8D44\u6599\u6E90\u6216\u5185\u5BB9\u914D\u7F6E");
-  }
-  const characterCount = corpus.reduce((sum, item) => sum + item.length, 0);
-  const assetCount = corpus.length;
-  const inputTokens = Math.max(256, Math.ceil(characterCount / 4) + assetCount * 48);
-  const outputTokens = Math.max(96, Math.ceil(inputTokens * 0.08));
-  const totalTokens = inputTokens + outputTokens;
-  const amount = toMoney(totalTokens / 1e3 * TRAINING_COST_PER_THOUSAND_TOKENS);
-  return {
-    sourceCount,
-    assetCount,
-    characterCount,
-    inputTokens,
-    outputTokens,
-    totalTokens,
-    amount
-  };
+    var _a, _b, _c;
+    const corpus = buildTrainingCorpus(tenant);
+    const sourceCount = (_c = (_b = (_a = tenant.contentConfig) === null || _a === void 0 ? void 0 : _a.contentSources) === null || _b === void 0 ? void 0 : _b.filter((item) => item.enabled !== false).length) !== null && _c !== void 0 ? _c : 0;
+    if (!corpus.length) {
+        throw new Error('当前租户没有可训练内容，请先添加资料源或内容配置');
+    }
+    const characterCount = corpus.reduce((sum, item) => sum + item.length, 0);
+    const assetCount = corpus.length;
+    const inputTokens = Math.max(256, Math.ceil(characterCount / 4) + assetCount * 48);
+    const outputTokens = Math.max(96, Math.ceil(inputTokens * 0.08));
+    const totalTokens = inputTokens + outputTokens;
+    const amount = toMoney((totalTokens / 1000) * TRAINING_COST_PER_THOUSAND_TOKENS);
+    return {
+        sourceCount,
+        assetCount,
+        characterCount,
+        inputTokens,
+        outputTokens,
+        totalTokens,
+        amount
+    };
 }
 async function simulateTenantTraining(input) {
-  var _a;
-  const createdAt = (_a = input.now) != null ? _a : Date.now();
-  const estimate = estimateTrainingRun(input.tenant);
-  const record = {
-    id: `usage-training-${createdAt}`,
-    tenantId: input.tenant.id,
-    sessionId: `training-${input.tenant.id}-${createdAt}`,
-    provider: TRAINING_PROVIDER,
-    model: TRAINING_MODEL,
-    inputTokens: estimate.inputTokens,
-    outputTokens: estimate.outputTokens,
-    totalTokens: estimate.totalTokens,
-    amount: estimate.amount,
-    status: "success",
-    createdAt
-  };
-  await input.storage.saveUsageRecord(record);
-  return {
-    ...estimate,
-    record
-  };
+    var _a;
+    const createdAt = (_a = input.now) !== null && _a !== void 0 ? _a : Date.now();
+    const estimate = estimateTrainingRun(input.tenant);
+    const record = {
+        id: `usage-training-${createdAt}`,
+        tenantId: input.tenant.id,
+        sessionId: `training-${input.tenant.id}-${createdAt}`,
+        provider: TRAINING_PROVIDER,
+        model: TRAINING_MODEL,
+        inputTokens: estimate.inputTokens,
+        outputTokens: estimate.outputTokens,
+        totalTokens: estimate.totalTokens,
+        amount: estimate.amount,
+        status: 'success',
+        createdAt
+    };
+    await input.storage.saveUsageRecord(record);
+    return {
+        ...estimate,
+        record
+    };
 }
 
 const training_post = defineEventHandler(async (event) => {
-  var _a;
-  requireAdminSession(event);
-  const tenantId = (_a = getRouterParam(event, "tenantId")) == null ? void 0 : _a.trim();
-  if (!tenantId) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: "tenantId is required"
-    });
-  }
-  const storage = getStorage();
-  const tenant = await resolveTenant(tenantId, storage);
-  if (!tenant) {
-    throw createError({
-      statusCode: 404,
-      statusMessage: "Tenant not found"
-    });
-  }
-  try {
-    return await simulateTenantTraining({
-      tenant,
-      storage
-    });
-  } catch (error) {
-    const message = error instanceof Error ? error.message : "\u8BAD\u7EC3\u6A21\u62DF\u5931\u8D25";
-    throw createError({
-      statusCode: 400,
-      statusMessage: message
-    });
-  }
+    var _a;
+    requireAdminSession(event);
+    const tenantId = (_a = getRouterParam(event, 'tenantId')) === null || _a === void 0 ? void 0 : _a.trim();
+    if (!tenantId) {
+        throw createError({
+            statusCode: 400,
+            statusMessage: 'tenantId is required'
+        });
+    }
+    const storage = getStorage();
+    const tenant = await resolveTenant(tenantId, storage);
+    if (!tenant) {
+        throw createError({
+            statusCode: 404,
+            statusMessage: 'Tenant not found'
+        });
+    }
+    try {
+        return await simulateTenantTraining({
+            tenant,
+            storage
+        });
+    }
+    catch (error) {
+        const message = error instanceof Error ? error.message : '训练模拟失败';
+        throw createError({
+            statusCode: 400,
+            statusMessage: message
+        });
+    }
 });
 
 const training_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
@@ -4252,841 +6760,1301 @@ const training_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.definePro
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const assistantKnowledgeEntries = [
-  {
-    id: "wms-rfid",
-    title: "WMS + RFID \u667A\u80FD\u4ED3\u50A8",
-    keywords: ["wms", "rfid", "\u4ED3\u50A8", "\u4ED3\u5E93", "\u5165\u5E93", "\u51FA\u5E93", "\u76D8\u70B9", "\u5E93\u4F4D", "\u6279\u6B21\u8FFD\u6EAF", "fifo", "\u4ED3\u50A8\u7BA1\u7406"],
-    oneLiner: "WMS + RFID \u662F\u628A\u4ED3\u5E93\u7BA1\u7406\u7CFB\u7EDF\u4E0E\u5C04\u9891\u8BC6\u522B\u7ED3\u5408\uFF0C\u5B9E\u73B0\u5165\u5E93\u3001\u5B9A\u4F4D\u3001\u76D8\u70B9\u3001\u51FA\u5E93\u5168\u6D41\u7A0B\u81EA\u52A8\u5316\u3002",
-    whatIs: "\u7CFB\u7EDF\u901A\u8FC7 RFID \u81EA\u52A8\u8BC6\u522B\u8D27\u7269\u4FE1\u606F\uFF0C\u5E76\u7531 WMS \u5728\u6BEB\u79D2\u7EA7\u505A\u5E93\u4F4D\u4E0E\u4F5C\u4E1A\u51B3\u7B56\uFF0C\u51CF\u5C11\u4EBA\u5DE5\u626B\u7801\u3001\u4EBA\u5DE5\u5206\u914D\u548C\u4EBA\u5DE5\u6838\u5BF9\u73AF\u8282\u3002",
-    problems: [
-      "\u5165\u5E93/\u51FA\u5E93\u6548\u7387\u4F4E\uFF0C\u4EBA\u5DE5\u626B\u7801\u6162\u4E14\u5BB9\u6613\u6F0F\u626B\u9519\u626B",
-      "\u5E93\u4F4D\u5206\u914D\u4F9D\u8D56\u7ECF\u9A8C\uFF0C\u5229\u7528\u7387\u4E0D\u9AD8\u4E14\u8C03\u5EA6\u4E0D\u7A33\u5B9A",
-      "\u76D8\u70B9\u5468\u671F\u957F\u3001\u505C\u5DE5\u6210\u672C\u9AD8\u3001\u8D26\u5B9E\u4E0D\u4E00\u81F4",
-      "\u6279\u6B21\u8FFD\u6EAF\u6162\uFF0C\u5F02\u5E38\u5B9A\u4F4D\u548C\u53EC\u56DE\u54CD\u5E94\u6162"
-    ],
-    workflow: [
-      "RFID \u8BFB\u53D6\uFF1A0.1 \u79D2\u5B8C\u6210\u8D27\u7269\u8BC6\u522B",
-      "\u81EA\u52A8\u5206\u914D\u4ED3\u5E93\uFF1A\u6309\u5E93\u5B58\u6C34\u4F4D\u3001\u5468\u8F6C\u7387\u3001\u5E93\u4F4D\u5229\u7528\u7387\u5339\u914D\u6700\u4F18\u533A\u57DF",
-      "\u5E93\u4F4D\u5B9A\u4F4D\uFF1A\u5B9A\u4F4D\u5230\u8D27\u67B6\u533A/\u5217/\u5C42\uFF0C\u652F\u6301\u7EC8\u7AEF\u5BFC\u822A",
-      "\u5165\u5E93\u5355\u751F\u6210\uFF1A\u81EA\u52A8\u540C\u6B65 ERP/MES/TMS\uFF0C\u4FDD\u7559\u5B8C\u6574\u8FFD\u6EAF\u8BB0\u5F55"
-    ],
-    scenarios: ["\u6C7D\u8F66\u96F6\u90E8\u4EF6\u4ED3\uFF0CSKU \u591A\u4E14\u6279\u6B21\u590D\u6742", "\u7535\u5B50\u5143\u5668\u4EF6\u4ED3\uFF0C\u9700\u8981\u6279\u6B21\u7EA7\u8FFD\u6EAF", "\u6210\u54C1\u4ED3\uFF0C\u591A\u8BA2\u5355\u5E76\u884C\u4E14\u53D1\u8D27\u51C6\u786E\u7387\u8981\u6C42\u9AD8"],
-    outcomes: ["\u51FA\u5165\u5E93\u6548\u7387\u63D0\u5347\u7EA6 80%", "\u5E93\u5B58\u51C6\u786E\u7387\u53EF\u8FBE 99.5%", "\u76D8\u70B9\u65F6\u95F4\u53EF\u4ECE\u5929\u7EA7\u7F29\u77ED\u5230\u5C0F\u65F6\u7EA7", "\u9519\u53D1\u6F0F\u53D1\u663E\u8457\u4E0B\u964D"],
-    source: "migrated from ai-manufacturing-trade-site"
-  },
-  {
-    id: "procurement-ai",
-    title: "\u91C7\u8D2D AI \u52A9\u624B",
-    keywords: ["\u91C7\u8D2D", "\u7F3A\u6599", "\u4F9B\u5E94\u5546", "\u8BE2\u4EF7", "\u8865\u8D27", "\u5728\u9014", "\u5B89\u5168\u5E93\u5B58", "procurement"],
-    oneLiner: "\u91C7\u8D2D AI \u52A9\u624B\u7528\u4E8E\u56DE\u7B54\u201C\u4E70\u4EC0\u4E48\u3001\u4E70\u591A\u5C11\u3001\u5411\u8C01\u4E70\u201D\uFF0C\u628A\u7F3A\u6599\u8BC6\u522B\u548C\u4F9B\u5E94\u5546\u9009\u62E9\u81EA\u52A8\u5316\u3002",
-    whatIs: "\u7CFB\u7EDF\u7ED3\u5408\u5E93\u5B58\u3001\u5728\u9014\u91CF\u548C\u751F\u4EA7\u8BA1\u5212\uFF0C\u81EA\u52A8\u751F\u6210\u91C7\u8D2D\u5EFA\u8BAE\u5E76\u56DE\u5199\u5230\u4E1A\u52A1\u7CFB\u7EDF\u3002",
-    problems: ["\u7F3A\u6599\u53D1\u73B0\u6EDE\u540E", "\u8BE2\u4EF7\u94FE\u8DEF\u957F", "\u4F9B\u5E94\u5546\u9009\u62E9\u7F3A\u5C11\u91CF\u5316\u4F9D\u636E"],
-    workflow: ["\u8BC6\u522B\u7F3A\u6599", "\u751F\u6210\u5EFA\u8BAE\u91C7\u8D2D\u91CF", "\u6BD4\u9009\u4F9B\u5E94\u5546", "\u56DE\u5199\u4E0E\u590D\u76D8"],
-    scenarios: ["\u591A\u54C1\u7C7B\u539F\u6599\u91C7\u8D2D", "\u4EA4\u671F\u654F\u611F\u8BA2\u5355", "\u6210\u672C\u4E0E\u7A33\u5B9A\u6027\u540C\u65F6\u8981\u6C42\u9AD8\u7684\u5236\u9020\u573A\u666F"],
-    outcomes: ["\u51CF\u5C11\u505C\u7EBF\u98CE\u9669", "\u7F29\u77ED\u91C7\u8D2D\u54CD\u5E94\u65F6\u95F4", "\u63D0\u9AD8\u91C7\u8D2D\u51B3\u7B56\u4E00\u81F4\u6027"],
-    source: "migrated from ai-manufacturing-trade-site"
-  },
-  {
-    id: "finance-ocr",
-    title: "\u8D22\u7A0E OCR \u81EA\u52A8\u5316",
-    keywords: ["\u8D22\u7A0E", "\u53D1\u7968", "ocr", "\u7968\u636E", "\u5408\u89C4", "\u62A5\u9500"],
-    oneLiner: "\u8D22\u7A0E OCR \u628A\u7968\u636E\u8BC6\u522B\u3001\u67E5\u9A8C\u3001\u5F52\u6863\u505A\u6210\u81EA\u52A8\u5316\u95ED\u73AF\uFF0C\u964D\u4F4E\u4EBA\u5DE5\u5F55\u5165\u548C\u5408\u89C4\u98CE\u9669\u3002",
-    whatIs: "\u7CFB\u7EDF\u81EA\u52A8\u63D0\u53D6\u7968\u636E\u5B57\u6BB5\u5E76\u505A\u89C4\u5219\u6821\u9A8C\uFF0C\u5F02\u5E38\u5B9E\u65F6\u9884\u8B66\uFF0C\u6240\u6709\u5904\u7406\u8FC7\u7A0B\u53EF\u8FFD\u6EAF\u3002",
-    problems: ["\u4EBA\u5DE5\u5F55\u7968\u6162\u4E14\u6613\u9519", "\u7968\u636E\u6838\u9A8C\u8D1F\u62C5\u91CD", "\u5BA1\u8BA1\u8FFD\u6EAF\u6210\u672C\u9AD8"],
-    workflow: ["\u7968\u636E\u91C7\u96C6", "OCR \u8BC6\u522B", "\u89C4\u5219\u6821\u9A8C", "\u7ED3\u679C\u5F52\u6863\u8FFD\u6EAF"],
-    scenarios: ["\u6708\u5EA6\u96C6\u4E2D\u5F00\u7968", "\u591A\u4E3B\u4F53\u62A5\u9500", "\u8D22\u7A0E\u5408\u89C4\u68C0\u67E5"],
-    outcomes: ["\u63D0\u5347\u5904\u7406\u901F\u5EA6", "\u51CF\u5C11\u9519\u5F55\u6F0F\u5F55", "\u63D0\u9AD8\u5BA1\u8BA1\u53EF\u8FFD\u6EAF\u6027"],
-    source: "migrated from ai-manufacturing-trade-site"
-  }
+    {
+        id: 'wms-rfid',
+        title: 'WMS + RFID 智能仓储',
+        keywords: ['wms', 'rfid', '仓储', '仓库', '入库', '出库', '盘点', '库位', '批次追溯', 'fifo', '仓储管理'],
+        oneLiner: 'WMS + RFID 是把仓库管理系统与射频识别结合，实现入库、定位、盘点、出库全流程自动化。',
+        whatIs: '系统通过 RFID 自动识别货物信息，并由 WMS 在毫秒级做库位与作业决策，减少人工扫码、人工分配和人工核对环节。',
+        problems: [
+            '入库/出库效率低，人工扫码慢且容易漏扫错扫',
+            '库位分配依赖经验，利用率不高且调度不稳定',
+            '盘点周期长、停工成本高、账实不一致',
+            '批次追溯慢，异常定位和召回响应慢'
+        ],
+        workflow: [
+            'RFID 读取：0.1 秒完成货物识别',
+            '自动分配仓库：按库存水位、周转率、库位利用率匹配最优区域',
+            '库位定位：定位到货架区/列/层，支持终端导航',
+            '入库单生成：自动同步 ERP/MES/TMS，保留完整追溯记录'
+        ],
+        scenarios: ['汽车零部件仓，SKU 多且批次复杂', '电子元器件仓，需要批次级追溯', '成品仓，多订单并行且发货准确率要求高'],
+        outcomes: ['出入库效率提升约 80%', '库存准确率可达 99.5%', '盘点时间可从天级缩短到小时级', '错发漏发显著下降'],
+        source: 'migrated from ai-manufacturing-trade-site'
+    },
+    {
+        id: 'procurement-ai',
+        title: '采购 AI 助手',
+        keywords: ['采购', '缺料', '供应商', '询价', '补货', '在途', '安全库存', 'procurement'],
+        oneLiner: '采购 AI 助手用于回答“买什么、买多少、向谁买”，把缺料识别和供应商选择自动化。',
+        whatIs: '系统结合库存、在途量和生产计划，自动生成采购建议并回写到业务系统。',
+        problems: ['缺料发现滞后', '询价链路长', '供应商选择缺少量化依据'],
+        workflow: ['识别缺料', '生成建议采购量', '比选供应商', '回写与复盘'],
+        scenarios: ['多品类原料采购', '交期敏感订单', '成本与稳定性同时要求高的制造场景'],
+        outcomes: ['减少停线风险', '缩短采购响应时间', '提高采购决策一致性'],
+        source: 'migrated from ai-manufacturing-trade-site'
+    },
+    {
+        id: 'finance-ocr',
+        title: '财税 OCR 自动化',
+        keywords: ['财税', '发票', 'ocr', '票据', '合规', '报销'],
+        oneLiner: '财税 OCR 把票据识别、查验、归档做成自动化闭环，降低人工录入和合规风险。',
+        whatIs: '系统自动提取票据字段并做规则校验，异常实时预警，所有处理过程可追溯。',
+        problems: ['人工录票慢且易错', '票据核验负担重', '审计追溯成本高'],
+        workflow: ['票据采集', 'OCR 识别', '规则校验', '结果归档追溯'],
+        scenarios: ['月度集中开票', '多主体报销', '财税合规检查'],
+        outcomes: ['提升处理速度', '减少错录漏录', '提高审计可追溯性'],
+        source: 'migrated from ai-manufacturing-trade-site'
+    }
 ];
 
 const demoSiteConfig = {
-  brandName: "AI Factory Customer Bot Demo",
-  heroTitle: "\u5236\u9020\u4E1A AI \u89E3\u51B3\u65B9\u6848\u4E0E\u4F9B\u5E94\u94FE\u670D\u52A1",
-  about: "\u8FD9\u4E2A\u6F14\u793A\u7AD9\u70B9\u63D0\u4F9B\u667A\u80FD\u4ED3\u50A8\u3001\u91C7\u8D2D AI\u3001\u8D22\u7A0E\u81EA\u52A8\u5316\u548C\u9879\u76EE\u54A8\u8BE2\u80FD\u529B\u3002",
-  phone: "+86 138-0000-0000",
-  email: "hello@example.com",
-  address: "Shanghai, China"
+    brandName: 'AI Factory Customer Bot Demo',
+    heroTitle: '制造业 AI 解决方案与供应链服务',
+    about: '这个演示站点提供智能仓储、采购 AI、财税自动化和项目咨询能力。',
+    phone: '+86 138-0000-0000',
+    email: 'hello@example.com',
+    address: 'Shanghai, China'
 };
 const demoArticles = [
-  {
-    id: "article-wms",
-    title: "WMS \u4E0E RFID \u5982\u4F55\u6539\u5584\u4ED3\u50A8\u6267\u884C",
-    summary: "\u4ECB\u7ECD\u5165\u5E93\u3001\u51FA\u5E93\u3001\u76D8\u70B9\u4E0E\u6279\u6B21\u8FFD\u6EAF\u7684\u81EA\u52A8\u5316\u6539\u9020\u601D\u8DEF\u3002",
-    category: "\u4ED3\u50A8"
-  },
-  {
-    id: "article-ai",
-    title: "\u91C7\u8D2D AI \u52A9\u624B\u7684\u843D\u5730\u65B9\u5F0F",
-    summary: "\u56F4\u7ED5\u7F3A\u6599\u8BC6\u522B\u3001\u4F9B\u5E94\u5546\u6BD4\u9009\u548C\u8865\u8D27\u5EFA\u8BAE\u6784\u5EFA\u81EA\u52A8\u5316\u95ED\u73AF\u3002",
-    category: "\u91C7\u8D2D"
-  }
+    {
+        id: 'article-wms',
+        title: 'WMS 与 RFID 如何改善仓储执行',
+        summary: '介绍入库、出库、盘点与批次追溯的自动化改造思路。',
+        category: '仓储'
+    },
+    {
+        id: 'article-ai',
+        title: '采购 AI 助手的落地方式',
+        summary: '围绕缺料识别、供应商比选和补货建议构建自动化闭环。',
+        category: '采购'
+    }
 ];
 const demoProducts = [
-  {
-    id: "product-bolt",
-    name: "\u516D\u89D2\u5934\u87BA\u6813",
-    category: "\u6807\u51C6\u4EF6",
-    summary: "\u9002\u7528\u4E8E\u591A\u79CD\u5DE5\u4E1A\u88C5\u914D\u573A\u666F\u7684\u5E38\u7528\u7D27\u56FA\u4EF6\u3002",
-    priceText: "\xA50.80 / \u4E2A",
-    parameters: [
-      { label: "\u89C4\u683C", value: "M8 x 30" },
-      { label: "\u6750\u8D28", value: "8.8 \u7EA7\u78B3\u94A2" },
-      { label: "\u8868\u9762\u5904\u7406", value: "\u9540\u950C" },
-      { label: "\u8D77\u8BA2\u91CF", value: "5000 \u4E2A" }
-    ]
-  },
-  {
-    id: "product-screw-machine",
-    name: "\u9AD8\u901F\u87BA\u4E1D\u673A",
-    category: "\u8BBE\u5907",
-    summary: "\u9002\u5408\u6D41\u6C34\u7EBF\u81EA\u52A8\u9501\u9644\u7684\u9AD8\u901F\u88C5\u914D\u8BBE\u5907\u3002",
-    priceText: "\xA528,000 / \u53F0",
-    parameters: [
-      { label: "\u8282\u62CD", value: "\u6BCF\u5206\u949F 45-60 \u9897" },
-      { label: "\u9002\u914D\u87BA\u4E1D", value: "M2-M6" },
-      { label: "\u4F9B\u7535", value: "220V / 50Hz" },
-      { label: "\u4EA4\u671F", value: "15 \u4E2A\u5DE5\u4F5C\u65E5" }
-    ]
-  }
+    {
+        id: 'product-bolt',
+        name: '六角头螺栓',
+        category: '标准件',
+        summary: '适用于多种工业装配场景的常用紧固件。',
+        priceText: '¥0.80 / 个',
+        parameters: [
+            { label: '规格', value: 'M8 x 30' },
+            { label: '材质', value: '8.8 级碳钢' },
+            { label: '表面处理', value: '镀锌' },
+            { label: '起订量', value: '5000 个' }
+        ]
+    },
+    {
+        id: 'product-screw-machine',
+        name: '高速螺丝机',
+        category: '设备',
+        summary: '适合流水线自动锁附的高速装配设备。',
+        priceText: '¥28,000 / 台',
+        parameters: [
+            { label: '节拍', value: '每分钟 45-60 颗' },
+            { label: '适配螺丝', value: 'M2-M6' },
+            { label: '供电', value: '220V / 50Hz' },
+            { label: '交期', value: '15 个工作日' }
+        ]
+    }
 ];
 const demoConsultingServices = [
-  {
-    id: "consulting-diagnosis",
-    name: "\u667A\u80FD\u5DE5\u5382\u8BCA\u65AD\u54A8\u8BE2",
-    category: "\u54A8\u8BE2",
-    introduction: "\u68B3\u7406\u73B0\u72B6\u3001\u8BC6\u522B\u74F6\u9888\u5E76\u8F93\u51FA\u8DEF\u7EBF\u56FE\u3002",
-    price: "6800",
-    negotiable: false
-  },
-  {
-    id: "consulting-qc",
-    name: "AI \u8D28\u68C0\u65B9\u6848\u54A8\u8BE2",
-    category: "\u54A8\u8BE2",
-    introduction: "\u56F4\u7ED5\u89C6\u89C9\u68C0\u6D4B\u4E0E\u8D28\u63A7\u6D41\u7A0B\u63D0\u4F9B\u65B9\u6848\u8BBE\u8BA1\u3002",
-    price: "",
-    negotiable: true
-  }
+    {
+        id: 'consulting-diagnosis',
+        name: '智能工厂诊断咨询',
+        category: '咨询',
+        introduction: '梳理现状、识别瓶颈并输出路线图。',
+        price: '6800',
+        negotiable: false
+    },
+    {
+        id: 'consulting-qc',
+        name: 'AI 质检方案咨询',
+        category: '咨询',
+        introduction: '围绕视觉检测与质控流程提供方案设计。',
+        price: '',
+        negotiable: true
+    }
 ];
 
 function normalizeText(value) {
-  return Array.from(value.toLowerCase()).filter((char) => /[a-z0-9\u4e00-\u9fa5]/.test(char)).join("");
+    return Array.from(value.toLowerCase())
+        .filter((char) => /[a-z0-9\u4e00-\u9fa5]/.test(char))
+        .join('');
 }
 function extractKeywords(value) {
-  var _a;
-  const words = value.toLowerCase().split(/[^a-z0-9\u4e00-\u9fa5]+/).map((word) => word.trim()).filter((word) => word.length >= 2);
-  const chineseSegments = (_a = value.match(/[\u4e00-\u9fa5]{2,}/g)) != null ? _a : [];
-  const chineseTokens = [];
-  for (const segment of chineseSegments) {
-    if (segment.length <= 4) {
-      chineseTokens.push(segment);
-      continue;
+    var _a;
+    const words = value
+        .toLowerCase()
+        .split(/[^a-z0-9\u4e00-\u9fa5]+/)
+        .map((word) => word.trim())
+        .filter((word) => word.length >= 2);
+    const chineseSegments = (_a = value.match(/[\u4e00-\u9fa5]{2,}/g)) !== null && _a !== void 0 ? _a : [];
+    const chineseTokens = [];
+    for (const segment of chineseSegments) {
+        if (segment.length <= 4) {
+            chineseTokens.push(segment);
+            continue;
+        }
+        for (let index = 0; index < segment.length - 1; index += 1) {
+            chineseTokens.push(segment.slice(index, index + 2));
+        }
     }
-    for (let index = 0; index < segment.length - 1; index += 1) {
-      chineseTokens.push(segment.slice(index, index + 2));
-    }
-  }
-  return Array.from(/* @__PURE__ */ new Set([...words, ...chineseTokens])).filter((word) => word.length >= 2);
+    return Array.from(new Set([...words, ...chineseTokens])).filter((word) => word.length >= 2);
 }
 function scoreSource(source, query, keywords) {
-  const normalizedSource = normalizeText(source);
-  if (!normalizedSource) {
-    return 0;
-  }
-  let score = 0;
-  const normalizedQuery = normalizeText(query);
-  if (normalizedQuery && normalizedSource.includes(normalizedQuery)) {
-    score += 10;
-  }
-  for (const keyword of keywords) {
-    const normalizedKeyword = normalizeText(keyword);
-    if (normalizedKeyword && normalizedSource.includes(normalizedKeyword)) {
-      score += 2;
+    const normalizedSource = normalizeText(source);
+    if (!normalizedSource) {
+        return 0;
     }
-  }
-  return score;
+    let score = 0;
+    const normalizedQuery = normalizeText(query);
+    if (normalizedQuery && normalizedSource.includes(normalizedQuery)) {
+        score += 10;
+    }
+    for (const keyword of keywords) {
+        const normalizedKeyword = normalizeText(keyword);
+        if (normalizedKeyword && normalizedSource.includes(normalizedKeyword)) {
+            score += 2;
+        }
+    }
+    return score;
 }
 function rankByQuery(items, query, resolveText) {
-  const keywords = extractKeywords(query);
-  return [...items].map((item) => ({
-    item,
-    score: scoreSource(resolveText(item), query, keywords)
-  })).filter((item) => item.score > 0).sort((left, right) => right.score - left.score).map((item) => item.item);
+    const keywords = extractKeywords(query);
+    return [...items]
+        .map((item) => ({
+        item,
+        score: scoreSource(resolveText(item), query, keywords)
+    }))
+        .filter((item) => item.score > 0)
+        .sort((left, right) => right.score - left.score)
+        .map((item) => item.item);
 }
 function formatContentSourceType(type) {
-  if (type === "webpage") return "\u7F51\u9875";
-  if (type === "email") return "\u90AE\u4EF6";
-  if (type === "excel") return "\u8868\u683C";
-  return "\u6587\u6863";
+    if (type === 'webpage')
+        return '网页';
+    if (type === 'email')
+        return '邮件';
+    if (type === 'excel')
+        return '表格';
+    return '文档';
 }
 function buildContentSourceCorpus(item) {
-  var _a, _b, _c;
-  return [
-    item.title,
-    item.category,
-    item.summary,
-    item.content,
-    item.sourceLabel,
-    item.sourceUrl,
-    ...(_a = item.tags) != null ? _a : [],
-    ...(_b = item.faqQuestions) != null ? _b : [],
-    ...(_c = item.answerHints) != null ? _c : []
-  ].filter(Boolean).join(" ");
+    var _a, _b, _c;
+    return [
+        item.title,
+        item.category,
+        item.summary,
+        item.content,
+        item.sourceLabel,
+        item.sourceUrl,
+        ...((_a = item.tags) !== null && _a !== void 0 ? _a : []),
+        ...((_b = item.faqQuestions) !== null && _b !== void 0 ? _b : []),
+        ...((_c = item.answerHints) !== null && _c !== void 0 ? _c : [])
+    ]
+        .filter(Boolean)
+        .join(' ');
 }
 function getEnabledContentSources(items) {
-  return items.filter((item) => item.enabled !== false);
+    return items.filter((item) => item.enabled !== false);
 }
 function splitContentIntoSegments(content) {
-  const compact = content.replace(/\r/g, "\n").trim();
-  if (!compact) {
-    return [];
-  }
-  const paragraphSegments = compact.split(/\n{2,}/).map((segment) => segment.replace(/\s+/g, " ").trim()).filter(Boolean);
-  const rawSegments = paragraphSegments.length ? paragraphSegments : compact.split(/[。！？!?；;\n]+/).map((segment) => segment.replace(/\s+/g, " ").trim());
-  const limitedSegments = [];
-  for (const segment of rawSegments.filter(Boolean)) {
-    if (segment.length <= 140) {
-      limitedSegments.push(segment);
-      continue;
+    const compact = content.replace(/\r/g, '\n').trim();
+    if (!compact) {
+        return [];
     }
-    for (let index = 0; index < segment.length; index += 120) {
-      const slice = segment.slice(index, index + 120).trim();
-      if (slice) {
-        limitedSegments.push(slice);
-      }
+    const paragraphSegments = compact
+        .split(/\n{2,}/)
+        .map((segment) => segment.replace(/\s+/g, ' ').trim())
+        .filter(Boolean);
+    const rawSegments = paragraphSegments.length ? paragraphSegments : compact.split(/[。！？!?；;\n]+/).map((segment) => segment.replace(/\s+/g, ' ').trim());
+    const limitedSegments = [];
+    for (const segment of rawSegments.filter(Boolean)) {
+        if (segment.length <= 140) {
+            limitedSegments.push(segment);
+            continue;
+        }
+        for (let index = 0; index < segment.length; index += 120) {
+            const slice = segment.slice(index, index + 120).trim();
+            if (slice) {
+                limitedSegments.push(slice);
+            }
+        }
     }
-  }
-  return limitedSegments.slice(0, 24);
+    return limitedSegments.slice(0, 24);
 }
 function pickBestContentSegment(item, query) {
-  var _a;
-  const segments = splitContentIntoSegments(item.content);
-  if (!segments.length) {
-    return item.summary.trim();
-  }
-  const keywords = extractKeywords(query);
-  const rankedSegments = segments.map((segment) => ({
-    segment,
-    score: scoreSource(segment, query, keywords)
-  })).sort((left, right) => right.score - left.score);
-  return ((_a = rankedSegments[0]) == null ? void 0 : _a.score) ? rankedSegments[0].segment : segments[0];
+    var _a;
+    const segments = splitContentIntoSegments(item.content);
+    if (!segments.length) {
+        return item.summary.trim();
+    }
+    const keywords = extractKeywords(query);
+    const rankedSegments = segments
+        .map((segment) => ({
+        segment,
+        score: scoreSource(segment, query, keywords)
+    }))
+        .sort((left, right) => right.score - left.score);
+    return ((_a = rankedSegments[0]) === null || _a === void 0 ? void 0 : _a.score) ? rankedSegments[0].segment : segments[0];
 }
 function pickMatchedContentSources(query, contentSources) {
-  const keywords = extractKeywords(query);
-  return [...getEnabledContentSources(contentSources)].map((item) => {
-    var _a, _b;
-    const corpusScore = scoreSource(buildContentSourceCorpus(item), query, keywords);
-    const segmentScore = splitContentIntoSegments(item.content).reduce((max, segment) => Math.max(max, scoreSource(segment, query, keywords)), 0);
-    const faqScore = ((_a = item.faqQuestions) != null ? _a : []).reduce((sum, question) => sum + scoreSource(question, query, keywords) * 2, 0);
-    const hintScore = ((_b = item.answerHints) != null ? _b : []).reduce((sum, hint) => sum + scoreSource(hint, query, keywords), 0);
-    return {
-      item,
-      score: corpusScore + segmentScore * 2 + faqScore + hintScore
-    };
-  }).filter((item) => item.score > 0).sort((left, right) => right.score - left.score).slice(0, 3).map((item) => item.item);
-}
-function toMatchedContentSourceReferences(items, query) {
-  return items.map((item) => {
-    var _a, _b;
-    return {
-      id: item.id,
-      title: item.title,
-      type: item.type,
-      category: item.category,
-      snippet: pickContentSourceSnippet(item, query),
-      answerHints: (_b = (_a = item.answerHints) == null ? void 0 : _a.slice(0, 4)) != null ? _b : []
-    };
-  });
+    const keywords = extractKeywords(query);
+    return [...getEnabledContentSources(contentSources)]
+        .map((item) => {
+        var _a, _b;
+        const corpusScore = scoreSource(buildContentSourceCorpus(item), query, keywords);
+        const segmentScore = splitContentIntoSegments(item.content).reduce((max, segment) => Math.max(max, scoreSource(segment, query, keywords)), 0);
+        const faqScore = ((_a = item.faqQuestions) !== null && _a !== void 0 ? _a : []).reduce((sum, question) => sum + scoreSource(question, query, keywords) * 2, 0);
+        const hintScore = ((_b = item.answerHints) !== null && _b !== void 0 ? _b : []).reduce((sum, hint) => sum + scoreSource(hint, query, keywords), 0);
+        return {
+            item,
+            score: corpusScore + segmentScore * 2 + faqScore + hintScore
+        };
+    })
+        .filter((item) => item.score > 0)
+        .sort((left, right) => right.score - left.score)
+        .slice(0, 3)
+        .map((item) => item.item);
 }
 function pickContentSourceSnippet(item, query) {
-  const compact = pickBestContentSegment(item, query).replace(/\s+/g, " ").trim();
-  if (!compact) {
-    return item.summary.trim();
-  }
-  const keywords = [query, ...extractKeywords(query)].map((value) => value.trim()).filter(Boolean);
-  const matchedKeyword = keywords.find((keyword) => compact.toLowerCase().includes(keyword.toLowerCase()));
-  if (!matchedKeyword) {
-    return compact.slice(0, 120);
-  }
-  const index = compact.toLowerCase().indexOf(matchedKeyword.toLowerCase());
-  const start = Math.max(0, index - 24);
-  const end = Math.min(compact.length, index + matchedKeyword.length + 48);
-  return compact.slice(start, end);
+    const compact = pickBestContentSegment(item, query).replace(/\s+/g, ' ').trim();
+    if (!compact) {
+        return item.summary.trim();
+    }
+    const keywords = [query, ...extractKeywords(query)].map((value) => value.trim()).filter(Boolean);
+    const matchedKeyword = keywords.find((keyword) => compact.toLowerCase().includes(keyword.toLowerCase()));
+    if (!matchedKeyword) {
+        return compact.slice(0, 120);
+    }
+    const index = compact.toLowerCase().indexOf(matchedKeyword.toLowerCase());
+    const start = Math.max(0, index - 24);
+    const end = Math.min(compact.length, index + matchedKeyword.length + 48);
+    return compact.slice(start, end);
 }
 function scoreKnowledgeEntry(entry, query) {
-  const keywords = extractKeywords(query);
-  const normalizedQuery = normalizeText(query);
-  const corpus = [entry.title, entry.oneLiner, entry.whatIs, ...entry.problems, ...entry.workflow, ...entry.scenarios, ...entry.outcomes].join(
-    " "
-  );
-  let score = scoreSource(corpus, query, keywords);
-  for (const keyword of entry.keywords) {
-    const normalizedKeyword = normalizeText(keyword);
-    if (normalizedKeyword && normalizedQuery.includes(normalizedKeyword)) {
-      score += 8;
+    const keywords = extractKeywords(query);
+    const normalizedQuery = normalizeText(query);
+    const corpus = [entry.title, entry.oneLiner, entry.whatIs, ...entry.problems, ...entry.workflow, ...entry.scenarios, ...entry.outcomes].join(' ');
+    let score = scoreSource(corpus, query, keywords);
+    for (const keyword of entry.keywords) {
+        const normalizedKeyword = normalizeText(keyword);
+        if (normalizedKeyword && normalizedQuery.includes(normalizedKeyword)) {
+            score += 8;
+        }
     }
-  }
-  return score;
+    return score;
 }
 function hasDirectKeywordHit(entry, query) {
-  const normalizedQuery = normalizeText(query);
-  if (!normalizedQuery) {
-    return false;
-  }
-  return entry.keywords.some((keyword) => {
-    const normalizedKeyword = normalizeText(keyword);
-    return normalizedKeyword.length >= 2 && normalizedQuery.includes(normalizedKeyword);
-  });
+    const normalizedQuery = normalizeText(query);
+    if (!normalizedQuery) {
+        return false;
+    }
+    return entry.keywords.some((keyword) => {
+        const normalizedKeyword = normalizeText(keyword);
+        return normalizedKeyword.length >= 2 && normalizedQuery.includes(normalizedKeyword);
+    });
 }
 function pickKnowledgeEntry(query, knowledgeEntries) {
-  const ranked = knowledgeEntries.map((entry) => {
-    const baseScore = scoreKnowledgeEntry(entry, query);
-    const priorityBoost = entry.source === "faq-standard-reply" && hasDirectKeywordHit(entry, query) ? 24 : 0;
-    return { entry, score: baseScore + priorityBoost };
-  }).sort((left, right) => right.score - left.score);
-  const top = ranked[0];
-  if (!top || top.score < 8) {
-    return null;
-  }
-  return top.entry;
+    const ranked = knowledgeEntries
+        .map((entry) => {
+        const baseScore = scoreKnowledgeEntry(entry, query);
+        const priorityBoost = entry.source === 'faq-standard-reply' && hasDirectKeywordHit(entry, query) ? 24 : 0;
+        return { entry, score: baseScore + priorityBoost };
+    })
+        .sort((left, right) => right.score - left.score);
+    const top = ranked[0];
+    if (!top || top.score < 8) {
+        return null;
+    }
+    return top.entry;
 }
 function buildKnowledgeAnswer(entry, question) {
-  const lines = [
-    "\u57FA\u4E8E\u5F53\u524D\u8D44\u6599\uFF0C\u7ED3\u6784\u5316\u7B54\u590D\u5982\u4E0B\uFF1A",
-    `\u3010\u4F60\u7684\u95EE\u9898\u3011${question}`,
-    `\u3010\u4E3B\u9898\u3011${entry.title}`,
-    `\u3010\u4E00\u53E5\u8BDD\u3011${entry.oneLiner}`,
-    `\u3010\u5B83\u662F\u4EC0\u4E48\u3011${entry.whatIs}`,
-    "\u3010\u4E3B\u8981\u89E3\u51B3\u3011"
-  ];
-  entry.problems.forEach((item) => {
-    lines.push(`- ${item}`);
-  });
-  lines.push("\u3010\u843D\u5730\u6D41\u7A0B\u3011");
-  entry.workflow.forEach((item, index) => {
-    lines.push(`${index + 1}. ${item}`);
-  });
-  lines.push("\u3010\u9002\u7528\u573A\u666F\u3011");
-  entry.scenarios.forEach((item) => {
-    lines.push(`- ${item}`);
-  });
-  lines.push("\u3010\u9884\u671F\u6548\u679C\u3011");
-  entry.outcomes.forEach((item) => {
-    lines.push(`- ${item}`);
-  });
-  lines.push("\u3010\u53C2\u8003\u8D44\u6599\u3011");
-  lines.push(`- \u77E5\u8BC6\u6761\u76EE\uFF1A${entry.title}`);
-  lines.push(`- \u6765\u6E90\uFF1A${entry.source}`);
-  return lines.join("\n");
+    const lines = [
+        '基于当前资料，结构化答复如下：',
+        `【你的问题】${question}`,
+        `【主题】${entry.title}`,
+        `【一句话】${entry.oneLiner}`,
+        `【它是什么】${entry.whatIs}`,
+        '【主要解决】'
+    ];
+    entry.problems.forEach((item) => {
+        lines.push(`- ${item}`);
+    });
+    lines.push('【落地流程】');
+    entry.workflow.forEach((item, index) => {
+        lines.push(`${index + 1}. ${item}`);
+    });
+    lines.push('【适用场景】');
+    entry.scenarios.forEach((item) => {
+        lines.push(`- ${item}`);
+    });
+    lines.push('【预期效果】');
+    entry.outcomes.forEach((item) => {
+        lines.push(`- ${item}`);
+    });
+    lines.push('【参考资料】');
+    lines.push(`- 知识条目：${entry.title}`);
+    lines.push(`- 来源：${entry.source}`);
+    return lines.join('\n');
 }
 function formatConsultingPrice(item) {
-  if (item.negotiable) {
-    return "\u9762\u8BAE";
-  }
-  if (!item.price.trim()) {
-    return "\u9762\u8BAE";
-  }
-  if (item.price.startsWith("\xA5") || item.price.startsWith("\uFFE5")) {
-    return item.price;
-  }
-  return `\xA5${item.price}`;
+    if (item.negotiable) {
+        return '面议';
+    }
+    if (!item.price.trim()) {
+        return '面议';
+    }
+    if (item.price.startsWith('¥') || item.price.startsWith('￥')) {
+        return item.price;
+    }
+    return `¥${item.price}`;
 }
 function buildPriceAnswer(input) {
-  const { query, products, consultingServices } = input;
-  const matchedProducts = rankByQuery(products, query, (item) => `${item.name} ${item.category} ${item.summary}`).slice(0, 8);
-  const matchedConsulting = rankByQuery(
-    consultingServices,
-    query,
-    (item) => `${item.name} ${item.category} ${item.introduction}`
-  ).slice(0, 5);
-  if (matchedProducts.length === 0 && matchedConsulting.length === 0) {
-    const examples = products.slice(0, 3).map((item) => item.name).join("\u3001");
-    return `\u6682\u65E0\u7CBE\u786E\u5339\u914D\u3002\u4F60\u53EF\u4EE5\u8BD5\u8BD5\u8FD9\u4E9B\u793A\u4F8B\uFF1A${examples || "\u516D\u89D2\u5934\u87BA\u6813\u3001\u9AD8\u901F\u87BA\u4E1D\u673A"}\u3002`;
-  }
-  const lines = ["\u5DF2\u68C0\u7D22\u5230\u4EE5\u4E0B\u4EF7\u683C\u4FE1\u606F\uFF1A"];
-  matchedProducts.forEach((item) => {
-    var _a;
-    lines.push(`- [${item.category}] ${item.name}\uFF1A${item.priceText}`);
-    if ((_a = item.parameters) == null ? void 0 : _a.length) {
-      lines.push(`  \u53C2\u6570\uFF1A${item.parameters.map((parameter) => `${parameter.label}=${parameter.value}`).join("\uFF1B")}`);
+    const { query, products, consultingServices } = input;
+    const matchedProducts = rankByQuery(products, query, (item) => `${item.name} ${item.category} ${item.summary}`).slice(0, 8);
+    const matchedConsulting = rankByQuery(consultingServices, query, (item) => `${item.name} ${item.category} ${item.introduction}`).slice(0, 5);
+    if (matchedProducts.length === 0 && matchedConsulting.length === 0) {
+        const examples = products
+            .slice(0, 3)
+            .map((item) => item.name)
+            .join('、');
+        return `暂无精确匹配。你可以试试这些示例：${examples || '六角头螺栓、高速螺丝机'}。`;
     }
-  });
-  matchedConsulting.forEach((item) => {
-    lines.push(`- [\u54A8\u8BE2] ${item.name}\uFF1A${formatConsultingPrice(item)}`);
-  });
-  lines.push("\u3010\u53C2\u8003\u8D44\u6599\u3011");
-  matchedProducts.forEach((item) => {
-    lines.push(`- \u4EA7\u54C1\uFF1A${item.name}`);
-  });
-  matchedConsulting.forEach((item) => {
-    lines.push(`- \u54A8\u8BE2\u670D\u52A1\uFF1A${item.name}`);
-  });
-  lines.push("\u5982\u9700\u6B63\u5F0F\u62A5\u4EF7\uFF0C\u8BF7\u63D0\u4EA4\u8054\u7CFB\u9700\u6C42\u3002");
-  return lines.join("\n");
+    const lines = ['已检索到以下价格信息：'];
+    matchedProducts.forEach((item) => {
+        var _a;
+        lines.push(`- [${item.category}] ${item.name}：${item.priceText}`);
+        if ((_a = item.parameters) === null || _a === void 0 ? void 0 : _a.length) {
+            lines.push(`  参数：${item.parameters.map((parameter) => `${parameter.label}=${parameter.value}`).join('；')}`);
+        }
+    });
+    matchedConsulting.forEach((item) => {
+        lines.push(`- [咨询] ${item.name}：${formatConsultingPrice(item)}`);
+    });
+    lines.push('【参考资料】');
+    matchedProducts.forEach((item) => {
+        lines.push(`- 产品：${item.name}`);
+    });
+    matchedConsulting.forEach((item) => {
+        lines.push(`- 咨询服务：${item.name}`);
+    });
+    lines.push('如需正式报价，请提交联系需求。');
+    return lines.join('\n');
 }
 function buildDocumentAnswer(input) {
-  const { query, knowledgeEntries, articles, products, consultingServices, contentSources, siteConfig } = input;
-  const question = query.trim() || "\u8BF7\u4ECB\u7ECD\u4F60\u4EEC\u7684\u5E73\u53F0\u80FD\u529B";
-  const matchedKnowledge = pickKnowledgeEntry(question, knowledgeEntries);
-  if (matchedKnowledge) {
-    const content2 = buildKnowledgeAnswer(matchedKnowledge, question);
-    return { content: content2, meta: { strategy: "knowledge", matchedKnowledgeEntry: matchedKnowledge, matchedContentSources: [] } } ;
-  }
-  const matchedArticles = rankByQuery(articles, question, (item) => `${item.title} ${item.summary} ${item.category}`).slice(0, 3);
-  const matchedProducts = rankByQuery(products, question, (item) => `${item.name} ${item.category} ${item.summary}`).slice(0, 3);
-  const matchedConsulting = rankByQuery(
-    consultingServices,
-    question,
-    (item) => `${item.name} ${item.category} ${item.introduction}`
-  ).slice(0, 2);
-  const matchedSources = pickMatchedContentSources(question, contentSources);
-  const lines = [
-    "\u57FA\u4E8E\u5F53\u524D\u8D44\u6599\uFF0C\u7ED3\u6784\u5316\u7B54\u590D\u5982\u4E0B\uFF1A",
-    `\u3010\u4F60\u7684\u95EE\u9898\u3011${question}`,
-    `\u3010\u5E73\u53F0\u5B9A\u4F4D\u3011${siteConfig.heroTitle}`,
-    `\u3010\u670D\u52A1\u7B80\u4ECB\u3011${siteConfig.about}`
-  ];
-  if (matchedArticles.length === 0 && matchedProducts.length === 0 && matchedConsulting.length === 0 && matchedSources.length === 0) {
-    lines.push("\u3010\u8BF4\u660E\u3011\u5F53\u524D\u8D44\u6599\u6CA1\u6709\u76F4\u63A5\u547D\u4E2D\u8BE5\u95EE\u9898\u3002\u53EF\u4EE5\u8865\u5145\u77E5\u8BC6\u6761\u76EE\u540E\u518D\u56DE\u7B54\u3002");
-    const content2 = lines.join("\n");
-    return { content: content2, meta: { strategy: "document", matchedKnowledgeEntry: null, matchedContentSources: [] } } ;
-  }
-  if (matchedArticles.length > 0) {
-    lines.push("\u3010\u76F8\u5173\u6587\u6863\u6458\u8981\u3011");
+    const { query, knowledgeEntries, articles, products, consultingServices, contentSources, siteConfig } = input;
+    const question = query.trim() || '请介绍你们的平台能力';
+    const matchedKnowledge = pickKnowledgeEntry(question, knowledgeEntries);
+    if (matchedKnowledge) {
+        const content = buildKnowledgeAnswer(matchedKnowledge, question);
+        return input.returnMeta ? { content, meta: { strategy: 'knowledge', matchedKnowledgeEntry: matchedKnowledge, matchedContentSources: [] } } : content;
+    }
+    const matchedArticles = rankByQuery(articles, question, (item) => `${item.title} ${item.summary} ${item.category}`).slice(0, 3);
+    const matchedProducts = rankByQuery(products, question, (item) => `${item.name} ${item.category} ${item.summary}`).slice(0, 3);
+    const matchedConsulting = rankByQuery(consultingServices, question, (item) => `${item.name} ${item.category} ${item.introduction}`).slice(0, 2);
+    const matchedSources = pickMatchedContentSources(question, contentSources);
+    const lines = [
+        '基于当前资料，结构化答复如下：',
+        `【你的问题】${question}`,
+        `【平台定位】${siteConfig.heroTitle}`,
+        `【服务简介】${siteConfig.about}`
+    ];
+    if (matchedArticles.length === 0 && matchedProducts.length === 0 && matchedConsulting.length === 0 && matchedSources.length === 0) {
+        lines.push('【说明】当前资料没有直接命中该问题。可以补充知识条目后再回答。');
+        const content = lines.join('\n');
+        return input.returnMeta ? { content, meta: { strategy: 'document', matchedKnowledgeEntry: null, matchedContentSources: [] } } : content;
+    }
+    if (matchedArticles.length > 0) {
+        lines.push('【相关文档摘要】');
+        matchedArticles.forEach((item) => {
+            lines.push(`- ${item.title}：${item.summary}`);
+        });
+    }
+    if (matchedProducts.length > 0) {
+        lines.push('【相关产品线索】');
+        matchedProducts.forEach((item) => {
+            var _a;
+            lines.push(`- ${item.name}（${item.category}）：${item.summary}`);
+            if ((_a = item.parameters) === null || _a === void 0 ? void 0 : _a.length) {
+                lines.push(`  参数：${item.parameters.map((parameter) => `${parameter.label}=${parameter.value}`).join('；')}`);
+            }
+        });
+    }
+    if (matchedConsulting.length > 0) {
+        lines.push('【相关咨询线索】');
+        matchedConsulting.forEach((item) => {
+            lines.push(`- ${item.name}：${item.introduction}`);
+        });
+    }
+    if (matchedSources.length > 0) {
+        lines.push('【相关资料源】');
+        matchedSources.forEach((item) => {
+            var _a, _b;
+            lines.push(`- [${formatContentSourceType(item.type)}] ${item.title}：${item.summary}`);
+            if ((_a = item.category) === null || _a === void 0 ? void 0 : _a.trim()) {
+                lines.push(`  分类：${item.category.trim()}`);
+            }
+            if ((_b = item.answerHints) === null || _b === void 0 ? void 0 : _b.length) {
+                lines.push(`  回答要点：${item.answerHints.join('；')}`);
+            }
+            const snippet = pickContentSourceSnippet(item, question);
+            if (snippet) {
+                lines.push(`  摘录：${snippet}`);
+            }
+        });
+    }
+    lines.push('【参考资料】');
     matchedArticles.forEach((item) => {
-      lines.push(`- ${item.title}\uFF1A${item.summary}`);
+        lines.push(`- 文档：${item.title}`);
     });
-  }
-  if (matchedProducts.length > 0) {
-    lines.push("\u3010\u76F8\u5173\u4EA7\u54C1\u7EBF\u7D22\u3011");
     matchedProducts.forEach((item) => {
-      var _a;
-      lines.push(`- ${item.name}\uFF08${item.category}\uFF09\uFF1A${item.summary}`);
-      if ((_a = item.parameters) == null ? void 0 : _a.length) {
-        lines.push(`  \u53C2\u6570\uFF1A${item.parameters.map((parameter) => `${parameter.label}=${parameter.value}`).join("\uFF1B")}`);
-      }
+        lines.push(`- 产品：${item.name}`);
     });
-  }
-  if (matchedConsulting.length > 0) {
-    lines.push("\u3010\u76F8\u5173\u54A8\u8BE2\u7EBF\u7D22\u3011");
     matchedConsulting.forEach((item) => {
-      lines.push(`- ${item.name}\uFF1A${item.introduction}`);
+        lines.push(`- 咨询服务：${item.name}`);
     });
-  }
-  if (matchedSources.length > 0) {
-    lines.push("\u3010\u76F8\u5173\u8D44\u6599\u6E90\u3011");
     matchedSources.forEach((item) => {
-      var _a, _b;
-      lines.push(`- [${formatContentSourceType(item.type)}] ${item.title}\uFF1A${item.summary}`);
-      if ((_a = item.category) == null ? void 0 : _a.trim()) {
-        lines.push(`  \u5206\u7C7B\uFF1A${item.category.trim()}`);
-      }
-      if ((_b = item.answerHints) == null ? void 0 : _b.length) {
-        lines.push(`  \u56DE\u7B54\u8981\u70B9\uFF1A${item.answerHints.join("\uFF1B")}`);
-      }
-      const snippet = pickContentSourceSnippet(item, question);
-      if (snippet) {
-        lines.push(`  \u6458\u5F55\uFF1A${snippet}`);
-      }
+        const sourceRef = item.sourceUrl || item.sourceLabel || item.id;
+        lines.push(`- ${formatContentSourceType(item.type)}：${item.title} (${sourceRef})`);
     });
-  }
-  lines.push("\u3010\u53C2\u8003\u8D44\u6599\u3011");
-  matchedArticles.forEach((item) => {
-    lines.push(`- \u6587\u6863\uFF1A${item.title}`);
-  });
-  matchedProducts.forEach((item) => {
-    lines.push(`- \u4EA7\u54C1\uFF1A${item.name}`);
-  });
-  matchedConsulting.forEach((item) => {
-    lines.push(`- \u54A8\u8BE2\u670D\u52A1\uFF1A${item.name}`);
-  });
-  matchedSources.forEach((item) => {
-    const sourceRef = item.sourceUrl || item.sourceLabel || item.id;
-    lines.push(`- ${formatContentSourceType(item.type)}\uFF1A${item.title} (${sourceRef})`);
-  });
-  const content = lines.join("\n");
-  return { content, meta: { strategy: "document", matchedKnowledgeEntry: null, matchedContentSources: matchedSources } } ;
-}
-function looksLikePriceQuestion(query) {
-  return /价格|报价|多少钱|费用|预算|采购价|单价/.test(query);
-}
-function buildAttachmentNotice(attachments) {
-  if (!(attachments == null ? void 0 : attachments.length)) {
-    return "";
-  }
-  const lines = ["\u3010\u5DF2\u6536\u5230\u9644\u4EF6\u3011"];
-  attachments.forEach((attachment) => {
-    lines.push(`- ${attachment.name}\uFF08${Math.max(1, Math.round(attachment.size / 1024))} KB\uFF09`);
-  });
-  lines.push("\u5F53\u524D MVP \u5DF2\u652F\u6301\u622A\u56FE\u968F\u4F1A\u8BDD\u7559\u5B58\uFF1B\u82E5\u9700\u56FE\u50CF\u8BC6\u522B\u7ED3\u8BBA\uFF0C\u8BF7\u7531\u5BA2\u670D\u8FDB\u4E00\u6B65\u5904\u7406\u6216\u63A5\u5165\u89C6\u89C9\u6A21\u578B\u3002");
-  return lines.join("\n");
-}
-function buildAssistantReply(input) {
-  let baseAnswer;
-  let meta;
-  if (looksLikePriceQuestion(input.query)) {
-    baseAnswer = buildPriceAnswer({
-      query: input.query,
-      products: input.products,
-      consultingServices: input.consultingServices
-    });
-    meta = { strategy: "price", matchedKnowledgeEntry: null, matchedContentSources: [] };
-  } else {
-    const documentResult = buildDocumentAnswer({ ...input});
-    baseAnswer = documentResult.content;
-    meta = documentResult.meta;
-  }
-  const attachmentNotice = buildAttachmentNotice(input.attachments);
-  const content = [baseAnswer, attachmentNotice].filter(Boolean).join("\n\n");
-  return input.returnMeta ? { content, meta } : content;
+    const content = lines.join('\n');
+    return input.returnMeta ? { content, meta: { strategy: 'document', matchedKnowledgeEntry: null, matchedContentSources: matchedSources } } : content;
 }
 
 function createLlmAdapter(options) {
-  return {
-    async reply(input) {
-      var _a, _b, _c, _d, _e, _f, _g, _h;
-      async function fallbackResult() {
-        return {
-          content: await options.fallback(input),
-          model: options.model || "",
-          inputTokens: 0,
-          outputTokens: 0,
-          totalTokens: 0,
-          status: "fallback"
-        };
-      }
-      if (!options.endpoint || !options.apiKey || !options.model) {
-        return fallbackResult();
-      }
-      try {
-        const fetcher = options.fetcher || fetch;
-        const soul = options.soulProfile ? [
-          options.soulProfile.role ? `\u89D2\u8272\uFF1A${options.soulProfile.role}` : "",
-          options.soulProfile.tone ? `\u8BED\u6C14\uFF1A${options.soulProfile.tone}` : "",
-          ((_a = options.soulProfile.goals) == null ? void 0 : _a.length) ? `\u76EE\u6807\uFF1A${options.soulProfile.goals.join("\uFF1B")}` : ""
-        ].filter(Boolean).join("\n") : "";
-        const messages = [
-          {
-            role: "system",
-            content: [options.systemPrompt || "", soul].filter(Boolean).join("\n\n")
-          },
-          ...(input.history || []).map((item) => ({
-            role: item.role,
-            content: item.content
-          })),
-          {
-            role: "user",
-            content: [input.context || "", input.message].filter(Boolean).join("\n\n")
-          }
-        ];
-        const response = await fetcher(options.endpoint, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${options.apiKey}`
-          },
-          body: JSON.stringify({
-            model: options.model,
-            messages
-          })
-        });
-        if (!response.ok) {
-          return fallbackResult();
+    return {
+        async reply(input) {
+            var _a, _b, _c, _d, _e, _f, _g, _h;
+            async function fallbackResult() {
+                return {
+                    content: await options.fallback(input),
+                    model: options.model || '',
+                    inputTokens: 0,
+                    outputTokens: 0,
+                    totalTokens: 0,
+                    status: 'fallback'
+                };
+            }
+            if (!options.endpoint || !options.apiKey || !options.model) {
+                return fallbackResult();
+            }
+            try {
+                const fetcher = options.fetcher || fetch;
+                const soul = options.soulProfile
+                    ? [
+                        options.soulProfile.role ? `角色：${options.soulProfile.role}` : '',
+                        options.soulProfile.tone ? `语气：${options.soulProfile.tone}` : '',
+                        ((_a = options.soulProfile.goals) === null || _a === void 0 ? void 0 : _a.length) ? `目标：${options.soulProfile.goals.join('；')}` : ''
+                    ]
+                        .filter(Boolean)
+                        .join('\n')
+                    : '';
+                const messages = [
+                    {
+                        role: 'system',
+                        content: [options.systemPrompt || '', soul].filter(Boolean).join('\n\n')
+                    },
+                    ...(input.history || []).map((item) => ({
+                        role: item.role,
+                        content: item.content
+                    })),
+                    {
+                        role: 'user',
+                        content: [input.context || '', input.message].filter(Boolean).join('\n\n')
+                    }
+                ];
+                const response = await fetcher(options.endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${options.apiKey}`
+                    },
+                    body: JSON.stringify({
+                        model: options.model,
+                        messages
+                    })
+                });
+                if (!response.ok) {
+                    return fallbackResult();
+                }
+                const data = (await response.json());
+                const content = (_e = (_d = (_c = (_b = data.choices) === null || _b === void 0 ? void 0 : _b[0]) === null || _c === void 0 ? void 0 : _c.message) === null || _d === void 0 ? void 0 : _d.content) === null || _e === void 0 ? void 0 : _e.trim();
+                if (!content) {
+                    return fallbackResult();
+                }
+                return {
+                    content,
+                    model: options.model,
+                    inputTokens: ((_f = data.usage) === null || _f === void 0 ? void 0 : _f.prompt_tokens) || 0,
+                    outputTokens: ((_g = data.usage) === null || _g === void 0 ? void 0 : _g.completion_tokens) || 0,
+                    totalTokens: ((_h = data.usage) === null || _h === void 0 ? void 0 : _h.total_tokens) || 0,
+                    status: 'success'
+                };
+            }
+            catch {
+                return fallbackResult();
+            }
         }
-        const data = await response.json();
-        const content = (_e = (_d = (_c = (_b = data.choices) == null ? void 0 : _b[0]) == null ? void 0 : _c.message) == null ? void 0 : _d.content) == null ? void 0 : _e.trim();
-        if (!content) {
-          return fallbackResult();
-        }
-        return {
-          content,
-          model: options.model,
-          inputTokens: ((_f = data.usage) == null ? void 0 : _f.prompt_tokens) || 0,
-          outputTokens: ((_g = data.usage) == null ? void 0 : _g.completion_tokens) || 0,
-          totalTokens: ((_h = data.usage) == null ? void 0 : _h.total_tokens) || 0,
-          status: "success"
-        };
-      } catch {
-        return fallbackResult();
-      }
+    };
+}
+
+async function generateFallbackAnswer(input) {
+    var _a, _b;
+    const prompt = [
+        '当前租户资料未直接命中，请提供通用但谨慎的回答。',
+        '不要编造价格、参数、交付承诺。',
+        `品牌：${input.brandName || '当前租户'}`,
+        `问题：${input.query}`,
+        ((_a = input.instructions) === null || _a === void 0 ? void 0 : _a.trim()) || ''
+    ].join('\n');
+    if (input.model) {
+        return input.model.respond(prompt);
     }
-  };
+    return [
+        '当前资料未直接命中，以下为通用参考答复：',
+        `- 问题：${input.query}`,
+        ((_b = input.instructions) === null || _b === void 0 ? void 0 : _b.trim()) ? `- 回答结构参考：${input.instructions.trim()}` : '',
+        '- 建议：请结合租户最新资料或人工进一步确认关键事实。'
+    ].filter(Boolean).join('\n');
 }
 
-var __defProp$1 = Object.defineProperty;
-var __defNormalProp$1 = (obj, key, value) => key in obj ? __defProp$1(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __publicField$1 = (obj, key, value) => __defNormalProp$1(obj, key + "" , value);
+function buildCitationContext(input) {
+    const lines = [
+        `【用户问题】${input.query}`,
+        '【命中资料】'
+    ];
+    input.citations.forEach((citation, index) => {
+        lines.push(`${index + 1}. ${citation.title}`);
+        lines.push(`   摘录：${citation.snippet}`);
+        if (citation.sourceUri) {
+            lines.push(`   来源：${citation.sourceUri}`);
+        }
+    });
+    return lines.join('\n');
+}
+
+async function generateGroundedAnswer(input) {
+    var _a, _b;
+    const context = buildCitationContext({
+        query: input.query,
+        citations: input.citations
+    });
+    if (input.model) {
+        return input.model.respond([
+            '请严格基于以下资料回答，不要编造。',
+            ((_a = input.instructions) === null || _a === void 0 ? void 0 : _a.trim()) || '',
+            context
+        ].filter(Boolean).join('\n\n'));
+    }
+    const lines = [
+        '基于当前命中资料，整理答复如下：',
+        `问题：${input.query}`
+    ];
+    if ((_b = input.instructions) === null || _b === void 0 ? void 0 : _b.trim()) {
+        lines.push(`回答结构参考：${input.instructions.trim()}`);
+    }
+    input.citations.forEach((citation, index) => {
+        lines.push(`${index + 1}. ${citation.title}：${citation.snippet}`);
+    });
+    return lines.join('\n');
+}
+
+const pricePattern = /价格|报价|多少钱|费用|预算|采购价|单价/;
+const contactPattern = /联系|电话|邮箱|邮件|微信|地址|销售|商务对接|怎么联系/;
+const faqPattern = /支持|是否|怎么|如何|是什么|介绍一下|能不能|可以吗|能力/;
+function classifyQuery(query) {
+    const normalized = query.trim();
+    if (!normalized) {
+        return 'document';
+    }
+    if (pricePattern.test(normalized)) {
+        return 'price';
+    }
+    if (contactPattern.test(normalized)) {
+        return 'contact';
+    }
+    if (faqPattern.test(normalized)) {
+        return 'faq';
+    }
+    return 'document';
+}
+
+function renderRagTemplate(template, variables) {
+    const source = (template === null || template === void 0 ? void 0 : template.trim()) || '';
+    if (!source) {
+        return '';
+    }
+    return source.replace(/\{\{\s*([a-zA-Z0-9_]+)\s*\}\}/g, (_match, key) => {
+        const value = variables[key];
+        return value === undefined || value === null ? '' : String(value);
+    });
+}
+
+function normalize(value) {
+    return value.toLowerCase().replace(/\s+/g, ' ').trim();
+}
+function extractTokens(value) {
+    return Array.from(new Set(normalize(value)
+        .split(/[^a-z0-9\u4e00-\u9fa5]+/)
+        .map((item) => item.trim())
+        .filter((item) => item.length >= 2)));
+}
+function scoreByKeywords(content, query) {
+    const normalizedContent = normalize(content);
+    const normalizedQuery = normalize(query);
+    if (!normalizedContent) {
+        return 0;
+    }
+    let score = 0;
+    if (normalizedQuery && normalizedContent.includes(normalizedQuery)) {
+        score += 10;
+    }
+    for (const token of extractTokens(query)) {
+        if (normalizedContent.includes(token)) {
+            score += 2;
+        }
+    }
+    return score;
+}
+function dotProduct(left, right) {
+    return left.reduce((sum, value, index) => { var _a; return sum + value * ((_a = right[index]) !== null && _a !== void 0 ? _a : 0); }, 0);
+}
+async function retrieveForTenant(input) {
+    var _a, _b, _c, _d;
+    const documents = await input.repository.listDocumentsByTenant(input.tenantId);
+    const queryEmbedding = input.embedQuery ? await input.embedQuery(input.query) : undefined;
+    const scored = [];
+    for (const document of documents) {
+        const chunks = await input.repository.listChunksByDocument(document.id);
+        for (const chunk of chunks) {
+            const keywordScore = scoreByKeywords(chunk.content, input.query);
+            const vectorScore = queryEmbedding && ((_a = chunk.embedding) === null || _a === void 0 ? void 0 : _a.length) ? dotProduct(queryEmbedding, chunk.embedding) : 0;
+            const score = keywordScore + vectorScore;
+            if (score <= 0) {
+                continue;
+            }
+            scored.push({
+                chunk,
+                title: document.title,
+                sourceUri: document.sourceUri,
+                score
+            });
+        }
+    }
+    scored.sort((left, right) => right.score - left.score);
+    const hits = scored.slice(0, (_b = input.topK) !== null && _b !== void 0 ? _b : 3);
+    const confidence = hits.length === 0 ? 'miss' : ((_d = (_c = hits[0]) === null || _c === void 0 ? void 0 : _c.score) !== null && _d !== void 0 ? _d : 0) >= 10 ? 'high' : 'low';
+    return {
+        confidence,
+        chunks: hits.map((item) => item.chunk),
+        citations: hits.map((item) => ({
+            documentId: item.chunk.documentId,
+            chunkId: item.chunk.id,
+            title: item.title,
+            snippet: item.chunk.content.slice(0, 160),
+            score: item.score,
+            sourceUri: item.sourceUri,
+            metadata: item.chunk.metadata
+        }))
+    };
+}
+
+function runStructuredFastPath(input) {
+    if (input.route === 'price') {
+        return {
+            handled: true,
+            answerSource: 'structured',
+            content: buildPriceAnswer({
+                query: input.query,
+                products: input.products,
+                consultingServices: input.consultingServices
+            }),
+            route: input.route
+        };
+    }
+    if (input.route === 'contact') {
+        return {
+            handled: true,
+            answerSource: 'structured',
+            content: [
+                '可通过以下方式继续沟通：',
+                `- 电话：${input.siteConfig.phone}`,
+                `- 邮箱：${input.siteConfig.email}`,
+                `- 地址：${input.siteConfig.address}`
+            ].join('\n'),
+            route: input.route
+        };
+    }
+    if (input.route === 'faq' && pickKnowledgeEntry(input.query, input.knowledgeEntries)) {
+        return {
+            handled: true,
+            answerSource: 'structured',
+            content: buildDocumentAnswer({
+                query: input.query,
+                knowledgeEntries: input.knowledgeEntries,
+                articles: input.articles,
+                products: input.products,
+                consultingServices: input.consultingServices,
+                contentSources: input.contentSources,
+                siteConfig: input.siteConfig
+            }),
+            route: input.route
+        };
+    }
+    return {
+        handled: false,
+        route: input.route
+    };
+}
+
 class TenantNotFoundError extends Error {
-  constructor(tenantId) {
-    super(`Tenant not found: ${tenantId}`);
-    __publicField$1(this, "code", "TENANT_NOT_FOUND");
-    this.name = "TenantNotFoundError";
-    Object.setPrototypeOf(this, TenantNotFoundError.prototype);
-  }
-}
-async function getRuntimeConfigForTenant(tenantId, storage = getStorage()) {
-  const tenant = await resolveTenant(tenantId, storage);
-  if (!tenant) {
-    throw new TenantNotFoundError(tenantId);
-  }
-  return {
-    tenantId: tenant.id,
-    status: tenant.status,
-    brandName: tenant.brandName,
-    themeColor: tenant.themeColor,
-    contactPhone: tenant.contactPhone,
-    contactEmail: tenant.contactEmail,
-    contactAddress: tenant.contactAddress,
-    systemPrompt: tenant.systemPrompt
-  };
+    constructor(tenantId) {
+        super(`Tenant not found: ${tenantId}`);
+        this.code = 'TENANT_NOT_FOUND';
+        this.name = 'TenantNotFoundError';
+        Object.setPrototypeOf(this, TenantNotFoundError.prototype);
+    }
 }
 
-var __defProp = Object.defineProperty;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __publicField = (obj, key, value) => __defNormalProp(obj, key + "" , value);
 class SessionNotFoundError extends Error {
-  constructor(sessionId) {
-    super(`Session not found: ${sessionId}`);
-    __publicField(this, "code", "SESSION_NOT_FOUND");
-    this.name = "SessionNotFoundError";
-    Object.setPrototypeOf(this, SessionNotFoundError.prototype);
-  }
+    constructor(sessionId) {
+        super(`Session not found: ${sessionId}`);
+        this.code = 'SESSION_NOT_FOUND';
+        this.name = 'SessionNotFoundError';
+        Object.setPrototypeOf(this, SessionNotFoundError.prototype);
+    }
 }
 function nextId(prefix) {
-  return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 }
 function normalizeQuestion(value) {
-  return value.trim().toLowerCase().replace(/\s+/g, " ");
+    return value
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, ' ');
 }
-function buildRetrievalSystemPrompt(basePrompt, strategy) {
-  const rules = [
-    "\u4F60\u662F\u4F01\u4E1A\u5BA2\u670D\u95EE\u7B54\u52A9\u624B\u3002",
-    "\u4F60\u5FC5\u987B\u4F18\u5148\u4F9D\u636E\u5DF2\u63D0\u4F9B\u7684\u547D\u4E2D\u8D44\u6599\u56DE\u7B54\uFF0C\u4E0D\u5F97\u8131\u79BB\u8D44\u6599\u81EA\u884C\u7F16\u9020\u4E8B\u5B9E\u3001\u53C2\u6570\u3001\u4EF7\u683C\u3001\u6D41\u7A0B\u6216\u627F\u8BFA\u3002",
-    "\u82E5\u8D44\u6599\u5DF2\u7ECF\u7ED9\u51FA\u7ED3\u6784\u5316\u7ED3\u679C\uFF0C\u4F18\u5148\u4FDD\u7559\u8BE5\u7ED3\u6784\u5E76\u505A\u8F7B\u5EA6\u6DA6\u8272\uFF0C\u4E0D\u8981\u6539\u5199\u6210\u6563\u4E71\u957F\u6587\u3002",
-    "\u82E5\u8D44\u6599\u672A\u76F4\u63A5\u547D\u4E2D\uFF0C\u53EA\u80FD\u660E\u786E\u8BF4\u660E\u201C\u5F53\u524D\u8D44\u6599\u672A\u76F4\u63A5\u547D\u4E2D\u201D\uFF0C\u5E76\u63D0\u793A\u53EF\u8865\u5145\u6587\u6863\u6216\u8F6C\u4EBA\u5DE5\uFF0C\u4E0D\u5F97\u81EA\u884C\u8111\u8865\u3002",
-    "\u82E5\u95EE\u9898\u6D89\u53CA\u4EF7\u683C\uFF0C\u53EA\u80FD\u4F7F\u7528\u8D44\u6599\u4E2D\u5DF2\u6709\u4EF7\u683C\uFF1B\u6CA1\u6709\u7CBE\u786E\u4EF7\u683C\u65F6\u8981\u660E\u786E\u8BF4\u660E\u6682\u65E0\u7CBE\u786E\u5339\u914D\u3002",
-    "\u56DE\u7B54\u4FDD\u6301\u7B80\u6D01\u3001\u4E13\u4E1A\u3001\u53EF\u6267\u884C\uFF0C\u907F\u514D\u7A7A\u6CDB\u5957\u8BDD\u3002"
-  ];
-  if (strategy === "knowledge") {
-    rules.push("\u5F53\u524D\u95EE\u9898\u5DF2\u547D\u4E2D\u77E5\u8BC6\u6761\u76EE\u6216\u6807\u51C6\u56DE\u590D\uFF0C\u4F18\u5148\u6CBF\u7528\u8BE5\u53E3\u5F84\u3002");
-  } else if (strategy === "price") {
-    rules.push("\u5F53\u524D\u95EE\u9898\u662F\u4EF7\u683C/\u62A5\u4EF7\u95EE\u9898\uFF0C\u7981\u6B62\u8F93\u51FA\u8D44\u6599\u4E4B\u5916\u7684\u4EF7\u683C\u533A\u95F4\u6216\u4F30\u7B97\u3002");
-  } else {
-    rules.push("\u5F53\u524D\u95EE\u9898\u4F7F\u7528\u6587\u6863\u68C0\u7D22\u7ED3\u679C\u56DE\u7B54\uFF0C\u8BF7\u4F18\u5148\u5F15\u7528\u8D44\u6599\u6458\u8981\u3001\u4EA7\u54C1\u53C2\u6570\u548C\u8D44\u6599\u6458\u5F55\u3002");
-  }
-  return [(basePrompt == null ? void 0 : basePrompt.trim()) || "", rules.join("\n")].filter(Boolean).join("\n\n");
+function buildRetrievalSystemPrompt(input) {
+    var _a;
+    const rules = [
+        '你是企业客服问答助手。',
+        '你必须优先依据已提供的命中资料回答，不得脱离资料自行编造事实、参数、价格、流程或承诺。',
+        '若资料已经给出结构化结果，优先保留该结构并做轻度润色，不要改写成散乱长文。',
+        '若资料未直接命中，只能明确说明“当前资料未直接命中”，并提示可补充文档或转人工，不得自行脑补。',
+        '若问题涉及价格，只能使用资料中已有价格；没有精确价格时要明确说明暂无精确匹配。',
+        '回答保持简洁、专业、可执行，避免空泛套话。'
+    ];
+    {
+        rules.push('当前问题使用文档检索结果回答，请优先引用资料摘要、产品参数和资料摘录。');
+    }
+    const templatePrompt = renderRagTemplate(input.ragSettings.retrievalPromptTemplate, {
+        query: input.query,
+        brandName: input.brandName,
+        answerStructureTemplate: input.ragSettings.answerStructureTemplate
+    });
+    return [((_a = input.basePrompt) === null || _a === void 0 ? void 0 : _a.trim()) || '', rules.join('\n'), templatePrompt].filter(Boolean).join('\n\n');
+}
+function buildFallbackSystemPrompt(input) {
+    var _a;
+    const templatePrompt = renderRagTemplate(input.ragSettings.fallbackPromptTemplate, {
+        query: input.query,
+        brandName: input.brandName,
+        answerStructureTemplate: input.ragSettings.answerStructureTemplate
+    });
+    return [
+        ((_a = input.basePrompt) === null || _a === void 0 ? void 0 : _a.trim()) || '',
+        '当前租户资料未直接命中。仅允许给出通用参考，不得编造价格、参数、交付承诺或事实。',
+        templatePrompt
+    ]
+        .filter(Boolean)
+        .join('\n\n');
+}
+function buildAnswerStructureContext(answerStructureTemplate) {
+    const template = answerStructureTemplate === null || answerStructureTemplate === void 0 ? void 0 : answerStructureTemplate.trim();
+    if (!template) {
+        return '';
+    }
+    return ['【回答结构模板】', template].join('\n');
+}
+function toMatchedContentSourcesFromCitations(citations) {
+    return citations.map((citation) => ({
+        id: citation.chunkId,
+        title: citation.title,
+        type: 'document',
+        category: 'RAG 命中',
+        snippet: citation.snippet
+    }));
+}
+function buildTenantSiteConfig(tenant) {
+    return {
+        ...demoSiteConfig,
+        brandName: (tenant === null || tenant === void 0 ? void 0 : tenant.brandName) || demoSiteConfig.brandName,
+        phone: (tenant === null || tenant === void 0 ? void 0 : tenant.contactPhone) || demoSiteConfig.phone,
+        email: (tenant === null || tenant === void 0 ? void 0 : tenant.contactEmail) || demoSiteConfig.email,
+        address: (tenant === null || tenant === void 0 ? void 0 : tenant.contactAddress) || demoSiteConfig.address
+    };
+}
+function buildAttachmentNotice(attachments) {
+    if (!attachments.length) {
+        return '';
+    }
+    const lines = ['【已收到附件】'];
+    attachments.forEach((attachment) => {
+        lines.push(`- ${attachment.name}（${Math.max(1, Math.round(attachment.size / 1024))} KB）`);
+    });
+    lines.push('当前链路已记录附件；如需基于附件内容做更深入识别，可继续补充视觉或文件解析能力。');
+    return lines.join('\n');
 }
 async function processChatMessage(input, options = {}) {
-  var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k;
-  const storage = options.storage || getStorage();
-  const tenant = await resolveTenant(input.tenantId, storage);
-  if (!tenant) {
-    throw new TenantNotFoundError(input.tenantId);
-  }
-  const now = Date.now();
-  let sessionId = input.sessionId;
-  let history = [];
-  const attachments = (_b = (_a = input.attachments) == null ? void 0 : _a.map((item) => structuredClone(item))) != null ? _b : [];
-  if (sessionId) {
-    const existingSession = await storage.getSessionById(sessionId);
-    if (!existingSession || existingSession.tenantId !== tenant.id) {
-      throw new SessionNotFoundError(sessionId);
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
+    const storage = options.storage || getStorage();
+    const ragRepository = options.ragRepository || getRagRepository();
+    const tenant = await resolveTenant(input.tenantId, storage);
+    if (!tenant) {
+        throw new TenantNotFoundError(input.tenantId);
     }
-    const previousMessages = await storage.listMessagesBySession(sessionId);
-    history = previousMessages.map((message) => {
-      var _a2;
-      return {
-        role: message.role,
-        content: ((_a2 = message.attachments) == null ? void 0 : _a2.length) ? `${message.content}
-[\u9644\u4EF6: ${message.attachments.map((item) => item.name).join("\u3001")}]` : message.content
-      };
-    });
-    await storage.saveSession({
-      ...existingSession,
-      lastMessageAt: now
-    });
-  } else {
-    sessionId = nextId("session");
-    await storage.saveSession({
-      id: sessionId,
-      tenantId: tenant.id,
-      visitorId: "anonymous",
-      startedAt: now,
-      lastMessageAt: now
-    });
-  }
-  const normalizedQuestion = normalizeQuestion(input.message);
-  if (tenant.reuseAnsweredQuestions !== false) {
-    const tenantSessions = await storage.listSessionsByTenant(tenant.id);
-    for (const session of tenantSessions) {
-      const sessionMessages = await storage.listMessagesBySession(session.id);
-      for (let index = 0; index < sessionMessages.length - 1; index += 1) {
-        const current = sessionMessages[index];
-        const next = sessionMessages[index + 1];
-        if (current.role === "user" && (next == null ? void 0 : next.role) === "assistant" && normalizeQuestion(current.content) === normalizedQuestion) {
-          await storage.saveMessage({
-            id: nextId("message"),
-            sessionId,
-            tenantId: tenant.id,
-            role: "user",
-            content: input.message,
-            createdAt: now,
-            attachments
-          });
-          await storage.saveMessage({
-            id: nextId("message"),
-            sessionId,
-            tenantId: tenant.id,
-            role: "assistant",
-            content: next.content,
-            createdAt: Date.now(),
-            matchedContentSources: next.matchedContentSources
-          });
-          return {
-            reply: next.content,
-            sessionId,
-            usage: {
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0
-            }
-          };
+    const ragSettings = normalizeTenantRagSettings(tenant.ragSettings);
+    const now = Date.now();
+    let sessionId = input.sessionId;
+    let history = [];
+    const attachments = (_b = (_a = input.attachments) === null || _a === void 0 ? void 0 : _a.map((item) => structuredClone(item))) !== null && _b !== void 0 ? _b : [];
+    if (sessionId) {
+        const existingSession = await storage.getSessionById(sessionId);
+        if (!existingSession || existingSession.tenantId !== tenant.id) {
+            throw new SessionNotFoundError(sessionId);
         }
-      }
+        const previousMessages = await storage.listMessagesBySession(sessionId);
+        history = previousMessages.map((message) => {
+            var _a;
+            return ({
+                role: message.role,
+                content: ((_a = message.attachments) === null || _a === void 0 ? void 0 : _a.length)
+                    ? `${message.content}\n[附件: ${message.attachments.map((item) => item.name).join('、')}]`
+                    : message.content
+            });
+        });
+        await storage.saveSession({
+            ...existingSession,
+            lastMessageAt: now
+        });
     }
-  }
-  await storage.saveMessage({
-    id: nextId("message"),
-    sessionId,
-    tenantId: tenant.id,
-    role: "user",
-    content: input.message,
-    createdAt: now,
-    attachments
-  });
-  const attachmentContext = attachments.length ? `\u7528\u6237\u672C\u8F6E\u4E0A\u4F20\u4E86\u9644\u4EF6\uFF1A${attachments.map((item) => `${item.name}(${item.mimeType}, ${Math.max(1, Math.round(item.size / 1024))}KB)`).join("\uFF1B")}` : "";
-  const tenantContent = tenant.contentConfig;
-  const activeContentSources = ((_c = tenantContent == null ? void 0 : tenantContent.contentSources) == null ? void 0 : _c.length) ? tenantContent.contentSources : [];
-  const rawReplyContext = buildAssistantReply({
-    query: input.message,
-    knowledgeEntries: ((_d = tenantContent == null ? void 0 : tenantContent.knowledgeEntries) == null ? void 0 : _d.length) ? tenantContent.knowledgeEntries : assistantKnowledgeEntries,
-    articles: ((_e = tenantContent == null ? void 0 : tenantContent.articles) == null ? void 0 : _e.length) ? tenantContent.articles : demoArticles,
-    products: ((_f = tenantContent == null ? void 0 : tenantContent.products) == null ? void 0 : _f.length) ? tenantContent.products : demoProducts,
-    consultingServices: ((_g = tenantContent == null ? void 0 : tenantContent.consultingServices) == null ? void 0 : _g.length) ? tenantContent.consultingServices : demoConsultingServices,
-    contentSources: activeContentSources,
-    siteConfig: {
-      ...demoSiteConfig,
-      brandName: tenant.brandName,
-      phone: tenant.contactPhone || demoSiteConfig.phone,
-      email: tenant.contactEmail || demoSiteConfig.email,
-      address: tenant.contactAddress || demoSiteConfig.address
-    },
-    attachments,
-    returnMeta: true
-  });
-  const replyContext = typeof rawReplyContext === "string" ? {
-    content: rawReplyContext,
-    meta: {
-      strategy: "document",
-      matchedKnowledgeEntry: null,
-      matchedContentSources: []
+    else {
+        sessionId = nextId('session');
+        await storage.saveSession({
+            id: sessionId,
+            tenantId: tenant.id,
+            visitorId: 'anonymous',
+            startedAt: now,
+            lastMessageAt: now
+        });
     }
-  } : {
-    content: rawReplyContext.content,
-    meta: {
-      strategy: ((_h = rawReplyContext.meta) == null ? void 0 : _h.strategy) || "document",
-      matchedKnowledgeEntry: ((_i = rawReplyContext.meta) == null ? void 0 : _i.matchedKnowledgeEntry) || null,
-      matchedContentSources: ((_j = rawReplyContext.meta) == null ? void 0 : _j.matchedContentSources) || []
+    const normalizedQuestion = normalizeQuestion(input.message);
+    if (tenant.reuseAnsweredQuestions !== false) {
+        const tenantSessions = await storage.listSessionsByTenant(tenant.id);
+        for (const session of tenantSessions) {
+            const sessionMessages = await storage.listMessagesBySession(session.id);
+            for (let index = 0; index < sessionMessages.length - 1; index += 1) {
+                const current = sessionMessages[index];
+                const next = sessionMessages[index + 1];
+                if (current.role === 'user' &&
+                    (next === null || next === void 0 ? void 0 : next.role) === 'assistant' &&
+                    normalizeQuestion(current.content) === normalizedQuestion) {
+                    await storage.saveMessage({
+                        id: nextId('message'),
+                        sessionId: sessionId,
+                        tenantId: tenant.id,
+                        role: 'user',
+                        content: input.message,
+                        createdAt: now,
+                        attachments
+                    });
+                    await storage.saveMessage({
+                        id: nextId('message'),
+                        sessionId: sessionId,
+                        tenantId: tenant.id,
+                        role: 'assistant',
+                        content: next.content,
+                        createdAt: Date.now(),
+                        matchedContentSources: next.matchedContentSources,
+                        citations: next.citations,
+                        answerSource: next.answerSource,
+                        credentialSource: next.credentialSource,
+                        retrievalConfidence: next.retrievalConfidence
+                    });
+                    return {
+                        reply: next.content,
+                        sessionId: sessionId,
+                        answerSource: next.answerSource || 'structured',
+                        credentialSource: next.credentialSource || 'tenant',
+                        citations: next.citations || [],
+                        retrievalConfidence: next.retrievalConfidence || 'miss',
+                        usage: {
+                            inputTokens: 0,
+                            outputTokens: 0,
+                            totalTokens: 0
+                        }
+                    };
+                }
+            }
+        }
     }
-  };
-  const matchedContentSources = [
-    ...((_k = replyContext.meta.matchedContentSources) == null ? void 0 : _k.length) ? toMatchedContentSourceReferences(replyContext.meta.matchedContentSources, input.message) : [],
-    ...replyContext.meta.matchedKnowledgeEntry ? [{ id: `knowledge:${replyContext.meta.matchedKnowledgeEntry.title}`, title: replyContext.meta.matchedKnowledgeEntry.title, type: "document", category: replyContext.meta.strategy === "knowledge" ? "\u6807\u51C6\u56DE\u590D/\u77E5\u8BC6\u5E93" : "\u77E5\u8BC6\u547D\u4E2D" }] : []
-  ];
-  const adapter = createLlmAdapter({
-    endpoint: tenant.llmEndpoint || options.endpoint,
-    apiKey: tenant.llmApiKey || options.apiKey,
-    model: tenant.llmModel || options.model,
-    systemPrompt: buildRetrievalSystemPrompt(tenant.systemPrompt, replyContext.meta.strategy),
-    fetcher: options.fetcher,
-    fallback: async () => replyContext.content
-  });
-  const reply = await adapter.reply({
-    message: input.message,
-    history,
-    context: [replyContext.content, attachmentContext].filter(Boolean).join("\n\n")
-  });
-  await storage.saveMessage({
-    id: nextId("message"),
-    sessionId,
-    tenantId: tenant.id,
-    role: "assistant",
-    content: reply.content,
-    createdAt: Date.now(),
-    matchedContentSources
-  });
-  await storage.saveUsageRecord({
-    id: nextId("usage"),
-    tenantId: tenant.id,
-    sessionId,
-    provider: "openai-compatible",
-    model: reply.model,
-    inputTokens: reply.inputTokens,
-    outputTokens: reply.outputTokens,
-    totalTokens: reply.totalTokens,
-    amount: "0",
-    status: reply.status === "success" ? "success" : "unknown",
-    createdAt: Date.now()
-  });
-  return {
-    reply: reply.content,
-    sessionId,
-    usage: {
-      inputTokens: reply.inputTokens,
-      outputTokens: reply.outputTokens,
-      totalTokens: reply.totalTokens
+    await storage.saveMessage({
+        id: nextId('message'),
+        sessionId: sessionId,
+        tenantId: tenant.id,
+        role: 'user',
+        content: input.message,
+        createdAt: now,
+        attachments
+    });
+    const attachmentContext = attachments.length
+        ? `用户本轮上传了附件：${attachments.map((item) => `${item.name}(${item.mimeType}, ${Math.max(1, Math.round(item.size / 1024))}KB)`).join('；')}`
+        : '';
+    const tenantContent = tenant.contentConfig;
+    const activeContentSources = ((_c = tenantContent === null || tenantContent === void 0 ? void 0 : tenantContent.contentSources) === null || _c === void 0 ? void 0 : _c.length) ? tenantContent.contentSources : [];
+    const knowledgeEntries = ((_d = tenantContent === null || tenantContent === void 0 ? void 0 : tenantContent.knowledgeEntries) === null || _d === void 0 ? void 0 : _d.length) ? tenantContent.knowledgeEntries : assistantKnowledgeEntries;
+    const articles = ((_e = tenantContent === null || tenantContent === void 0 ? void 0 : tenantContent.articles) === null || _e === void 0 ? void 0 : _e.length) ? tenantContent.articles : demoArticles;
+    const products = ((_f = tenantContent === null || tenantContent === void 0 ? void 0 : tenantContent.products) === null || _f === void 0 ? void 0 : _f.length) ? tenantContent.products : demoProducts;
+    const consultingServices = ((_g = tenantContent === null || tenantContent === void 0 ? void 0 : tenantContent.consultingServices) === null || _g === void 0 ? void 0 : _g.length) ? tenantContent.consultingServices : demoConsultingServices;
+    const siteConfig = buildTenantSiteConfig(tenant);
+    const route = classifyQuery(input.message);
+    const structuredReply = runStructuredFastPath({
+        route,
+        query: input.message,
+        knowledgeEntries,
+        articles,
+        products,
+        consultingServices,
+        contentSources: activeContentSources,
+        siteConfig
+    });
+    let replyContent = '';
+    let matchedContentSources = [];
+    let citations = [];
+    let answerSource = 'structured';
+    let credentialSource = 'tenant';
+    let retrievalConfidence = 'miss';
+    let usage = {
+        inputTokens: 0,
+        outputTokens: 0,
+        totalTokens: 0
+    };
+    let usageModel = '';
+    let usageStatus = 'unknown';
+    if (structuredReply.handled) {
+        replyContent = structuredReply.content || '当前已按结构化路径处理。';
+        retrievalConfidence = 'high';
+        if (route === 'faq') {
+            const matchedKnowledge = pickKnowledgeEntry(input.message, knowledgeEntries);
+            if (matchedKnowledge) {
+                matchedContentSources = [
+                    {
+                        id: `knowledge:${matchedKnowledge.id}`,
+                        title: matchedKnowledge.title,
+                        type: 'document',
+                        category: '标准回复/知识库'
+                    }
+                ];
+            }
+        }
     }
-  };
+    else {
+        if (ragSettings.enabled) {
+            const retrieval = await retrieveForTenant({
+                tenantId: tenant.id,
+                query: input.message,
+                repository: ragRepository,
+                topK: ragSettings.retrievalTopK
+            });
+            retrievalConfidence = retrieval.confidence;
+            citations = retrieval.citations;
+            matchedContentSources = toMatchedContentSourcesFromCitations(citations);
+            if (retrieval.confidence !== 'miss') {
+                answerSource = 'rag';
+                const answerTemplateContext = buildAnswerStructureContext(ragSettings.answerStructureTemplate);
+                const adapter = createLlmAdapter({
+                    endpoint: tenant.llmEndpoint || options.endpoint,
+                    apiKey: tenant.llmApiKey || options.apiKey,
+                    model: tenant.llmModel || options.model,
+                    systemPrompt: buildRetrievalSystemPrompt({
+                        basePrompt: tenant.systemPrompt,
+                        query: input.message,
+                        brandName: tenant.brandName,
+                        ragSettings
+                    }),
+                    fetcher: options.fetcher,
+                    fallback: async () => generateGroundedAnswer({
+                        query: input.message,
+                        citations,
+                        instructions: ragSettings.answerStructureTemplate
+                    })
+                });
+                const reply = await adapter.reply({
+                    message: input.message,
+                    history,
+                    context: [
+                        answerTemplateContext,
+                        buildCitationContext({ query: input.message, citations }),
+                        attachmentContext
+                    ]
+                        .filter(Boolean)
+                        .join('\n\n')
+                });
+                replyContent = reply.content;
+                usage = {
+                    inputTokens: reply.inputTokens,
+                    outputTokens: reply.outputTokens,
+                    totalTokens: reply.totalTokens
+                };
+                usageModel = reply.model;
+                usageStatus = reply.status === 'success' ? 'success' : 'unknown';
+            }
+        }
+        if (!replyContent) {
+            answerSource = 'general_fallback';
+            credentialSource = 'platform_shared';
+            retrievalConfidence = ragSettings.enabled ? retrievalConfidence : 'miss';
+            const sharedEndpoint = options.platformEndpoint || ((_h = process.env.CUSTOMER_BOT_PLATFORM_LLM_ENDPOINT) === null || _h === void 0 ? void 0 : _h.trim()) || '';
+            const sharedApiKey = options.platformApiKey || ((_j = process.env.CUSTOMER_BOT_PLATFORM_LLM_API_KEY) === null || _j === void 0 ? void 0 : _j.trim()) || '';
+            const sharedModel = options.platformModel || ((_k = process.env.CUSTOMER_BOT_PLATFORM_LLM_MODEL) === null || _k === void 0 ? void 0 : _k.trim()) || '';
+            const adapter = createLlmAdapter({
+                endpoint: sharedEndpoint,
+                apiKey: sharedApiKey,
+                model: sharedModel,
+                systemPrompt: buildFallbackSystemPrompt({
+                    basePrompt: tenant.systemPrompt,
+                    query: input.message,
+                    brandName: tenant.brandName,
+                    ragSettings
+                }),
+                fetcher: options.fetcher,
+                fallback: async () => generateFallbackAnswer({
+                    query: input.message,
+                    brandName: tenant.brandName,
+                    instructions: ragSettings.answerStructureTemplate
+                })
+            });
+            const reply = await adapter.reply({
+                message: input.message,
+                history,
+                context: [buildAnswerStructureContext(ragSettings.answerStructureTemplate), attachmentContext]
+                    .filter(Boolean)
+                    .join('\n\n')
+            });
+            replyContent = reply.content;
+            usage = {
+                inputTokens: reply.inputTokens,
+                outputTokens: reply.outputTokens,
+                totalTokens: reply.totalTokens
+            };
+            usageModel = reply.model;
+            usageStatus = reply.status === 'success' ? 'success' : 'unknown';
+        }
+    }
+    const attachmentNotice = buildAttachmentNotice(attachments);
+    if (attachmentNotice) {
+        replyContent = [replyContent, attachmentNotice].filter(Boolean).join('\n\n');
+    }
+    await storage.saveMessage({
+        id: nextId('message'),
+        sessionId: sessionId,
+        tenantId: tenant.id,
+        role: 'assistant',
+        content: replyContent,
+        createdAt: Date.now(),
+        matchedContentSources,
+        citations,
+        answerSource,
+        credentialSource,
+        retrievalConfidence
+    });
+    if (usage.totalTokens > 0 || answerSource === 'general_fallback') {
+        await storage.saveUsageRecord({
+            id: nextId('usage'),
+            tenantId: tenant.id,
+            sessionId: sessionId,
+            provider: answerSource === 'general_fallback' ? 'platform-shared-llm' : 'openai-compatible',
+            model: usageModel,
+            inputTokens: usage.inputTokens,
+            outputTokens: usage.outputTokens,
+            totalTokens: usage.totalTokens,
+            amount: '0',
+            status: usageStatus,
+            credentialSource,
+            answerSource,
+            createdAt: Date.now()
+        });
+    }
+    return {
+        reply: replyContent,
+        sessionId: sessionId,
+        answerSource,
+        credentialSource,
+        citations,
+        retrievalConfidence,
+        usage
+    };
+}
+
+class AgentRuntimeApplication {
+    constructor(deps) {
+        this.deps = deps;
+    }
+    chat(input) {
+        return this.deps.processChatMessage(input);
+    }
+    contact(input) {
+        return this.deps.submitLead(input);
+    }
+}
+
+async function submitLead(input, storage) {
+    const tenant = await resolveTenant(input.tenantId, storage);
+    if (!tenant) {
+        throw new Error('Tenant not found');
+    }
+    const leadId = `lead-${Date.now()}`;
+    await storage.saveLead({
+        id: leadId,
+        tenantId: tenant.id,
+        sessionId: input.sessionId || '',
+        name: input.name,
+        company: input.company,
+        contact: input.contact,
+        demandType: input.demandType,
+        message: input.message || '',
+        createdAt: Date.now()
+    });
+    return {
+        ok: true,
+        id: leadId,
+        message: '提交成功，我们会在 1 个工作日内联系你。'
+    };
+}
+function createAgentRuntimeApplication(input) {
+    return new AgentRuntimeApplication({
+        processChatMessage: (request) => processChatMessage(request, {
+            storage: input.storage,
+            ragRepository: input.ragRepository,
+            endpoint: input.endpoint,
+            apiKey: input.apiKey,
+            model: input.model,
+            platformEndpoint: input.platformEndpoint,
+            platformApiKey: input.platformApiKey,
+            platformModel: input.platformModel,
+            fetcher: input.fetcher
+        }),
+        submitLead: (request) => submitLead(request, input.storage)
+    });
+}
+
+class ChatController {
+    constructor(application) {
+        this.application = application;
+    }
+    execute(input) {
+        return this.application.chat(input);
+    }
+}
+
+class ContactController {
+    constructor(application) {
+        this.application = application;
+    }
+    execute(input) {
+        return this.application.contact(input);
+    }
+}
+
+function createAgentRuntimeHttpLayer(application) {
+    return {
+        chat: new ChatController(application),
+        contact: new ContactController(application)
+    };
+}
+
+function createAgentRuntimeHttpAdapter(input) {
+    const application = createAgentRuntimeApplication(input);
+    return createAgentRuntimeHttpLayer(application);
+}
+
+function createAgentRuntimeGateway(input) {
+    const baseUrl = input.baseUrl || getServiceBaseUrl('agent-runtime-service');
+    const http = createAgentRuntimeHttpAdapter(input);
+    return {
+        chat(request) {
+            if (baseUrl) {
+                return requestJson({
+                    baseUrl,
+                    path: '/chat',
+                    method: 'POST',
+                    body: request,
+                    fetcher: input.fetcher
+                });
+            }
+            return http.chat.execute(request);
+        },
+        contact(request) {
+            if (baseUrl) {
+                return requestJson({
+                    baseUrl,
+                    path: '/contact',
+                    method: 'POST',
+                    body: request,
+                    fetcher: input.fetcher
+                });
+            }
+            return http.contact.execute(request);
+        }
+    };
 }
 
 const chat_post = defineEventHandler(async (event) => {
-  var _a, _b, _c;
-  const runtimeConfig = useRuntimeConfig();
-  const body = await readBody(event);
-  const tenantId = (_a = body == null ? void 0 : body.tenantId) == null ? void 0 : _a.trim();
-  const message = (_b = body == null ? void 0 : body.message) == null ? void 0 : _b.trim();
-  if (!tenantId || !message) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: "tenantId and message are required"
-    });
-  }
-  try {
-    return await processChatMessage({
-      tenantId,
-      message,
-      sessionId: (_c = body == null ? void 0 : body.sessionId) == null ? void 0 : _c.trim(),
-      attachments: Array.isArray(body == null ? void 0 : body.attachments) ? body.attachments : []
-    }, {
-      endpoint: runtimeConfig.customerBotLlmEndpoint,
-      apiKey: runtimeConfig.customerBotLlmApiKey,
-      model: runtimeConfig.customerBotLlmModel
-    });
-  } catch (error) {
-    if (error instanceof TenantNotFoundError) {
-      throw createError({
-        statusCode: 404,
-        statusMessage: "Tenant not found"
-      });
+    var _a, _b, _c;
+    const runtimeConfig = useRuntimeConfig();
+    const body = await readBody(event);
+    const tenantId = (_a = body === null || body === void 0 ? void 0 : body.tenantId) === null || _a === void 0 ? void 0 : _a.trim();
+    const message = (_b = body === null || body === void 0 ? void 0 : body.message) === null || _b === void 0 ? void 0 : _b.trim();
+    if (!tenantId || !message) {
+        throw createError({
+            statusCode: 400,
+            statusMessage: 'tenantId and message are required'
+        });
     }
-    if (error instanceof SessionNotFoundError) {
-      throw createError({
-        statusCode: 404,
-        statusMessage: "Session not found"
-      });
+    try {
+        const gateway = createAgentRuntimeGateway({
+            storage: getStorage(),
+            ragRepository: getRagRepository(),
+            endpoint: runtimeConfig.customerBotLlmEndpoint,
+            apiKey: runtimeConfig.customerBotLlmApiKey,
+            model: runtimeConfig.customerBotLlmModel,
+            platformEndpoint: runtimeConfig.customerBotPlatformLlmEndpoint,
+            platformApiKey: runtimeConfig.customerBotPlatformLlmApiKey,
+            platformModel: runtimeConfig.customerBotPlatformLlmModel
+        });
+        return await gateway.chat({
+            tenantId,
+            message,
+            sessionId: (_c = body === null || body === void 0 ? void 0 : body.sessionId) === null || _c === void 0 ? void 0 : _c.trim(),
+            attachments: Array.isArray(body === null || body === void 0 ? void 0 : body.attachments) ? body.attachments : []
+        });
     }
-    throw error;
-  }
+    catch (error) {
+        if (error instanceof TenantNotFoundError) {
+            throw createError({
+                statusCode: 404,
+                statusMessage: 'Tenant not found'
+            });
+        }
+        if (error instanceof SessionNotFoundError) {
+            throw createError({
+                statusCode: 404,
+                statusMessage: 'Session not found'
+            });
+        }
+        throw error;
+    }
 });
 
 const chat_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
@@ -5095,38 +8063,38 @@ const chat_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.definePropert
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const contact_post = defineEventHandler(async (event) => {
-  const body = await readBody(event);
-  if (!(body == null ? void 0 : body.tenantId) || !(body == null ? void 0 : body.name) || !body.company || !body.contact || !body.demandType) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: "\u7F3A\u5C11\u5FC5\u586B\u5B57\u6BB5"
+    const body = await readBody(event);
+    if (!(body === null || body === void 0 ? void 0 : body.tenantId) || !(body === null || body === void 0 ? void 0 : body.name) || !body.company || !body.contact || !body.demandType) {
+        throw createError({
+            statusCode: 400,
+            statusMessage: '缺少必填字段'
+        });
+    }
+    const storage = getStorage();
+    const gateway = createAgentRuntimeGateway({
+        storage,
+        ragRepository: getRagRepository()
     });
-  }
-  const storage = getStorage();
-  const tenant = await resolveTenant(body.tenantId, storage);
-  if (!tenant) {
-    throw createError({
-      statusCode: 404,
-      statusMessage: "Tenant not found"
-    });
-  }
-  const leadId = `lead-${Date.now()}`;
-  await storage.saveLead({
-    id: leadId,
-    tenantId: tenant.id,
-    sessionId: body.sessionId || "",
-    name: body.name,
-    company: body.company,
-    contact: body.contact,
-    demandType: body.demandType,
-    message: body.message || "",
-    createdAt: Date.now()
-  });
-  return {
-    ok: true,
-    id: leadId,
-    message: "\u63D0\u4EA4\u6210\u529F\uFF0C\u6211\u4EEC\u4F1A\u5728 1 \u4E2A\u5DE5\u4F5C\u65E5\u5185\u8054\u7CFB\u4F60\u3002"
-  };
+    try {
+        return await gateway.contact({
+            tenantId: body.tenantId,
+            sessionId: body.sessionId || '',
+            name: body.name,
+            company: body.company,
+            contact: body.contact,
+            demandType: body.demandType,
+            message: body.message || ''
+        });
+    }
+    catch (error) {
+        if (error instanceof Error && error.message === 'Tenant not found') {
+            throw createError({
+                statusCode: 404,
+                statusMessage: 'Tenant not found'
+            });
+        }
+        throw error;
+    }
 });
 
 const contact_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
@@ -5134,26 +8102,139 @@ const contact_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProp
   default: contact_post
 }, Symbol.toStringTag, { value: 'Module' }));
 
-const config_get = defineEventHandler(async (event) => {
-  const query = getQuery$1(event);
-  const tenantId = typeof query.tenantId === "string" ? query.tenantId.trim() : "";
-  if (!tenantId) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: "tenantId is required"
-    });
-  }
-  try {
-    return await getRuntimeConfigForTenant(tenantId);
-  } catch (error) {
-    if (error instanceof TenantNotFoundError) {
-      throw createError({
-        statusCode: 404,
-        statusMessage: "Tenant not found"
-      });
+class EmbedDeliveryApplication {
+    constructor(deps) {
+        this.deps = deps;
     }
-    throw error;
-  }
+    runtimeConfig(input) {
+        return this.deps.getRuntimeConfig(input.tenantId);
+    }
+    widgetScript() {
+        return this.deps.getWidgetScript();
+    }
+}
+
+async function loadWidgetScriptCode() {
+    const candidatePaths = [
+        resolve(process.cwd(), 'dist/customer-bot.js'),
+        resolve(process.cwd(), '.output/public/customer-bot.js')
+    ];
+    for (const filePath of candidatePaths) {
+        try {
+            const code = await readFile(filePath, 'utf8');
+            return {
+                code,
+                contentType: 'application/javascript; charset=utf-8',
+                cacheControl: 'public, max-age=60, stale-while-revalidate=300'
+            };
+        }
+        catch { }
+    }
+    throw new Error('customer-bot.js not found. Ensure dist/customer-bot.js is deployed.');
+}
+async function loadRuntimeConfig(storage, tenantId) {
+    const tenantHttp = createTenantIdentityHttpAdapter(storage);
+    const tenant = await tenantHttp.tenants.get(tenantId);
+    return {
+        tenantId: tenant.item.id,
+        status: tenant.item.status,
+        brandName: tenant.item.brandName,
+        themeColor: tenant.item.themeColor,
+        contactPhone: tenant.item.contactPhone,
+        contactEmail: tenant.item.contactEmail,
+        contactAddress: tenant.item.contactAddress,
+        systemPrompt: tenant.item.systemPrompt
+    };
+}
+function createEmbedDeliveryApplication(storage) {
+    return new EmbedDeliveryApplication({
+        getRuntimeConfig: (tenantId) => loadRuntimeConfig(storage, tenantId),
+        getWidgetScript: () => loadWidgetScriptCode()
+    });
+}
+
+class EmbedConfigController {
+    constructor(application) {
+        this.application = application;
+    }
+    execute(input) {
+        return this.application.runtimeConfig(input);
+    }
+}
+
+class WidgetScriptController {
+    constructor(application) {
+        this.application = application;
+    }
+    execute() {
+        return this.application.widgetScript();
+    }
+}
+
+function createEmbedDeliveryHttpLayer(application) {
+    return {
+        embedConfig: new EmbedConfigController(application),
+        widgetScript: new WidgetScriptController(application)
+    };
+}
+
+function createEmbedDeliveryHttpAdapter(storage) {
+    const application = createEmbedDeliveryApplication(storage);
+    return createEmbedDeliveryHttpLayer(application);
+}
+
+function createEmbedDeliveryGateway(input) {
+    const storage = 'saveTenant' in input ? input : input.storage;
+    const baseUrl = 'saveTenant' in input ? getServiceBaseUrl('embed-delivery-service') : input.baseUrl || getServiceBaseUrl('embed-delivery-service');
+    const fetcher = 'saveTenant' in input ? undefined : input.fetcher;
+    const http = createEmbedDeliveryHttpAdapter(storage);
+    return {
+        runtimeConfig(tenantId) {
+            if (baseUrl) {
+                return requestJson({
+                    baseUrl,
+                    path: `/embed/runtime-config?tenantId=${encodeURIComponent(tenantId)}`,
+                    fetcher
+                });
+            }
+            return http.embedConfig.execute({ tenantId });
+        },
+        widgetScript() {
+            if (baseUrl) {
+                return requestText({
+                    baseUrl,
+                    path: '/embed/widget-script',
+                    fetcher
+                }).then((result) => ({
+                    code: result.text,
+                    contentType: result.contentType,
+                    cacheControl: result.cacheControl
+                }));
+            }
+            return http.widgetScript.execute();
+        }
+    };
+}
+
+const config_get = defineEventHandler(async (event) => {
+    const query = getQuery$1(event);
+    const tenantId = typeof query.tenantId === 'string' ? query.tenantId.trim() : '';
+    if (!tenantId) {
+        throw createError({
+            statusCode: 400,
+            statusMessage: 'tenantId is required'
+        });
+    }
+    try {
+        const gateway = createEmbedDeliveryGateway(getStorage());
+        return await gateway.runtimeConfig(tenantId);
+    }
+    catch {
+        throw createError({
+            statusCode: 404,
+            statusMessage: 'Tenant not found'
+        });
+    }
 });
 
 const config_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
@@ -5162,37 +8243,27 @@ const config_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProper
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const changePassword_post = defineEventHandler(async (event) => {
-  const session = requireTenantSession(event);
-  const body = await readBody(event);
-  const currentPassword = (body == null ? void 0 : body.currentPassword) || "";
-  const nextPassword = (body == null ? void 0 : body.nextPassword) || "";
-  if (!currentPassword || !nextPassword) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: "currentPassword and nextPassword are required"
-    });
-  }
-  const storage = getStorage();
-  const user = await verifyTenantPassword(session.email, currentPassword, storage);
-  if (!user || user.id !== session.tenantUserId) {
-    throw createError({
-      statusCode: 401,
-      statusMessage: "Invalid credentials"
-    });
-  }
-  const updatedUser = {
-    ...user,
-    passwordHash: user.passwordHash,
-    temporaryPassword: "",
-    mustChangePassword: false,
-    updatedAt: Date.now()
-  };
-  const { createHash } = await import('node:crypto');
-  updatedUser.passwordHash = createHash("sha256").update(nextPassword).digest("hex");
-  await storage.saveTenantUser(updatedUser);
-  return {
-    ok: true
-  };
+    const session = requireTenantSession(event);
+    const body = await readBody(event);
+    const currentPassword = (body === null || body === void 0 ? void 0 : body.currentPassword) || '';
+    const nextPassword = (body === null || body === void 0 ? void 0 : body.nextPassword) || '';
+    try {
+        const gateway = createTenantIdentityGateway(getStorage());
+        return await gateway.changeTenantPassword({
+            tenantUserId: session.tenantUserId,
+            tenantId: session.tenantId,
+            email: session.email,
+            currentPassword,
+            nextPassword
+        });
+    }
+    catch (error) {
+        const message = error instanceof Error ? error.message : 'Invalid credentials';
+        throw createError({
+            statusCode: message.includes('required') ? 400 : 401,
+            statusMessage: message
+        });
+    }
 });
 
 const changePassword_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
@@ -5201,37 +8272,35 @@ const changePassword_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.def
 }, Symbol.toStringTag, { value: 'Module' }));
 
 function buildTenantChatItems(sessions, messagesBySession) {
-  return [...sessions].sort((left, right) => right.lastMessageAt - left.lastMessageAt).map((session) => {
-    var _a;
-    return {
-      session,
-      messages: [...(_a = messagesBySession.get(session.id)) != null ? _a : []].sort((left, right) => left.createdAt - right.createdAt)
-    };
-  });
+    return [...sessions]
+        .sort((left, right) => right.lastMessageAt - left.lastMessageAt)
+        .map((session) => {
+        var _a;
+        return ({
+            session,
+            messages: [...((_a = messagesBySession.get(session.id)) !== null && _a !== void 0 ? _a : [])].sort((left, right) => left.createdAt - right.createdAt)
+        });
+    });
 }
 function sortTenantLeads(leads) {
-  return [...leads].sort((left, right) => right.createdAt - left.createdAt);
+    return [...leads].sort((left, right) => right.createdAt - left.createdAt);
 }
 
 const chats_get = defineEventHandler(async (event) => {
-  const session = requireTenantSession(event);
-  const storage = getStorage();
-  const user = await storage.getTenantUserById(session.tenantUserId);
-  if (!user || user.status !== "active" || user.tenantId !== session.tenantId) {
-    throw createError({
-      statusCode: 401,
-      statusMessage: "Unauthorized"
-    });
-  }
-  const sessions = await storage.listSessionsByTenant(session.tenantId);
-  const messagesBySession = new Map(
-    await Promise.all(
-      sessions.map(async (chatSession) => [chatSession.id, await storage.listMessagesBySession(chatSession.id)])
-    )
-  );
-  return {
-    items: buildTenantChatItems(sessions, messagesBySession)
-  };
+    const session = requireTenantSession(event);
+    const storage = getStorage();
+    const user = await storage.getTenantUserById(session.tenantUserId);
+    if (!user || user.status !== 'active' || user.tenantId !== session.tenantId) {
+        throw createError({
+            statusCode: 401,
+            statusMessage: 'Unauthorized'
+        });
+    }
+    const sessions = await storage.listSessionsByTenant(session.tenantId);
+    const messagesBySession = new Map(await Promise.all(sessions.map(async (chatSession) => [chatSession.id, await storage.listMessagesBySession(chatSession.id)])));
+    return {
+        items: buildTenantChatItems(sessions, messagesBySession)
+    };
 });
 
 const chats_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
@@ -5240,18 +8309,18 @@ const chats_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.definePropert
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const leads_get = defineEventHandler(async (event) => {
-  const session = requireTenantSession(event);
-  const storage = getStorage();
-  const user = await storage.getTenantUserById(session.tenantUserId);
-  if (!user || user.status !== "active" || user.tenantId !== session.tenantId) {
-    throw createError({
-      statusCode: 401,
-      statusMessage: "Unauthorized"
-    });
-  }
-  return {
-    items: sortTenantLeads(await storage.listLeadsByTenant(session.tenantId))
-  };
+    const session = requireTenantSession(event);
+    const storage = getStorage();
+    const user = await storage.getTenantUserById(session.tenantUserId);
+    if (!user || user.status !== 'active' || user.tenantId !== session.tenantId) {
+        throw createError({
+            statusCode: 401,
+            statusMessage: 'Unauthorized'
+        });
+    }
+    return {
+        items: sortTenantLeads(await storage.listLeadsByTenant(session.tenantId))
+    };
 });
 
 const leads_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
@@ -5260,30 +8329,31 @@ const leads_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.definePropert
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const login_post = defineEventHandler(async (event) => {
-  var _a;
-  const body = await readBody(event);
-  const email = ((_a = body == null ? void 0 : body.email) == null ? void 0 : _a.trim()) || "";
-  const password = (body == null ? void 0 : body.password) || "";
-  const user = await verifyTenantPassword(email, password, getStorage());
-  if (!user) {
-    throw createError({
-      statusCode: 401,
-      statusMessage: "Invalid credentials"
-    });
-  }
-  setTenantSession(event, {
-    tenantUserId: user.id,
-    tenantId: user.tenantId,
-    email: user.email
-  });
-  return {
-    ok: true,
-    user: {
-      email: user.email,
-      tenantId: user.tenantId,
-      mustChangePassword: user.mustChangePassword
+    var _a;
+    const body = await readBody(event);
+    const email = ((_a = body === null || body === void 0 ? void 0 : body.email) === null || _a === void 0 ? void 0 : _a.trim()) || '';
+    const password = (body === null || body === void 0 ? void 0 : body.password) || '';
+    const storage = getStorage();
+    const gateway = createTenantIdentityGateway(storage);
+    let response;
+    try {
+        response = await gateway.tenantUserLogin({
+            email,
+            password
+        });
     }
-  };
+    catch {
+        throw createError({
+            statusCode: 401,
+            statusMessage: 'Invalid credentials'
+        });
+    }
+    setTenantSession(event, {
+        tenantUserId: response.user.tenantUserId,
+        tenantId: response.user.tenantId,
+        email: response.user.email
+    });
+    return response;
 });
 
 const login_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
@@ -5292,10 +8362,10 @@ const login_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProper
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const logout_post = defineEventHandler(async (event) => {
-  clearTenantSession(event);
-  return {
-    ok: true
-  };
+    clearTenantSession(event);
+    return {
+        ok: true
+    };
 });
 
 const logout_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
@@ -5304,25 +8374,20 @@ const logout_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.definePrope
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const me_get = defineEventHandler(async (event) => {
-  const session = requireTenantSession(event);
-  const storage = getStorage();
-  const user = await storage.getTenantUserById(session.tenantUserId);
-  const tenant = await storage.getTenantById(session.tenantId);
-  if (!user || !tenant || user.status !== "active") {
-    throw createError({
-      statusCode: 401,
-      statusMessage: "Unauthorized"
-    });
-  }
-  return {
-    user: {
-      id: user.id,
-      email: user.email,
-      tenantId: user.tenantId,
-      mustChangePassword: user.mustChangePassword
-    },
-    tenant
-  };
+    const session = requireTenantSession(event);
+    try {
+        const gateway = createTenantIdentityGateway(getStorage());
+        return gateway.tenantMe({
+            tenantUserId: session.tenantUserId,
+            tenantId: session.tenantId
+        });
+    }
+    catch {
+        throw createError({
+            statusCode: 401,
+            statusMessage: 'Unauthorized'
+        });
+    }
 });
 
 const me_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
@@ -5331,43 +8396,43 @@ const me_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const overview_get = defineEventHandler(async (event) => {
-  var _a, _b, _c, _d;
-  const session = requireTenantSession(event);
-  const storage = getStorage();
-  const tenant = await storage.getTenantById(session.tenantId);
-  const user = await storage.getTenantUserById(session.tenantUserId);
-  if (!tenant || !user || user.status !== "active") {
-    throw createError({
-      statusCode: 401,
-      statusMessage: "Unauthorized"
-    });
-  }
-  const [sessions, leads, usageRecords] = await Promise.all([
-    storage.listSessionsByTenant(tenant.id),
-    storage.listLeadsByTenant(tenant.id),
-    storage.listUsageByTenant(tenant.id)
-  ]);
-  const plan = getBillingPlanById((_a = tenant.billingSubscription) == null ? void 0 : _a.planId);
-  const summaries = buildMonthlyBillingSummary(usageRecords, plan, tenant.billingSubscription);
-  return {
-    tenant: {
-      id: tenant.id,
-      name: tenant.name,
-      brandName: tenant.brandName,
-      contactEmail: tenant.contactEmail
-    },
-    user: {
-      email: user.email,
-      mustChangePassword: user.mustChangePassword
-    },
-    kpis: {
-      sessionCount: sessions.length,
-      leadCount: leads.length,
-      contentSourceCount: (_d = (_c = (_b = tenant.contentConfig) == null ? void 0 : _b.contentSources) == null ? void 0 : _c.length) != null ? _d : 0
-    },
-    trainingRuns: listTrainingRuns(usageRecords).slice(0, 10),
-    latestBillingSummary: summaries[summaries.length - 1] || null
-  };
+    var _a, _b, _c, _d;
+    const session = requireTenantSession(event);
+    const storage = getStorage();
+    const tenant = await storage.getTenantById(session.tenantId);
+    const user = await storage.getTenantUserById(session.tenantUserId);
+    if (!tenant || !user || user.status !== 'active') {
+        throw createError({
+            statusCode: 401,
+            statusMessage: 'Unauthorized'
+        });
+    }
+    const [sessions, leads, usageRecords] = await Promise.all([
+        storage.listSessionsByTenant(tenant.id),
+        storage.listLeadsByTenant(tenant.id),
+        storage.listUsageByTenant(tenant.id)
+    ]);
+    const plan = getBillingPlanById((_a = tenant.billingSubscription) === null || _a === void 0 ? void 0 : _a.planId);
+    const summaries = buildMonthlyBillingSummary(usageRecords, plan, tenant.billingSubscription);
+    return {
+        tenant: {
+            id: tenant.id,
+            name: tenant.name,
+            brandName: tenant.brandName,
+            contactEmail: tenant.contactEmail
+        },
+        user: {
+            email: user.email,
+            mustChangePassword: user.mustChangePassword
+        },
+        kpis: {
+            sessionCount: sessions.length,
+            leadCount: leads.length,
+            contentSourceCount: (_d = (_c = (_b = tenant.contentConfig) === null || _b === void 0 ? void 0 : _b.contentSources) === null || _c === void 0 ? void 0 : _c.length) !== null && _d !== void 0 ? _d : 0
+        },
+        trainingRuns: listTrainingRuns(usageRecords).slice(0, 10),
+        latestBillingSummary: summaries[summaries.length - 1] || null
+    };
 });
 
 const overview_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
@@ -5376,35 +8441,23 @@ const overview_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProp
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const resetCode_post = defineEventHandler(async (event) => {
-  var _a;
-  const body = await readBody(event);
-  const email = ((_a = body == null ? void 0 : body.email) == null ? void 0 : _a.trim()) || "";
-  if (!email) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: "email is required"
-    });
-  }
-  const reset = await issueTenantPasswordReset({
-    email,
-    storage: getStorage()
-  });
-  const sent = await sendTenantResetEmail({
-    to: reset.email,
-    code: reset.code,
-    expiresAt: reset.expiresAt,
-    tenantName: reset.tenantId,
-    loginUrl: `${(process.env.CUSTOMER_BOT_PUBLIC_BASE_URL || "https://bot.aifactory.website").replace(/\/+$/, "")}/tenant/login`
-  });
-  return {
-    ok: true,
-    item: {
-      email: reset.email,
-      expiresAt: reset.expiresAt,
-      provider: sent.provider,
-      previewCode: sent.previewCode
+    var _a;
+    const body = await readBody(event);
+    const email = ((_a = body === null || body === void 0 ? void 0 : body.email) === null || _a === void 0 ? void 0 : _a.trim()) || '';
+    if (!email) {
+        throw createError({
+            statusCode: 400,
+            statusMessage: 'email is required'
+        });
     }
-  };
+    const storage = getStorage();
+    const tenantUser = await storage.getTenantUserByEmail(email);
+    const gateway = createTenantIdentityGateway(storage);
+    return gateway.issueTenantUserResetCode({
+        tenantId: (tenantUser === null || tenantUser === void 0 ? void 0 : tenantUser.tenantId) || '',
+        email,
+        loginUrl: `${(process.env.CUSTOMER_BOT_PUBLIC_BASE_URL || 'https://bot.aifactory.website').replace(/\/+$/, '')}/tenant/login`
+    });
 });
 
 const resetCode_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
@@ -5413,36 +8466,29 @@ const resetCode_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.definePr
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const resetPassword_post = defineEventHandler(async (event) => {
-  var _a, _b;
-  const body = await readBody(event);
-  const email = ((_a = body == null ? void 0 : body.email) == null ? void 0 : _a.trim()) || "";
-  const code = ((_b = body == null ? void 0 : body.code) == null ? void 0 : _b.trim()) || "";
-  const nextPassword = (body == null ? void 0 : body.nextPassword) || "";
-  if (!email || !code || !nextPassword) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: "email, code and nextPassword are required"
-    });
-  }
-  const user = await resetTenantPassword({
-    email,
-    code,
-    nextPassword,
-    storage: getStorage()
-  });
-  setTenantSession(event, {
-    tenantUserId: user.id,
-    tenantId: user.tenantId,
-    email: user.email
-  });
-  return {
-    ok: true,
-    user: {
-      email: user.email,
-      tenantId: user.tenantId,
-      mustChangePassword: user.mustChangePassword
+    var _a, _b;
+    const body = await readBody(event);
+    const email = ((_a = body === null || body === void 0 ? void 0 : body.email) === null || _a === void 0 ? void 0 : _a.trim()) || '';
+    const code = ((_b = body === null || body === void 0 ? void 0 : body.code) === null || _b === void 0 ? void 0 : _b.trim()) || '';
+    const nextPassword = (body === null || body === void 0 ? void 0 : body.nextPassword) || '';
+    if (!email || !code || !nextPassword) {
+        throw createError({
+            statusCode: 400,
+            statusMessage: 'email, code and nextPassword are required'
+        });
     }
-  };
+    const gateway = createTenantIdentityGateway(getStorage());
+    const response = await gateway.resetTenantPassword({
+        email,
+        code,
+        nextPassword
+    });
+    setTenantSession(event, {
+        tenantUserId: response.user.tenantUserId,
+        tenantId: response.user.tenantId,
+        email: response.user.email
+    });
+    return response;
 });
 
 const resetPassword_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
@@ -5451,27 +8497,16 @@ const resetPassword_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defi
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const customerBot_js_get = defineEventHandler(async (event) => {
-  const candidatePaths = [
-    resolve(process.cwd(), "dist/customer-bot.js"),
-    resolve(process.cwd(), ".output/public/customer-bot.js")
-  ];
-  try {
-    for (const filePath of candidatePaths) {
-      try {
-        const code = await readFile(filePath, "utf8");
-        setHeader(event, "Content-Type", "application/javascript; charset=utf-8");
-        setHeader(event, "Cache-Control", "public, max-age=60, stale-while-revalidate=300");
-        return code;
-      } catch {
-      }
+    try {
+        const gateway = createEmbedDeliveryGateway(getStorage());
+        const result = await gateway.widgetScript();
+        setHeader(event, 'Content-Type', result.contentType);
+        setHeader(event, 'Cache-Control', result.cacheControl);
+        return result.code;
     }
-    throw createError({
-      statusCode: 503,
-      statusMessage: "customer-bot.js not found. Ensure dist/customer-bot.js is deployed."
-    });
-  } catch (error) {
-    throw error;
-  }
+    catch (error) {
+        throw error;
+    }
 });
 
 const customerBot_js_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
@@ -5741,5 +8776,22 @@ function renderHTMLDocument(html) {
 const renderer = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   __proto__: null,
   default: handler
+}, Symbol.toStringTag, { value: 'Module' }));
+
+async function importOptionalModule(moduleName, installHint) {
+    try {
+        const runtimeImport = new Function('name', 'return import(name)');
+        return await runtimeImport(moduleName);
+    }
+    catch (error) {
+        const detail = error instanceof Error ? error.message : String(error);
+        const hint = installHint ? ` 请先安装依赖：${installHint}` : '';
+        throw new Error(`Optional module "${moduleName}" is unavailable.${hint} 原始错误：${detail}`);
+    }
+}
+
+const optionalModule = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  importOptionalModule: importOptionalModule
 }, Symbol.toStringTag, { value: 'Module' }));
 //# sourceMappingURL=index.mjs.map

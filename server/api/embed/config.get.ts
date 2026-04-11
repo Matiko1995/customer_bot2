@@ -1,4 +1,5 @@
-import { getRuntimeConfigForTenant, TenantNotFoundError } from '../../lib/tenants'
+import { createEmbedDeliveryGateway } from '../../lib/service-gateways/embed-delivery'
+import { getStorage } from '../../lib/storage'
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event)
@@ -12,15 +13,12 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    return await getRuntimeConfigForTenant(tenantId)
-  } catch (error) {
-    if (error instanceof TenantNotFoundError) {
-      throw createError({
-        statusCode: 404,
-        statusMessage: 'Tenant not found'
-      })
-    }
-
-    throw error
+    const gateway = createEmbedDeliveryGateway(getStorage())
+    return await gateway.runtimeConfig(tenantId)
+  } catch {
+    throw createError({
+      statusCode: 404,
+      statusMessage: 'Tenant not found'
+    })
   }
 })

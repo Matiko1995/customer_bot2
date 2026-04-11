@@ -1,5 +1,5 @@
 import { describe, expect, expectTypeOf, it } from 'vitest'
-import { buildBillingCsv, buildMonthlyBillingSummary, pickLatestBillingSummary } from '../../server/lib/billing'
+import { buildBillingCsv, buildMonthlyBillingSummary, buildUsageBreakdown, pickLatestBillingSummary } from '../../server/lib/billing'
 import type { BillingPlan, BillingSummary, TenantBillingSubscription } from '../../types'
 
 describe('billing summary types', () => {
@@ -120,5 +120,44 @@ describe('billing summary types', () => {
 
     expect(csv).toContain('tenantId,month,inputTokens,outputTokens,totalTokens,includedTokens,billableTokens,baseFee,overageFee,amount')
     expect(csv).toContain('tenant-1,2026-04,10,20,30,100,0,99.00,0.00,99.00')
+  })
+
+  it('builds usage provenance breakdown', () => {
+    const breakdown = buildUsageBreakdown([
+      {
+        id: 'usage-1',
+        tenantId: 'tenant-1',
+        sessionId: 'session-1',
+        provider: 'openai-compatible',
+        model: 'gpt-test',
+        inputTokens: 60,
+        outputTokens: 40,
+        totalTokens: 100,
+        amount: '0.10',
+        status: 'success',
+        credentialSource: 'platform_shared',
+        answerSource: 'general_fallback',
+        createdAt: Date.UTC(2026, 3, 8)
+      },
+      {
+        id: 'usage-2',
+        tenantId: 'tenant-1',
+        sessionId: 'session-2',
+        provider: 'openai-compatible',
+        model: 'gpt-test',
+        inputTokens: 30,
+        outputTokens: 20,
+        totalTokens: 50,
+        amount: '0.05',
+        status: 'success',
+        credentialSource: 'tenant',
+        answerSource: 'rag',
+        createdAt: Date.UTC(2026, 3, 9)
+      }
+    ])
+
+    expect(breakdown).toHaveLength(2)
+    expect(breakdown[0]?.totalTokens).toBeGreaterThanOrEqual(breakdown[1]?.totalTokens ?? 0)
+    expect(breakdown.some((item) => item.credentialSource === 'platform_shared' && item.answerSource === 'general_fallback')).toBe(true)
   })
 })

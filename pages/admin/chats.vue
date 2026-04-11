@@ -35,6 +35,11 @@
       <article v-for="message in item.messages" :key="message.id" class="message">
         <strong>{{ message.role }}</strong>
         <p>{{ message.content }}</p>
+        <div v-if="message.role === 'assistant'" class="message-meta-grid">
+          <span v-if="message.answerSource" class="meta-chip">answer={{ message.answerSource }}</span>
+          <span v-if="message.credentialSource" class="meta-chip">credential={{ message.credentialSource }}</span>
+          <span v-if="message.retrievalConfidence" class="meta-chip">confidence={{ message.retrievalConfidence }}</span>
+        </div>
         <div v-if="message.matchedContentSources?.length" class="matched-sources">
           <p class="matched-title">命中来源</p>
           <ul>
@@ -45,6 +50,19 @@
               </div>
               <p v-if="source.snippet" class="source-snippet">命中摘录：{{ source.snippet }}</p>
               <p v-if="source.answerHints?.length" class="source-hints">回答要点：{{ source.answerHints.join('；') }}</p>
+            </li>
+          </ul>
+        </div>
+        <div v-if="message.citations?.length" class="matched-sources">
+          <p class="matched-title">RAG 引用</p>
+          <ul>
+            <li v-for="citation in message.citations" :key="citation.chunkId">
+              <div class="source-row">
+                <span class="source-pill">score={{ citation.score }}</span>
+                <span class="source-text">{{ citation.title }}</span>
+              </div>
+              <p class="source-snippet">摘录：{{ citation.snippet }}</p>
+              <p v-if="citation.sourceUri" class="source-hints">来源：{{ citation.sourceUri }}</p>
             </li>
           </ul>
         </div>
@@ -105,6 +123,8 @@ button { background: #0a7ea4; color: white; border: 0; font-weight: 700; }
 .toggle-filter input { margin: 0; padding: 0; width: 16px; height: 16px; }
 .message { padding: 12px 0; border-top: 1px solid #edf2f7; }
 .message p { margin: 6px 0 0; white-space: pre-wrap; }
+.message-meta-grid { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.meta-chip { display: inline-flex; align-items: center; justify-content: center; padding: 4px 10px; border-radius: 999px; background: rgba(20, 56, 74, 0.08); color: #173a4f; font-size: 12px; font-weight: 700; }
 .matched-sources { margin-top: 10px; padding: 10px 12px; border-radius: 12px; background: #f8fbfd; border: 1px solid #e5edf3; }
 .matched-title { margin: 0 0 6px; font-weight: 700; color: #21425b; }
 .matched-sources ul { margin: 0; padding-left: 0; color: #34536b; list-style: none; display: grid; gap: 8px; }

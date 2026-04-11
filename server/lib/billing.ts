@@ -1,10 +1,10 @@
-import type { BillingPlan, BillingSummary, LlmUsageRecord, TenantBillingSubscription } from '../../types'
+import type { BillingPlan, CredentialSource, LlmUsageRecord, TenantBillingSubscription, BillingSummary, AnswerSource } from '../../types'
 
 function getMonthKey(timestamp: number): BillingSummary['month'] {
   const date = new Date(timestamp)
   const year = date.getUTCFullYear()
   const month = String(date.getUTCMonth() + 1).padStart(2, '0')
-  return `${year}-${month}`
+  return `${year}-${month}` as BillingSummary['month']
 }
 
 function addMoney(left: string, right: string): string {
@@ -108,4 +108,44 @@ export function buildBillingCsv(summaries: BillingSummary[]): string {
   )
 
   return [header.join(','), ...rows].join('\n')
+}
+
+export interface UsageBreakdownItem {
+  credentialSource: CredentialSource | 'unknown'
+  answerSource: AnswerSource | 'unknown'
+  totalTokens: number
+  amount: string
+  requestCount: number
+}
+
+export function buildUsageBreakdown(records: LlmUsageRecord[]): UsageBreakdownItem[] {
+  const grouped = new Map<string, UsageBreakdownItem>()
+
+  for (const record of records) {
+    if (record.status !== 'success') {
+      continue
+    }
+
+    const credentialSource = record.credentialSource || 'unknown'
+    const answerSource = record.answerSource || 'unknown'
+    const key = `${credentialSource}:${answerSource}`
+    const current = grouped.get(key)
+
+    if (current) {
+      current.totalTokens += record.totalTokens
+      current.amount = addMoney(current.amount, record.amount)
+      current.requestCount += 1
+      continue
+    }
+
+    grouped.set(key, {
+      credentialSource,
+      answerSource,
+      totalTokens: record.totalTokens,
+      amount: Number(record.amount).toFixed(2),
+      requestCount: 1
+    })
+  }
+
+  return Array.from(grouped.values()).sort((left, right) => right.totalTokens - left.totalTokens)
 }

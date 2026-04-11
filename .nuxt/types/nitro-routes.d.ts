@@ -30,11 +30,43 @@ declare module "nitropack/types" {
       'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/admin/tenants/[tenantId].get').default>>>>
       'put': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/admin/tenants/[tenantId].put').default>>>>
     }
+    '/api/admin/tenants/:tenantId/agent-docs': {
+      'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/admin/tenants/[tenantId]/agent-docs.get').default>>>>
+    }
+    '/api/admin/tenants/:tenantId/agent-docs/:fileName': {
+      'put': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/admin/tenants/[tenantId]/agent-docs/[fileName].put').default>>>>
+    }
+    '/api/admin/tenants/:tenantId/index-stats': {
+      'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/admin/tenants/[tenantId]/index-stats.get').default>>>>
+    }
+    '/api/admin/tenants/:tenantId/jobs': {
+      'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/admin/tenants/[tenantId]/jobs.get').default>>>>
+    }
+    '/api/admin/tenants/:tenantId/jobs/:jobId/retry': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/admin/tenants/[tenantId]/jobs/[jobId]/retry.post').default>>>>
+    }
+    '/api/admin/tenants/:tenantId/jobs/reindex': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/admin/tenants/[tenantId]/jobs/reindex.post').default>>>>
+    }
     '/api/admin/tenants/:tenantId/reset-code': {
       'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/admin/tenants/[tenantId]/reset-code.post').default>>>>
     }
     '/api/admin/tenants/:tenantId/restore': {
       'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/admin/tenants/[tenantId]/restore.post').default>>>>
+    }
+    '/api/admin/tenants/:tenantId/sources': {
+      'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/admin/tenants/[tenantId]/sources.get').default>>>>
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/admin/tenants/[tenantId]/sources.post').default>>>>
+    }
+    '/api/admin/tenants/:tenantId/sources/:sourceId': {
+      'delete': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/admin/tenants/[tenantId]/sources/[sourceId].delete').default>>>>
+      'put': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/admin/tenants/[tenantId]/sources/[sourceId].put').default>>>>
+    }
+    '/api/admin/tenants/:tenantId/sources/:sourceId/sync': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/admin/tenants/[tenantId]/sources/[sourceId]/sync.post').default>>>>
+    }
+    '/api/admin/tenants/:tenantId/sources/:sourceId/upload': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/admin/tenants/[tenantId]/sources/[sourceId]/upload.post').default>>>>
     }
     '/api/admin/tenants/:tenantId/training': {
       'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/admin/tenants/[tenantId]/training.post').default>>>>

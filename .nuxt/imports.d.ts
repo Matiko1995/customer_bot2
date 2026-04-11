@@ -33,4 +33,3 @@ export { definePageMeta, PageMeta } from '#app/composables/pages';
 export { defineLazyHydrationComponent } from '#app/composables/lazy-hydration';
 export { useAdminApi } from '../composables/useAdminApi';
 export { useTenantApi } from '../composables/useTenantApi';
-export { useNuxtDevTools } from '../node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools';

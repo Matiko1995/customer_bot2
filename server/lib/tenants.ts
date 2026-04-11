@@ -1,7 +1,7 @@
 import type { RuntimeWidgetConfig } from '../../types'
-import { getStorage } from './storage'
+import { getStorage } from './storage/index.ts'
 import type { StorageRepository } from './storage/types'
-import { resolveTenant } from './tenant-resolver'
+import { resolveTenant } from './tenant-resolver.ts'
 
 export class TenantNotFoundError extends Error {
   code = 'TENANT_NOT_FOUND' as const

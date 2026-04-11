@@ -8,6 +8,7 @@ import type {
   ArticleListItem,
   AssistantKnowledgeEntry,
   AssistantModuleId,
+  CitationRecord,
   ConsultingServiceListItem,
   ConversationMessage,
   MessageAttachment,
@@ -497,6 +498,31 @@ function ensureStyle(themeColor: string) {
       color: #6f8799;
       padding: 0 4px;
     }
+    .cbot-citation-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 8px;
+      width: 100%;
+    }
+    .cbot-citation-item {
+      display: grid;
+      gap: 4px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: rgba(15, 23, 42, 0.04);
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      width: 100%;
+    }
+    .cbot-citation-item strong {
+      font-size: 11px;
+      line-height: 1.3;
+      color: #21425b;
+    }
+    .cbot-citation-item span {
+      font-size: 12px;
+      line-height: 1.5;
+      color: #49657c;
+    }
     .cbot-message-body {
       display: grid;
       gap: 8px;
@@ -853,6 +879,7 @@ export function createCustomerBot(): CustomerBotInstance {
       message,
       history: history[module]
         .filter((item) => item.content.trim())
+        .filter((item): item is ConversationMessage & { role: 'user' | 'assistant' } => item.role !== 'system')
         .slice(-6)
         .map((item) => ({
           role: item.role,
@@ -931,7 +958,13 @@ export function createCustomerBot(): CustomerBotInstance {
     }
   }
 
-  async function runBackendChat(message: string, attachments: MessageAttachment[] = []): Promise<string> {
+  async function runBackendChat(message: string, attachments: MessageAttachment[] = []): Promise<{
+    reply: string
+    answerSource?: ConversationMessage['answerSource']
+    credentialSource?: ConversationMessage['credentialSource']
+    retrievalConfidence?: ConversationMessage['retrievalConfidence']
+    citations?: CitationRecord[]
+  }> {
     if (!options.tenantId) {
       throw new Error('tenantId is required')
     }
@@ -956,10 +989,20 @@ export function createCustomerBot(): CustomerBotInstance {
     const data = (await response.json()) as {
       reply: string
       sessionId?: string
+      answerSource?: ConversationMessage['answerSource']
+      credentialSource?: ConversationMessage['credentialSource']
+      retrievalConfidence?: ConversationMessage['retrievalConfidence']
+      citations?: CitationRecord[]
     }
 
     activeSessionId = data.sessionId || activeSessionId
-    return data.reply
+    return {
+      reply: data.reply,
+      answerSource: data.answerSource,
+      credentialSource: data.credentialSource,
+      retrievalConfidence: data.retrievalConfidence,
+      citations: data.citations
+    }
   }
 
   async function submitTenantLead(body: {
@@ -1092,6 +1135,20 @@ export function createCustomerBot(): CustomerBotInstance {
       return
     }
 
+    function buildAssistantMeta(item: ConversationMessage): string {
+      if (item.role !== 'assistant') {
+        return item.role === 'user' ? '已发送' : '请处理后重试'
+      }
+
+      const chips = [
+        item.answerSource ? `来源=${item.answerSource}` : '',
+        item.credentialSource ? `凭据=${item.credentialSource}` : '',
+        item.retrievalConfidence ? `命中=${item.retrievalConfidence}` : ''
+      ].filter(Boolean)
+
+      return chips.length ? chips.join(' / ') : '基于当前资料整理回复'
+    }
+
     const messageMarkup = history[activeModule]
       .map((item) => item)
       .reduce<string[]>((accumulator, item, index) => {
@@ -1110,6 +1167,16 @@ export function createCustomerBot(): CustomerBotInstance {
                 <p class="cbot-message-meta">${item.role === 'user' ? '你' : item.role === 'system' ? '系统提示' : 'AI 客服'}</p>
                 ${formatMessageContent(item.content)}
                 ${
+                  item.citations?.length
+                    ? `<div class="cbot-citation-list">${item.citations
+                        .map(
+                          (citation) =>
+                            `<div class="cbot-citation-item"><strong>${citation.title}</strong><span>${citation.snippet}</span></div>`
+                        )
+                        .join('')}</div>`
+                    : ''
+                }
+                ${
                   item.attachments?.length
                     ? `<div class="cbot-message-attachments">${item.attachments
                         .map(
@@ -1120,7 +1187,7 @@ export function createCustomerBot(): CustomerBotInstance {
                     : ''
                 }
               </article>
-              <div class="cbot-message-note">${item.role === 'user' ? '已发送' : item.role === 'system' ? '请处理后重试' : '基于当前资料整理回复'}</div>
+              <div class="cbot-message-note">${buildAssistantMeta(item)}</div>
             </div>
           </div>
         `)
@@ -1146,14 +1213,19 @@ export function createCustomerBot(): CustomerBotInstance {
     module: AssistantModule,
     role: ConversationMessage['role'],
     content: string,
-    attachments?: MessageAttachment[]
+    attachments?: MessageAttachment[],
+    metadata?: Partial<Pick<ConversationMessage, 'citations' | 'answerSource' | 'credentialSource' | 'retrievalConfidence'>>
   ) {
     history[module].push({
       id: `${module}-${Date.now()}-${history[module].length + 1}`,
       role,
       content,
       createdAt: Date.now(),
-      attachments: attachments?.length ? structuredClone(attachments) : undefined
+      attachments: attachments?.length ? structuredClone(attachments) : undefined,
+      citations: metadata?.citations?.length ? structuredClone(metadata.citations) : undefined,
+      answerSource: metadata?.answerSource,
+      credentialSource: metadata?.credentialSource,
+      retrievalConfidence: metadata?.retrievalConfidence
     })
     persistHistory()
     if (module === activeModule) {
@@ -1292,7 +1364,12 @@ export function createCustomerBot(): CustomerBotInstance {
       try {
         if (options.tenantId) {
           const reply = await runBackendChat(text, attachments)
-          pushMessage(activeModule, 'assistant', reply)
+          pushMessage(activeModule, 'assistant', reply.reply, undefined, {
+            citations: reply.citations,
+            answerSource: reply.answerSource,
+            credentialSource: reply.credentialSource,
+            retrievalConfidence: reply.retrievalConfidence
+          })
           setChatStatus('')
           return
         }
@@ -1308,7 +1385,7 @@ export function createCustomerBot(): CustomerBotInstance {
               contentSources: [],
               siteConfig: initializedData!.siteConfig,
               attachments
-            })
+            }) as string
           )
           pushMessage(activeModule, 'assistant', reply)
           setChatStatus('')

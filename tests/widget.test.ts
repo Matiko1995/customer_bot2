@@ -221,7 +221,7 @@ describe('customer bot widget api', () => {
       error: DOMException | null = null
 
       readAsDataURL() {
-        this.onload?.call(this as unknown as FileReader, new ProgressEvent('load'))
+        this.onload?.call(this as unknown as FileReader, new ProgressEvent('load') as ProgressEvent<FileReader>)
       }
     }
 

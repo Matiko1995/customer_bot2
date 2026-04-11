@@ -1,5 +1,5 @@
 import type { TenantRecord } from '../../types'
-import { getStorage } from './storage'
+import { getStorage } from './storage/index.ts'
 import type { StorageRepository } from './storage/types'
 
 export async function resolveTenant(identifier: string, storage: StorageRepository = getStorage()): Promise<TenantRecord | undefined> {
