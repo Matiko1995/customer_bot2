@@ -1,0 +1,10 @@
+{
+  "name": "@customer-bot/tenant-identity-service",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "..\\..\\node_modules\\.bin\\tsx.exe src/main.ts",
+    "start": "..\\..\\node_modules\\.bin\\tsx.exe src/main.ts",
+    "start:standalone": "..\\..\\node_modules\\.bin\\tsx.exe src/server.ts"
+  }
+}

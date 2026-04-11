@@ -1,6 +1,6 @@
 import { requireAdminSession } from '../../lib/auth'
 import { getBillingPlanById } from '../../../lib/billing-plans'
-import { buildBillingCsv, buildMonthlyBillingSummary } from '../../lib/billing'
+import { buildBillingCsv, buildMonthlyBillingSummary, buildUsageBreakdown } from '../../lib/billing'
 import { getStorage } from '../../lib/storage'
 import { resolveTenant } from '../../lib/tenant-resolver'
 
@@ -31,6 +31,7 @@ export default defineEventHandler(async (event) => {
     tenant,
     plan,
     usageRecords,
-    summaries
+    summaries,
+    breakdown: buildUsageBreakdown(usageRecords)
   }
 })

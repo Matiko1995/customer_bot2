@@ -14,20 +14,42 @@ codex resume 019cd008-0b0d-71f1-9cfd-d49e34e022db
 - 客户嵌入式 `customer-bot.js`
 - 截图附件随会话持久化
 - 产品参数表与回答引用来源
+- monorepo 下的多服务拆分骨架：tenant identity / knowledge indexing / agent runtime / embed delivery
 
 ## Local Run
 
 ```bash
 npm install
 npm test
-npm run dev
+npm run app:dev
 npm run build
+```
+
+如需额外重打挂件脚本和归档包，可执行：
+
+```bash
+npm run app:bundle
 ```
 
 本地演示入口：
 
 - 前台演示页：`/`
 - 后台登录页：`/admin/login`
+
+多服务本地启动：
+
+```bash
+npm run stack:dev
+```
+
+单独启动服务：
+
+```bash
+npm run service:tenant-identity
+npm run service:knowledge-indexing
+npm run service:agent-runtime
+npm run service:embed-delivery
+```
 
 当前可演示能力：
 
@@ -82,11 +104,21 @@ CUSTOMER_BOT_RESEND_API_KEY=re_xxx
 - 挂件脚本：`dist/customer-bot.js`
 - Nuxt 服务端：`.output/`
 
+部署到 `bot.factory.website` 的多服务说明见：
+
+- `docs/deployment-bot.factory.website-aapanel.md`
+
+线上多服务启动可参考：
+
+```bash
+npm run deploy:pm2:start
+```
+
 本地预览生产包：
 
 ```bash
-npm run build
-npm run preview
+npm run app:build
+npm run app:preview
 ```
 
 租户详情页的安装面板支持：

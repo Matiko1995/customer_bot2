@@ -16,6 +16,12 @@ import { RuntimeConfig as UserRuntimeConfig, PublicRuntimeConfig as UserPublicRu
 
    customerBotLlmModel: string,
 
+   customerBotPlatformLlmEndpoint: string,
+
+   customerBotPlatformLlmApiKey: string,
+
+   customerBotPlatformLlmModel: string,
+
    customerBotWidgetVersion: string,
 
    nitro: {

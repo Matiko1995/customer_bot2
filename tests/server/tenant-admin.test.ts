@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { createMemoryStore } from '../../server/lib/storage/memory-store'
+import type { TenantRecord } from '../../types'
 
 describe('memory store', () => {
   it('creates and returns tenants by id', async () => {
@@ -23,7 +24,7 @@ describe('memory store', () => {
       },
       createdAt: 1760000000000,
       updatedAt: 1760000000000
-    }
+    } satisfies TenantRecord
 
     await store.saveTenant(inputTenant)
 

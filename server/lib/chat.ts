@@ -1,12 +1,28 @@
-import { assistantKnowledgeEntries } from '../../config/ai-assistant-knowledge'
-import { demoArticles, demoConsultingServices, demoProducts, demoSiteConfig } from '../../config/customer-bot-data'
-import { buildAssistantReply, pickMatchedContentSources, toMatchedContentSourceReferences } from '../../lib/customer-bot'
-import type { MessageAttachment } from '../../types'
-import { createLlmAdapter } from '../../src/llm-adapter'
+import { assistantKnowledgeEntries } from '../../config/ai-assistant-knowledge.ts'
+import { demoArticles, demoConsultingServices, demoProducts, demoSiteConfig } from '../../config/customer-bot-data.ts'
+import { pickKnowledgeEntry } from '../../lib/customer-bot.ts'
+import type {
+  CitationRecord,
+  CredentialSource,
+  MatchedContentSource,
+  MessageAttachment,
+  RetrievalConfidence,
+  TenantContentSource
+} from '../../types'
+import { createLlmAdapter } from '../../src/llm-adapter.ts'
+import { generateFallbackAnswer } from './rag/fallback-chain.ts'
+import { generateGroundedAnswer } from './rag/answer-chain.ts'
+import { buildCitationContext } from './rag/build-context.ts'
+import { classifyQuery } from './rag/query-classifier.ts'
+import { renderRagTemplate } from './rag/render-template.ts'
+import { retrieveForTenant } from './rag/retriever.ts'
+import { runStructuredFastPath } from './rag/structured-fast-path.ts'
+import type { RagRepository } from './repositories/rag-repository'
 import type { StorageRepository } from './storage/types'
-import { getStorage } from './storage'
-import { TenantNotFoundError } from './tenants'
-import { resolveTenant } from './tenant-resolver'
+import { getRagRepository, getStorage } from './storage/index.ts'
+import { TenantNotFoundError } from './tenants.ts'
+import { resolveTenant } from './tenant-resolver.ts'
+import { normalizeTenantRagSettings, type TenantRagSettings } from '../../packages/shared-config/src/rag-settings.ts'
 
 export interface ProcessChatMessageInput {
   tenantId: string
@@ -17,9 +33,13 @@ export interface ProcessChatMessageInput {
 
 export interface ProcessChatMessageOptions {
   storage?: StorageRepository
+  ragRepository?: RagRepository
   endpoint?: string
   apiKey?: string
   model?: string
+  platformEndpoint?: string
+  platformApiKey?: string
+  platformModel?: string
   fetcher?: typeof fetch
 }
 
@@ -44,7 +64,13 @@ function normalizeQuestion(value: string): string {
     .replace(/\s+/g, ' ')
 }
 
-function buildRetrievalSystemPrompt(basePrompt: string | undefined, strategy: string): string {
+function buildRetrievalSystemPrompt(input: {
+  basePrompt: string | undefined
+  strategy: string
+  query: string
+  brandName: string
+  ragSettings: TenantRagSettings
+}): string {
   const rules = [
     '你是企业客服问答助手。',
     '你必须优先依据已提供的命中资料回答，不得脱离资料自行编造事实、参数、价格、流程或承诺。',
@@ -54,15 +80,84 @@ function buildRetrievalSystemPrompt(basePrompt: string | undefined, strategy: st
     '回答保持简洁、专业、可执行，避免空泛套话。'
   ]
 
-  if (strategy === 'knowledge') {
+  if (input.strategy === 'knowledge') {
     rules.push('当前问题已命中知识条目或标准回复，优先沿用该口径。')
-  } else if (strategy === 'price') {
+  } else if (input.strategy === 'price') {
     rules.push('当前问题是价格/报价问题，禁止输出资料之外的价格区间或估算。')
   } else {
     rules.push('当前问题使用文档检索结果回答，请优先引用资料摘要、产品参数和资料摘录。')
   }
 
-  return [basePrompt?.trim() || '', rules.join('\n')].filter(Boolean).join('\n\n')
+  const templatePrompt = renderRagTemplate(input.ragSettings.retrievalPromptTemplate, {
+    query: input.query,
+    brandName: input.brandName,
+    answerStructureTemplate: input.ragSettings.answerStructureTemplate
+  })
+
+  return [input.basePrompt?.trim() || '', rules.join('\n'), templatePrompt].filter(Boolean).join('\n\n')
+}
+
+function buildFallbackSystemPrompt(input: {
+  basePrompt: string | undefined
+  query: string
+  brandName: string
+  ragSettings: TenantRagSettings
+}): string {
+  const templatePrompt = renderRagTemplate(input.ragSettings.fallbackPromptTemplate, {
+    query: input.query,
+    brandName: input.brandName,
+    answerStructureTemplate: input.ragSettings.answerStructureTemplate
+  })
+
+  return [
+    input.basePrompt?.trim() || '',
+    '当前租户资料未直接命中。仅允许给出通用参考，不得编造价格、参数、交付承诺或事实。',
+    templatePrompt
+  ]
+    .filter(Boolean)
+    .join('\n\n')
+}
+
+function buildAnswerStructureContext(answerStructureTemplate: string | undefined): string {
+  const template = answerStructureTemplate?.trim()
+  if (!template) {
+    return ''
+  }
+
+  return ['【回答结构模板】', template].join('\n')
+}
+
+function toMatchedContentSourcesFromCitations(citations: CitationRecord[]): MatchedContentSource[] {
+  return citations.map((citation) => ({
+    id: citation.chunkId,
+    title: citation.title,
+    type: 'document',
+    category: 'RAG 命中',
+    snippet: citation.snippet
+  }))
+}
+
+function buildTenantSiteConfig(tenant: Awaited<ReturnType<typeof resolveTenant>>) {
+  return {
+    ...demoSiteConfig,
+    brandName: tenant?.brandName || demoSiteConfig.brandName,
+    phone: tenant?.contactPhone || demoSiteConfig.phone,
+    email: tenant?.contactEmail || demoSiteConfig.email,
+    address: tenant?.contactAddress || demoSiteConfig.address
+  }
+}
+
+function buildAttachmentNotice(attachments: MessageAttachment[]): string {
+  if (!attachments.length) {
+    return ''
+  }
+
+  const lines = ['【已收到附件】']
+  attachments.forEach((attachment) => {
+    lines.push(`- ${attachment.name}（${Math.max(1, Math.round(attachment.size / 1024))} KB）`)
+  })
+  lines.push('当前链路已记录附件；如需基于附件内容做更深入识别，可继续补充视觉或文件解析能力。')
+  return lines.join('\n')
 }
 
 export async function processChatMessage(
@@ -70,11 +165,14 @@ export async function processChatMessage(
   options: ProcessChatMessageOptions = {}
 ) {
   const storage = options.storage || getStorage()
+  const ragRepository = options.ragRepository || getRagRepository()
   const tenant = await resolveTenant(input.tenantId, storage)
 
   if (!tenant) {
     throw new TenantNotFoundError(input.tenantId)
   }
+
+  const ragSettings = normalizeTenantRagSettings(tenant.ragSettings)
 
   const now = Date.now()
   let sessionId = input.sessionId
@@ -143,12 +241,20 @@ export async function processChatMessage(
             role: 'assistant',
             content: next.content,
             createdAt: Date.now(),
-            matchedContentSources: next.matchedContentSources
+            matchedContentSources: next.matchedContentSources,
+            citations: next.citations,
+            answerSource: next.answerSource,
+            credentialSource: next.credentialSource,
+            retrievalConfidence: next.retrievalConfidence
           })
 
           return {
             reply: next.content,
             sessionId: sessionId,
+            answerSource: next.answerSource || 'structured',
+            credentialSource: next.credentialSource || 'tenant',
+            citations: next.citations || [],
+            retrievalConfidence: next.retrievalConfidence || 'miss',
             usage: {
               inputTokens: 0,
               outputTokens: 0,
@@ -175,98 +281,203 @@ export async function processChatMessage(
     : ''
   const tenantContent = tenant.contentConfig
   const activeContentSources = tenantContent?.contentSources?.length ? tenantContent.contentSources : []
-  const rawReplyContext = buildAssistantReply({
+  const knowledgeEntries = tenantContent?.knowledgeEntries?.length ? tenantContent.knowledgeEntries : assistantKnowledgeEntries
+  const articles = tenantContent?.articles?.length ? tenantContent.articles : demoArticles
+  const products = tenantContent?.products?.length ? tenantContent.products : demoProducts
+  const consultingServices = tenantContent?.consultingServices?.length ? tenantContent.consultingServices : demoConsultingServices
+  const siteConfig = buildTenantSiteConfig(tenant)
+  const route = classifyQuery(input.message)
+  const structuredReply = runStructuredFastPath({
+    route,
     query: input.message,
-    knowledgeEntries: tenantContent?.knowledgeEntries?.length ? tenantContent.knowledgeEntries : assistantKnowledgeEntries,
-    articles: tenantContent?.articles?.length ? tenantContent.articles : demoArticles,
-    products: tenantContent?.products?.length ? tenantContent.products : demoProducts,
-    consultingServices: tenantContent?.consultingServices?.length ? tenantContent.consultingServices : demoConsultingServices,
+    knowledgeEntries,
+    articles,
+    products,
+    consultingServices,
     contentSources: activeContentSources,
-    siteConfig: {
-      ...demoSiteConfig,
-      brandName: tenant.brandName,
-      phone: tenant.contactPhone || demoSiteConfig.phone,
-      email: tenant.contactEmail || demoSiteConfig.email,
-      address: tenant.contactAddress || demoSiteConfig.address
-    },
-    attachments,
-    returnMeta: true
-  }) as string | { content: string; meta?: { strategy?: string; matchedKnowledgeEntry?: { title: string } | null; matchedContentSources?: TenantContentSource[] } }
+    siteConfig
+  })
 
-  const replyContext =
-    typeof rawReplyContext === 'string'
-      ? {
-          content: rawReplyContext,
-          meta: {
+  let replyContent = ''
+  let matchedContentSources: MatchedContentSource[] = []
+  let citations: CitationRecord[] = []
+  let answerSource: 'structured' | 'rag' | 'general_fallback' = 'structured'
+  let credentialSource: CredentialSource = 'tenant'
+  let retrievalConfidence: RetrievalConfidence = 'miss'
+  let usage = {
+    inputTokens: 0,
+    outputTokens: 0,
+    totalTokens: 0
+  }
+  let usageModel = ''
+  let usageStatus: 'success' | 'failed' | 'unknown' = 'unknown'
+
+  if (structuredReply.handled) {
+    replyContent = structuredReply.content || '当前已按结构化路径处理。'
+    retrievalConfidence = 'high'
+
+    if (route === 'faq') {
+      const matchedKnowledge = pickKnowledgeEntry(input.message, knowledgeEntries)
+      if (matchedKnowledge) {
+        matchedContentSources = [
+          {
+            id: `knowledge:${matchedKnowledge.id}`,
+            title: matchedKnowledge.title,
+            type: 'document',
+            category: '标准回复/知识库'
+          }
+        ]
+      }
+    }
+  } else {
+    if (ragSettings.enabled) {
+      const retrieval = await retrieveForTenant({
+        tenantId: tenant.id,
+        query: input.message,
+        repository: ragRepository,
+        topK: ragSettings.retrievalTopK
+      })
+
+      retrievalConfidence = retrieval.confidence
+      citations = retrieval.citations
+      matchedContentSources = toMatchedContentSourcesFromCitations(citations)
+
+      if (retrieval.confidence !== 'miss') {
+        answerSource = 'rag'
+        const answerTemplateContext = buildAnswerStructureContext(ragSettings.answerStructureTemplate)
+        const adapter = createLlmAdapter({
+          endpoint: tenant.llmEndpoint || options.endpoint,
+          apiKey: tenant.llmApiKey || options.apiKey,
+          model: tenant.llmModel || options.model,
+          systemPrompt: buildRetrievalSystemPrompt({
+            basePrompt: tenant.systemPrompt,
             strategy: 'document',
-            matchedKnowledgeEntry: null,
-            matchedContentSources: []
-          }
+            query: input.message,
+            brandName: tenant.brandName,
+            ragSettings
+          }),
+          fetcher: options.fetcher,
+          fallback: async () =>
+            generateGroundedAnswer({
+              query: input.message,
+              citations,
+              instructions: ragSettings.answerStructureTemplate
+            })
+        })
+
+        const reply = await adapter.reply({
+          message: input.message,
+          history,
+          context: [
+            answerTemplateContext,
+            buildCitationContext({ query: input.message, citations }),
+            attachmentContext
+          ]
+            .filter(Boolean)
+            .join('\n\n')
+        })
+
+        replyContent = reply.content
+        usage = {
+          inputTokens: reply.inputTokens,
+          outputTokens: reply.outputTokens,
+          totalTokens: reply.totalTokens
         }
-      : {
-          content: rawReplyContext.content,
-          meta: {
-            strategy: rawReplyContext.meta?.strategy || 'document',
-            matchedKnowledgeEntry: rawReplyContext.meta?.matchedKnowledgeEntry || null,
-            matchedContentSources: rawReplyContext.meta?.matchedContentSources || []
-          }
-        }
+        usageModel = reply.model
+        usageStatus = reply.status === 'success' ? 'success' : 'unknown'
+      }
+    }
 
-  const matchedContentSources = [
-    ...(replyContext.meta.matchedContentSources?.length
-      ? toMatchedContentSourceReferences(replyContext.meta.matchedContentSources, input.message)
-      : []),
-    ...(replyContext.meta.matchedKnowledgeEntry
-      ? [{ id: `knowledge:${replyContext.meta.matchedKnowledgeEntry.title}`, title: replyContext.meta.matchedKnowledgeEntry.title, type: 'document' as const, category: replyContext.meta.strategy === 'knowledge' ? '标准回复/知识库' : '知识命中' }]
-      : [])
-  ]
+    if (!replyContent) {
+      answerSource = 'general_fallback'
+      credentialSource = 'platform_shared'
+      retrievalConfidence = ragSettings.enabled ? retrievalConfidence : 'miss'
+      const sharedEndpoint = options.platformEndpoint || process.env.CUSTOMER_BOT_PLATFORM_LLM_ENDPOINT?.trim() || ''
+      const sharedApiKey = options.platformApiKey || process.env.CUSTOMER_BOT_PLATFORM_LLM_API_KEY?.trim() || ''
+      const sharedModel = options.platformModel || process.env.CUSTOMER_BOT_PLATFORM_LLM_MODEL?.trim() || ''
 
-  const adapter = createLlmAdapter({
-    endpoint: tenant.llmEndpoint || options.endpoint,
-    apiKey: tenant.llmApiKey || options.apiKey,
-    model: tenant.llmModel || options.model,
-    systemPrompt: buildRetrievalSystemPrompt(tenant.systemPrompt, replyContext.meta.strategy),
-    fetcher: options.fetcher,
-    fallback: async () => replyContext.content
-  })
+      const adapter = createLlmAdapter({
+        endpoint: sharedEndpoint,
+        apiKey: sharedApiKey,
+        model: sharedModel,
+        systemPrompt: buildFallbackSystemPrompt({
+          basePrompt: tenant.systemPrompt,
+          query: input.message,
+          brandName: tenant.brandName,
+          ragSettings
+        }),
+        fetcher: options.fetcher,
+        fallback: async () =>
+          generateFallbackAnswer({
+            query: input.message,
+            brandName: tenant.brandName,
+            instructions: ragSettings.answerStructureTemplate
+          })
+      })
 
-  const reply = await adapter.reply({
-    message: input.message,
-    history,
-    context: [replyContext.content, attachmentContext].filter(Boolean).join('\n\n')
-  })
+      const reply = await adapter.reply({
+        message: input.message,
+        history,
+        context: [buildAnswerStructureContext(ragSettings.answerStructureTemplate), attachmentContext]
+          .filter(Boolean)
+          .join('\n\n')
+      })
+
+      replyContent = reply.content
+      usage = {
+        inputTokens: reply.inputTokens,
+        outputTokens: reply.outputTokens,
+        totalTokens: reply.totalTokens
+      }
+      usageModel = reply.model
+      usageStatus = reply.status === 'success' ? 'success' : 'unknown'
+    }
+  }
+
+  const attachmentNotice = buildAttachmentNotice(attachments)
+  if (attachmentNotice) {
+    replyContent = [replyContent, attachmentNotice].filter(Boolean).join('\n\n')
+  }
 
   await storage.saveMessage({
     id: nextId('message'),
     sessionId: sessionId,
     tenantId: tenant.id,
     role: 'assistant',
-    content: reply.content,
+    content: replyContent,
     createdAt: Date.now(),
-    matchedContentSources
+    matchedContentSources,
+    citations,
+    answerSource,
+    credentialSource,
+    retrievalConfidence
   })
 
-  await storage.saveUsageRecord({
-    id: nextId('usage'),
-    tenantId: tenant.id,
-    sessionId: sessionId,
-    provider: 'openai-compatible',
-    model: reply.model,
-    inputTokens: reply.inputTokens,
-    outputTokens: reply.outputTokens,
-    totalTokens: reply.totalTokens,
-    amount: '0',
-    status: reply.status === 'success' ? 'success' : 'unknown',
-    createdAt: Date.now()
-  })
+  if (usage.totalTokens > 0 || answerSource === 'general_fallback') {
+    await storage.saveUsageRecord({
+      id: nextId('usage'),
+      tenantId: tenant.id,
+      sessionId: sessionId,
+      provider: answerSource === 'general_fallback' ? 'platform-shared-llm' : 'openai-compatible',
+      model: usageModel,
+      inputTokens: usage.inputTokens,
+      outputTokens: usage.outputTokens,
+      totalTokens: usage.totalTokens,
+      amount: '0',
+      status: usageStatus,
+      credentialSource,
+      answerSource,
+      createdAt: Date.now()
+    })
+  }
 
   return {
-    reply: reply.content,
+    reply: replyContent,
     sessionId: sessionId,
-    usage: {
-      inputTokens: reply.inputTokens,
-      outputTokens: reply.outputTokens,
-      totalTokens: reply.totalTokens
-    }
+    answerSource,
+    credentialSource,
+    citations,
+    retrievalConfidence,
+    usage
   }
 }

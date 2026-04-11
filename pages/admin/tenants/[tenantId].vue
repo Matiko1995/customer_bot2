@@ -42,6 +42,11 @@
           <p class="install-hint">相同问题{{ form.reuseAnsweredQuestions === false ? '每次重新生成' : '优先复用历史回答' }}</p>
         </article>
         <article class="install-card">
+          <p class="install-label">RAG 检索</p>
+          <code>{{ form.ragSettings?.enabled ? '开启' : '关闭' }}</code>
+          <p class="install-hint">{{ form.ragSettings?.industryPreset === 'fastener' ? '紧固件行业模板' : '通用行业模板' }}</p>
+        </article>
+        <article class="install-card">
           <p class="install-label">租户登录</p>
           <code>{{ primaryTenantUser?.email || '未生成' }}</code>
           <p class="install-hint">{{ primaryTenantUser?.mustChangePassword ? '首次登录需改密' : '客户可直接登录查看' }}</p>
@@ -401,6 +406,53 @@
     </section>
 
     <section v-if="activeWorkspaceTab === 'content'" class="workspace-section">
+      <RagSettingsPanel
+        :settings="form.ragSettings!"
+        :busy="saving || sourceOpsBusy"
+        @apply-preset="applyRagPreset"
+        @reset-preset="resetRagSettings"
+      />
+
+      <SourceLibraryPanel
+        :sources="ragSources"
+        :busy="sourceOpsBusy"
+        @refresh="loadRagData"
+        @create="createRagSource"
+        @sync="syncRagSource"
+        @disable="disableRagSource"
+        @upload="uploadRagSourceAsset"
+      />
+
+      <SyncJobsPanel
+        :jobs="ingestionJobs"
+        :busy="sourceOpsBusy"
+        @refresh="loadRagData"
+        @retry="retryRagJob"
+      />
+
+      <IndexHealthPanel
+        :tenant-id="tenantId"
+        :sources="ragSources"
+        :jobs="ingestionJobs"
+        :stats="indexStats"
+        :rag-enabled="form.ragSettings?.enabled"
+        :busy="sourceOpsBusy"
+        @reindex="reindexAllSources"
+      />
+
+      <AgentDocsPanel
+        v-model="activeAgentDoc"
+        :items="agentDocItems"
+        :busy="sourceOpsBusy"
+        @refresh="loadRagData"
+        @save="saveAgentDoc"
+      />
+
+      <section v-if="sourceOpsNotice || sourceOpsError" class="panel install-panel">
+        <p v-if="sourceOpsNotice" class="copy-notice">{{ sourceOpsNotice }}</p>
+        <p v-if="sourceOpsError" class="content-error">{{ sourceOpsError }}</p>
+      </section>
+
       <form class="panel form-grid" @submit.prevent="saveTenant">
       <input v-model.trim="form.name" type="text" placeholder="租户名称" required />
       <input v-model.trim="form.brandName" type="text" placeholder="品牌名称" required />
@@ -618,6 +670,12 @@ import { listTrainingRuns } from '../../../lib/training-runs'
 import { demoArticles, demoConsultingServices, demoProducts } from '../../../config/customer-bot-data'
 import { billingPlans } from '../../../lib/billing-plans'
 import { buildTenantOverview } from '../../../lib/tenant-overview'
+import {
+  applyTenantRagPreset,
+  createDefaultTenantRagSettings,
+  normalizeTenantRagSettings,
+  type RagIndustryPreset
+} from '../../../packages/shared-config/src/rag-settings.ts'
 import type {
   ArticleListItem,
   AssistantKnowledgeEntry,
@@ -626,6 +684,8 @@ import type {
   ChatSessionRecord,
   ConsultingServiceListItem,
   ConversationMessage,
+  DataSourceRecord,
+  IngestionJobRecord,
   LeadRecord,
   LlmUsageRecord,
   MatchedContentSource,
@@ -636,11 +696,25 @@ import type {
   TenantRecord,
   TenantUserRecord
 } from '../../../types'
+import type { IndexStatsResponse } from '../../../packages/contracts/src/indexing/job.contract'
 
 const route = useRoute()
 const requestUrl = useRequestURL()
 const runtimeConfig = useRuntimeConfig()
-const { request } = useAdminApi()
+const {
+  request,
+  listTenantSources,
+  createTenantSource,
+  syncTenantSource,
+  disableTenantSource,
+  uploadTenantSourceAsset,
+  listTenantIngestionJobs,
+  getTenantIndexStats,
+  retryTenantIngestionJob,
+  reindexTenantSources,
+  listTenantAgentDocs,
+  saveTenantAgentDoc
+} = useAdminApi()
 const tenantId = String(route.params.tenantId)
 const saving = ref(false)
 const contentError = ref('')
@@ -672,6 +746,14 @@ const contentStats = ref<Array<MatchedContentSource & { hits: number }>>([])
 const sessionRecords = ref<ChatSessionRecord[]>([])
 const sessionMessages = ref<Array<{ session: ChatSessionRecord; messages: ConversationMessage[] }>>([])
 const leadRecords = ref<LeadRecord[]>([])
+const ragSources = ref<DataSourceRecord[]>([])
+const ingestionJobs = ref<IngestionJobRecord[]>([])
+const agentDocItems = ref<Array<{ fileName: string; content: string }>>([])
+const activeAgentDoc = ref('')
+const indexStats = ref<IndexStatsResponse | null>(null)
+const sourceOpsBusy = ref(false)
+const sourceOpsError = ref('')
+const sourceOpsNotice = ref('')
 const faqSummaries = computed(() => {
   const map = new Map<string, { question: string; answer: string; hits: number; lastAskedAt: number; isUnhandled: boolean }>()
 
@@ -756,6 +838,7 @@ const form = reactive<TenantRecord>({
   llmModel: '',
   reuseAnsweredQuestions: true,
   embedKey: '',
+  ragSettings: createDefaultTenantRagSettings(),
   billingSubscription: {
     planId: selectedBillingPlanId.value,
     startedAt: Date.now(),
@@ -871,6 +954,7 @@ const overview = computed(() =>
 async function loadTenant() {
   const response = await request<{ item: TenantRecord; tenantUsers?: TenantUserRecord[] }>(`/api/admin/tenants/${tenantId}`)
   Object.assign(form, response.item)
+  form.ragSettings = normalizeTenantRagSettings(response.item.ragSettings)
   tenantUsers.value = Array.isArray(response.tenantUsers) ? response.tenantUsers : []
   selectedBillingPlanId.value = response.item.billingSubscription?.planId || activeBillingPlans[0]?.id || 'plan-basic'
   billingNotes.value = response.item.billingSubscription?.notes || ''
@@ -878,6 +962,27 @@ async function loadTenant() {
   await loadLatestBillingSummary()
   await loadContentStats()
   await loadOverviewData()
+  await loadRagData()
+}
+
+async function loadRagData() {
+  const [sourceResponse, jobResponse, statsResponse] = await Promise.all([
+    listTenantSources(tenantId),
+    listTenantIngestionJobs(tenantId),
+    getTenantIndexStats(tenantId)
+  ])
+
+  ragSources.value = sourceResponse.items
+  ingestionJobs.value = jobResponse.items.sort((left, right) => {
+    const leftTime = left.finishedAt ?? left.startedAt ?? 0
+    const rightTime = right.finishedAt ?? right.startedAt ?? 0
+    return rightTime - leftTime
+  })
+  indexStats.value = statsResponse
+
+  const agentDocsResponse = await listTenantAgentDocs(tenantId)
+  agentDocItems.value = agentDocsResponse.items
+  activeAgentDoc.value = activeAgentDoc.value || agentDocsResponse.items[0]?.fileName || ''
 }
 
 async function issueResetCode() {
@@ -978,6 +1083,7 @@ async function saveTenant() {
       method: 'PUT',
       body: {
         ...form,
+        ragSettings: normalizeTenantRagSettings(form.ragSettings),
         billingSubscription: {
           planId: selectedBillingPlanId.value,
           startedAt: form.billingSubscription?.startedAt || Date.now(),
@@ -1040,6 +1146,148 @@ async function saveTenantAndSimulateTraining() {
     trainingError.value = error instanceof Error ? error.message : '训练模拟失败'
   } finally {
     trainingBusy.value = false
+  }
+}
+
+function applyRagPreset(preset: RagIndustryPreset) {
+  form.ragSettings = applyTenantRagPreset(preset, form.ragSettings)
+}
+
+function resetRagSettings() {
+  form.ragSettings = createDefaultTenantRagSettings(form.ragSettings?.industryPreset || 'general')
+}
+
+async function createRagSource(payload: {
+  type: DataSourceRecord['type']
+  syncMode: DataSourceRecord['syncMode']
+  scheduleCron?: string
+  config: Record<string, unknown>
+}) {
+  sourceOpsBusy.value = true
+  sourceOpsError.value = ''
+  sourceOpsNotice.value = ''
+
+  try {
+    await createTenantSource(tenantId, payload)
+    await loadRagData()
+    sourceOpsNotice.value = '资料源已创建'
+  } catch (error) {
+    sourceOpsError.value = error instanceof Error ? error.message : '创建资料源失败'
+  } finally {
+    sourceOpsBusy.value = false
+  }
+}
+
+async function syncRagSource(sourceId: string) {
+  sourceOpsBusy.value = true
+  sourceOpsError.value = ''
+  sourceOpsNotice.value = ''
+
+  try {
+    const response = await syncTenantSource(tenantId, sourceId)
+    await loadRagData()
+    sourceOpsNotice.value = `同步完成：${response.documentCount} 个文档 / ${response.chunkCount} 个 chunks`
+  } catch (error) {
+    sourceOpsError.value = error instanceof Error ? error.message : '同步失败'
+  } finally {
+    sourceOpsBusy.value = false
+  }
+}
+
+async function disableRagSource(sourceId: string) {
+  sourceOpsBusy.value = true
+  sourceOpsError.value = ''
+  sourceOpsNotice.value = ''
+
+  try {
+    await disableTenantSource(tenantId, sourceId)
+    await loadRagData()
+    sourceOpsNotice.value = '资料源已停用'
+  } catch (error) {
+    sourceOpsError.value = error instanceof Error ? error.message : '停用资料源失败'
+  } finally {
+    sourceOpsBusy.value = false
+  }
+}
+
+async function uploadRagSourceAsset(payload: { sourceId: string; file: File }) {
+  sourceOpsBusy.value = true
+  sourceOpsError.value = ''
+  sourceOpsNotice.value = ''
+
+  try {
+    const buffer = await payload.file.arrayBuffer()
+    const bytes = new Uint8Array(buffer)
+    let binary = ''
+    for (const byte of bytes) {
+      binary += String.fromCharCode(byte)
+    }
+
+    await uploadTenantSourceAsset(tenantId, payload.sourceId, {
+      fileName: payload.file.name,
+      mimeType: payload.file.type || 'application/octet-stream',
+      base64Data: btoa(binary)
+    })
+    await loadRagData()
+    sourceOpsNotice.value = `文件 ${payload.file.name} 已上传`
+  } catch (error) {
+    sourceOpsError.value = error instanceof Error ? error.message : '上传文件失败'
+  } finally {
+    sourceOpsBusy.value = false
+  }
+}
+
+async function retryRagJob(jobId: string) {
+  sourceOpsBusy.value = true
+  sourceOpsError.value = ''
+  sourceOpsNotice.value = ''
+
+  try {
+    await retryTenantIngestionJob(tenantId, jobId)
+    await loadRagData()
+    sourceOpsNotice.value = '已重新执行同步任务'
+  } catch (error) {
+    sourceOpsError.value = error instanceof Error ? error.message : '重试任务失败'
+  } finally {
+    sourceOpsBusy.value = false
+  }
+}
+
+async function reindexAllSources() {
+  sourceOpsBusy.value = true
+  sourceOpsError.value = ''
+  sourceOpsNotice.value = ''
+
+  try {
+    const response = await reindexTenantSources(tenantId)
+    sourceOpsNotice.value = response.failureCount
+      ? `已触发 ${response.successCount} 个资料源重建，${response.failureCount} 个失败`
+      : `已触发 ${response.successCount} 个资料源重建，共新增 ${response.documentCount} 个文档、${response.chunkCount} 个 chunks`
+    if (response.failures.length) {
+      sourceOpsError.value = response.failures.map((item) => `${item.sourceId}: ${item.message}`).join('\n')
+    }
+    await loadRagData()
+  } catch (error) {
+    sourceOpsError.value = error instanceof Error ? error.message : '重建索引失败'
+  } finally {
+    sourceOpsBusy.value = false
+  }
+}
+
+async function saveAgentDoc(payload: { fileName: string; content: string }) {
+  sourceOpsBusy.value = true
+  sourceOpsError.value = ''
+  sourceOpsNotice.value = ''
+
+  try {
+    await saveTenantAgentDoc(tenantId, payload.fileName, payload.content)
+    await loadRagData()
+    activeAgentDoc.value = payload.fileName
+    sourceOpsNotice.value = `${payload.fileName} 已保存`
+  } catch (error) {
+    sourceOpsError.value = error instanceof Error ? error.message : '保存 agent 文档失败'
+  } finally {
+    sourceOpsBusy.value = false
   }
 }
 

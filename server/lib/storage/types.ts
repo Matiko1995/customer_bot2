@@ -1,8 +1,12 @@
 import type {
   ChatMessageRecord,
   ChatSessionRecord,
+  DataSourceRecord,
+  DocumentChunkRecord,
+  IngestionJobRecord,
   LeadRecord,
   LlmUsageRecord,
+  SourceDocumentRecord,
   TenantPasswordResetRecord,
   TenantRecord,
   TenantUserRecord
@@ -48,6 +52,29 @@ export interface TenantPasswordResetStorage {
   getTenantPasswordResetByCode(email: string, code: string): Promise<TenantPasswordResetRecord | undefined>
 }
 
+export interface DataSourceStorage {
+  saveDataSource(record: DataSourceRecord): Promise<void>
+  getDataSourceById(dataSourceId: string): Promise<DataSourceRecord | undefined>
+  listDataSourcesByTenant(tenantId: string): Promise<DataSourceRecord[]>
+}
+
+export interface IngestionJobStorage {
+  saveIngestionJob(record: IngestionJobRecord): Promise<void>
+  getIngestionJobById(jobId: string): Promise<IngestionJobRecord | undefined>
+  listIngestionJobsByTenant(tenantId: string): Promise<IngestionJobRecord[]>
+}
+
+export interface SourceDocumentStorage {
+  saveSourceDocument(record: SourceDocumentRecord): Promise<void>
+  getSourceDocumentById(documentId: string): Promise<SourceDocumentRecord | undefined>
+  listSourceDocumentsByTenant(tenantId: string): Promise<SourceDocumentRecord[]>
+}
+
+export interface DocumentChunkStorage {
+  replaceDocumentChunks(documentId: string, chunks: DocumentChunkRecord[]): Promise<void>
+  listDocumentChunksByDocument(documentId: string): Promise<DocumentChunkRecord[]>
+}
+
 export interface StorageRepository
   extends TenantStorage,
     SessionStorage,
@@ -56,3 +83,9 @@ export interface StorageRepository
     UsageStorage,
     TenantUserStorage,
     TenantPasswordResetStorage {}
+
+export interface RagStorageRepository
+  extends DataSourceStorage,
+    IngestionJobStorage,
+    SourceDocumentStorage,
+    DocumentChunkStorage {}

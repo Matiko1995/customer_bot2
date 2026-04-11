@@ -1,9 +1,10 @@
+import type { TenantResetPasswordRequest } from '../../../packages/contracts/src/tenant/auth.contract'
+import { createTenantIdentityGateway } from '../../lib/service-gateways/tenant-identity'
 import { setTenantSession } from '../../lib/auth'
 import { getStorage } from '../../lib/storage'
-import { resetTenantPassword } from '../../lib/tenant-users'
 
 export default defineEventHandler(async (event) => {
-  const body = await readBody<{ email?: string; code?: string; nextPassword?: string }>(event)
+  const body = await readBody<Partial<TenantResetPasswordRequest>>(event)
   const email = body?.email?.trim() || ''
   const code = body?.code?.trim() || ''
   const nextPassword = body?.nextPassword || ''
@@ -15,25 +16,18 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const user = await resetTenantPassword({
+  const gateway = createTenantIdentityGateway(getStorage())
+  const response = await gateway.resetTenantPassword({
     email,
     code,
-    nextPassword,
-    storage: getStorage()
+    nextPassword
   })
 
   setTenantSession(event, {
-    tenantUserId: user.id,
-    tenantId: user.tenantId,
-    email: user.email
+    tenantUserId: response.user.tenantUserId,
+    tenantId: response.user.tenantId,
+    email: response.user.email
   })
 
-  return {
-    ok: true,
-    user: {
-      email: user.email,
-      tenantId: user.tenantId,
-      mustChangePassword: user.mustChangePassword
-    }
-  }
+  return response
 })

@@ -1,4 +1,4 @@
-import type { AssistantModuleId, ConversationMessage, MessageAttachment } from '../types'
+import type { AssistantModuleId, CitationRecord, ConversationMessage, MessageAttachment } from '../types'
 
 const STORAGE_KEY = 'customer-bot:history:v1'
 
@@ -42,6 +42,33 @@ function normalizeAttachment(value: unknown): MessageAttachment | null {
   }
 }
 
+function normalizeCitation(value: unknown): CitationRecord | null {
+  if (!value || typeof value !== 'object') {
+    return null
+  }
+
+  const candidate = value as Partial<CitationRecord>
+  if (
+    typeof candidate.documentId !== 'string' ||
+    typeof candidate.chunkId !== 'string' ||
+    typeof candidate.title !== 'string' ||
+    typeof candidate.snippet !== 'string' ||
+    typeof candidate.score !== 'number'
+  ) {
+    return null
+  }
+
+  return {
+    documentId: candidate.documentId,
+    chunkId: candidate.chunkId,
+    title: candidate.title,
+    snippet: candidate.snippet,
+    score: candidate.score,
+    sourceUri: typeof candidate.sourceUri === 'string' ? candidate.sourceUri : undefined,
+    metadata: candidate.metadata && typeof candidate.metadata === 'object' ? candidate.metadata as Record<string, unknown> : undefined
+  }
+}
+
 function normalizeMessage(value: unknown): ConversationMessage | null {
   if (!value || typeof value !== 'object') {
     return null
@@ -58,6 +85,23 @@ function normalizeMessage(value: unknown): ConversationMessage | null {
     role,
     content: candidate.content,
     createdAt: typeof candidate.createdAt === 'number' ? candidate.createdAt : Date.now(),
+    citations: Array.isArray(candidate.citations)
+      ? candidate.citations
+          .map((item) => normalizeCitation(item))
+          .filter((item): item is CitationRecord => Boolean(item))
+      : undefined,
+    answerSource:
+      candidate.answerSource === 'structured' || candidate.answerSource === 'rag' || candidate.answerSource === 'general_fallback'
+        ? candidate.answerSource
+        : undefined,
+    credentialSource:
+      candidate.credentialSource === 'tenant' || candidate.credentialSource === 'platform_shared'
+        ? candidate.credentialSource
+        : undefined,
+    retrievalConfidence:
+      candidate.retrievalConfidence === 'high' || candidate.retrievalConfidence === 'low' || candidate.retrievalConfidence === 'miss'
+        ? candidate.retrievalConfidence
+        : undefined,
     attachments: Array.isArray(candidate.attachments)
       ? candidate.attachments
           .map((item) => normalizeAttachment(item))

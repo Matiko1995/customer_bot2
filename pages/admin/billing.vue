@@ -54,12 +54,28 @@
     </section>
 
     <section class="panel">
+      <h2>来源拆分</h2>
+      <div v-if="breakdown.length" class="breakdown-grid">
+        <article v-for="item in breakdown" :key="`${item.credentialSource}-${item.answerSource}`" class="breakdown-card">
+          <p><strong>凭据来源</strong> {{ item.credentialSource }}</p>
+          <p><strong>回答来源</strong> {{ item.answerSource }}</p>
+          <p><strong>请求数</strong> {{ item.requestCount }}</p>
+          <p><strong>总 Tokens</strong> {{ item.totalTokens }}</p>
+          <p><strong>金额</strong> {{ item.amount }}</p>
+        </article>
+      </div>
+      <p v-else class="empty-text">当前没有可展示的来源拆分。</p>
+    </section>
+
+    <section class="panel">
       <h2>调用明细</h2>
       <table class="data-table">
         <thead>
           <tr>
             <th>时间</th>
             <th>来源</th>
+            <th>凭据</th>
+            <th>回答链路</th>
             <th>模型</th>
             <th>会话 / 任务</th>
             <th>输入</th>
@@ -73,6 +89,8 @@
           <tr v-for="item in filteredUsageRecords" :key="item.id">
             <td>{{ new Date(item.createdAt).toLocaleString() }}</td>
             <td>{{ item.provider }}</td>
+            <td>{{ item.credentialSource || '-' }}</td>
+            <td>{{ item.answerSource || '-' }}</td>
             <td>{{ item.model }}</td>
             <td>{{ item.sessionId }}</td>
             <td>{{ item.inputTokens }}</td>
@@ -90,12 +108,21 @@
 <script setup lang="ts">
 import type { BillingPlan, BillingSummary, LlmUsageRecord, TenantRecord } from '../../types'
 
+type UsageBreakdownItem = {
+  credentialSource: string
+  answerSource: string
+  totalTokens: number
+  amount: string
+  requestCount: number
+}
+
 const route = useRoute()
 const { request } = useAdminApi()
 const tenantId = ref(typeof route.query.tenantId === 'string' ? route.query.tenantId : '')
 const providerFilter = ref(typeof route.query.provider === 'string' ? route.query.provider : '')
 const summaries = ref<BillingSummary[]>([])
 const usageRecords = ref<LlmUsageRecord[]>([])
+const breakdown = ref<UsageBreakdownItem[]>([])
 const tenant = ref<TenantRecord | null>(null)
 const plan = ref<BillingPlan | null>(null)
 const filteredUsageRecords = computed(() => {
@@ -108,11 +135,12 @@ const filteredUsageRecords = computed(() => {
 
 async function loadBilling() {
   if (!tenantId.value) return
-  const response = await request<{ summaries: BillingSummary[]; usageRecords: LlmUsageRecord[]; tenant?: TenantRecord | null; plan?: BillingPlan | null }>(
+  const response = await request<{ summaries: BillingSummary[]; usageRecords: LlmUsageRecord[]; breakdown: UsageBreakdownItem[]; tenant?: TenantRecord | null; plan?: BillingPlan | null }>(
     `/api/admin/billing?tenantId=${encodeURIComponent(tenantId.value)}`
   )
   summaries.value = response.summaries
   usageRecords.value = response.usageRecords
+  breakdown.value = response.breakdown
   tenant.value = response.tenant || null
   plan.value = response.plan || null
 }
@@ -153,7 +181,10 @@ input, button { padding: 12px; border-radius: 12px; border: 1px solid #cfd9e2; f
 button { background: #0a7ea4; color: white; border: 0; font-weight: 700; }
 .ghost-btn { background: white; color: #21425b; border: 1px solid #cfd9e2; }
 .plan-summary, .empty-text { margin: 0; line-height: 1.7; }
+.breakdown-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.breakdown-card { padding: 16px; border-radius: 16px; background: #f8fbfd; border: 1px solid #e5edf3; }
+.breakdown-card p { margin: 0 0 8px; }
 .data-table { width: 100%; border-collapse: collapse; }
 .data-table th, .data-table td { padding: 12px; border-bottom: 1px solid #edf2f7; text-align: left; }
-@media (max-width: 900px) { .filter { flex-wrap: wrap; } }
+@media (max-width: 900px) { .filter { flex-wrap: wrap; } .breakdown-grid { grid-template-columns: 1fr; } }
 </style>

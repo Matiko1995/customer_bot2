@@ -1,5 +1,6 @@
 const ADMIN_COOKIE = 'customer_bot_admin'
 const TENANT_COOKIE = 'customer_bot_tenant'
+import type { TenantSessionPayload } from '../../packages/contracts/src/tenant/auth.contract'
 
 function getAdminConfig() {
   return {
@@ -39,7 +40,7 @@ export function requireAdminSession(event: Parameters<typeof getCookie>[0]) {
 
 export function setTenantSession(
   event: Parameters<typeof setCookie>[0],
-  payload: { tenantUserId: string; tenantId: string; email: string }
+  payload: TenantSessionPayload
 ) {
   setCookie(event, TENANT_COOKIE, JSON.stringify(payload), {
     httpOnly: true,
@@ -64,7 +65,7 @@ export function requireTenantSession(event: Parameters<typeof getCookie>[0]) {
   }
 
   try {
-    const parsed = JSON.parse(raw) as { tenantUserId: string; tenantId: string; email: string }
+    const parsed = JSON.parse(raw) as TenantSessionPayload
     if (!parsed.tenantUserId || !parsed.tenantId || !parsed.email) {
       throw new Error('invalid tenant session')
     }

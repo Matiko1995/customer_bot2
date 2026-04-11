@@ -1,43 +1,28 @@
+import type { ChangeTenantPasswordRequest } from '../../../packages/contracts/src/tenant/auth.contract'
+import { createTenantIdentityGateway } from '../../lib/service-gateways/tenant-identity'
 import { requireTenantSession } from '../../lib/auth'
 import { getStorage } from '../../lib/storage'
-import { verifyTenantPassword } from '../../lib/tenant-users'
 
 export default defineEventHandler(async (event) => {
   const session = requireTenantSession(event)
-  const body = await readBody<{ currentPassword?: string; nextPassword?: string }>(event)
+  const body = await readBody<Partial<ChangeTenantPasswordRequest>>(event)
   const currentPassword = body?.currentPassword || ''
   const nextPassword = body?.nextPassword || ''
 
-  if (!currentPassword || !nextPassword) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: 'currentPassword and nextPassword are required'
+  try {
+    const gateway = createTenantIdentityGateway(getStorage())
+    return await gateway.changeTenantPassword({
+      tenantUserId: session.tenantUserId,
+      tenantId: session.tenantId,
+      email: session.email,
+      currentPassword,
+      nextPassword
     })
-  }
-
-  const storage = getStorage()
-  const user = await verifyTenantPassword(session.email, currentPassword, storage)
-  if (!user || user.id !== session.tenantUserId) {
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Invalid credentials'
     throw createError({
-      statusCode: 401,
-      statusMessage: 'Invalid credentials'
+      statusCode: message.includes('required') ? 400 : 401,
+      statusMessage: message
     })
-  }
-
-  const updatedUser = {
-    ...user,
-    passwordHash: user.passwordHash,
-    temporaryPassword: '',
-    mustChangePassword: false,
-    updatedAt: Date.now()
-  }
-
-  const { createHash } = await import('node:crypto')
-  updatedUser.passwordHash = createHash('sha256').update(nextPassword).digest('hex')
-
-  await storage.saveTenantUser(updatedUser)
-
-  return {
-    ok: true
   }
 })

@@ -45,9 +45,10 @@ describe('chat service', () => {
       }
     )
 
-    expect(result.reply).toBe('您好，这里是 AI 客服。')
+    expect(result.reply).toContain('当前资料未直接命中')
     expect(result.sessionId).toBeTruthy()
-    expect(result.usage.totalTokens).toBe(20)
+    expect(result.answerSource).toBe('general_fallback')
+    expect(result.credentialSource).toBe('platform_shared')
   })
 
   it('stores uploaded attachments with the user message', async () => {
@@ -196,6 +197,35 @@ describe('chat service', () => {
       updatedAt: 1760000000000
     })
 
+    const { createInMemoryRagRepository } = await import('../../server/lib/repositories/rag-repository')
+    const ragRepository = createInMemoryRagRepository()
+    await ragRepository.saveDocument({
+      id: 'doc-1',
+      tenantId: 'tenant-1',
+      dataSourceId: 'source-1',
+      title: '价格资料',
+      mimeType: 'text/plain',
+      sourceUri: 'file://pricing.txt',
+      contentText: '六角头螺栓支持标准参数和报价查询。',
+      metadata: {},
+      contentHash: 'hash-1',
+      versionHash: 'hash-1',
+      createdAt: 1,
+      updatedAt: 1
+    })
+    await ragRepository.replaceDocumentChunks('doc-1', [
+      {
+        id: 'chunk-1',
+        tenantId: 'tenant-1',
+        documentId: 'doc-1',
+        chunkIndex: 0,
+        content: '六角头螺栓支持标准参数和报价查询。',
+        tokenCount: 5,
+        metadata: {},
+        createdAt: 1
+      }
+    ])
+
     const fetcher = vi.fn().mockResolvedValue({
       ok: true,
       json: async () => ({
@@ -224,6 +254,7 @@ describe('chat service', () => {
       },
       {
         storage: store,
+        ragRepository,
         endpoint: 'https://example.com/chat',
         apiKey: 'test-key',
         model: 'gpt-test',
@@ -235,9 +266,9 @@ describe('chat service', () => {
     const body = JSON.parse(String(request?.body))
     expect(body.messages[1]?.content).toContain('六角头螺栓多少钱？')
     expect(body.messages[1]?.content).toContain('已收到附件')
-    expect(body.messages[1]?.content).toContain('参数')
+    expect(body.messages[1]?.content).toContain('命中资料')
     expect(body.messages[0]?.content).toContain('你必须优先依据已提供的命中资料回答')
-    expect(body.messages[0]?.content).toContain('禁止输出资料之外的价格区间或估算')
+    expect(body.messages[0]?.content).toContain('优先引用资料摘要')
   })
 
   it('prefers tenant-specific content when available', async () => {
@@ -290,6 +321,7 @@ describe('chat service', () => {
 
     expect(result.reply).toContain('客户专属知识库')
     expect(result.reply).toContain('这是客户自己的知识条目')
+    expect(result.answerSource).toBe('structured')
   })
 
   it('stores matched knowledge source metadata', async () => {
@@ -335,9 +367,10 @@ describe('chat service', () => {
     const assistant = messages.find((item) => item.role === 'assistant')
 
     expect(assistant?.matchedContentSources?.some((item) => item.title.includes('客户专属知识库｜标准回复'))).toBe(true)
+    expect(assistant?.answerSource).toBe('structured')
   })
 
-  it('stores matched content snippet and answer hints for trace view', async () => {
+  it('stores rag citations for trace view', async () => {
     const store = createMemoryStore()
 
     await store.saveTenant({
@@ -356,32 +389,93 @@ describe('chat service', () => {
         articles: [],
         products: [],
         consultingServices: [],
-        contentSources: [
-          {
-            id: 'source-api',
-            type: 'document',
-            enabled: true,
-            category: '交付',
-            title: 'API 接口说明',
-            summary: '接口能力说明。',
-            content: '系统支持 API 对接、Webhook 回调以及 ERP / MES 字段映射。',
-            tags: ['API'],
-            faqQuestions: ['支持 API 对接吗？'],
-            answerHints: ['先确认支持 API', '说明可对接 ERP / MES']
-          }
-        ]
+        contentSources: []
       },
       createdAt: 1760000000000,
       updatedAt: 1760000000000
     })
 
-    const result = await processChatMessage({ tenantId: 'tenant-trace', message: '支持 API 对接吗？' }, { storage: store })
+    const { createInMemoryRagRepository } = await import('../../server/lib/repositories/rag-repository')
+    const ragRepository = createInMemoryRagRepository()
+    await ragRepository.saveDocument({
+      id: 'doc-api',
+      tenantId: 'tenant-trace',
+      dataSourceId: 'source-api',
+      title: 'API 接口说明',
+      mimeType: 'text/plain',
+      sourceUri: 'file://api.txt',
+      contentText: '系统支持 API 对接、Webhook 回调以及 ERP / MES 字段映射。',
+      metadata: {},
+      contentHash: 'hash-api',
+      versionHash: 'hash-api',
+      createdAt: 1,
+      updatedAt: 1
+    })
+    await ragRepository.replaceDocumentChunks('doc-api', [
+      {
+        id: 'chunk-api',
+        tenantId: 'tenant-trace',
+        documentId: 'doc-api',
+        chunkIndex: 0,
+        content: '系统支持 API 对接、Webhook 回调以及 ERP / MES 字段映射。',
+        tokenCount: 6,
+        metadata: {},
+        createdAt: 1
+      }
+    ])
+
+    const result = await processChatMessage({ tenantId: 'tenant-trace', message: '支持 API 对接吗？' }, { storage: store, ragRepository })
     const messages = await store.listMessagesBySession(result.sessionId)
     const assistant = messages.find((item) => item.role === 'assistant')
-    const source = assistant?.matchedContentSources?.find((item) => item.id === 'source-api')
+    const source = assistant?.matchedContentSources?.find((item) => item.id === 'chunk-api')
 
     expect(source?.snippet).toContain('系统支持 API 对接')
-    expect(source?.answerHints).toEqual(['先确认支持 API', '说明可对接 ERP / MES'])
+    expect(assistant?.citations?.[0]?.title).toBe('API 接口说明')
+    expect(assistant?.answerSource).toBe('rag')
+  })
+
+  it('preserves platform_shared provenance when reusing a fallback answer', async () => {
+    const store = createMemoryStore()
+
+    await store.saveTenant({
+      id: 'tenant-reuse-fallback',
+      name: 'Tenant Reuse Fallback',
+      status: 'active',
+      brandName: 'Tenant Reuse Fallback Bot',
+      themeColor: '#118ab2',
+      contactPhone: '+86 138-0000-0000',
+      contactEmail: 'tenant-reuse@example.com',
+      contactAddress: 'Shanghai',
+      systemPrompt: 'You are the tenant bot.',
+      embedKey: 'embed-tenant-reuse-fallback',
+      createdAt: 1760000000000,
+      updatedAt: 1760000000000
+    })
+
+    const first = await processChatMessage(
+      {
+        tenantId: 'tenant-reuse-fallback',
+        message: '你们适合哪些行业？'
+      },
+      {
+        storage: store
+      }
+    )
+
+    const second = await processChatMessage(
+      {
+        tenantId: 'tenant-reuse-fallback',
+        message: '你们适合哪些行业？'
+      },
+      {
+        storage: store
+      }
+    )
+
+    expect(first.answerSource).toBe('general_fallback')
+    expect(first.credentialSource).toBe('platform_shared')
+    expect(second.answerSource).toBe('general_fallback')
+    expect(second.credentialSource).toBe('platform_shared')
   })
 
   it('does not reuse previous answer when tenant reuse toggle is disabled', async () => {

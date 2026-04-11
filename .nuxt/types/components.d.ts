@@ -15,6 +15,11 @@ type LazyComponent<T> = DefineComponent<HydrationStrategies, {}, {}, {}, {}, {},
 
 interface _GlobalComponents {
   AiSupportWidget: typeof import("../../components/AiSupportWidget.vue")['default']
+  AdminTenantWorkspaceAgentDocsPanel: typeof import("../../components/admin/tenant-workspace/AgentDocsPanel.vue")['default']
+  AdminTenantWorkspaceIndexHealthPanel: typeof import("../../components/admin/tenant-workspace/IndexHealthPanel.vue")['default']
+  AdminTenantWorkspaceRagSettingsPanel: typeof import("../../components/admin/tenant-workspace/RagSettingsPanel.vue")['default']
+  AdminTenantWorkspaceSourceLibraryPanel: typeof import("../../components/admin/tenant-workspace/SourceLibraryPanel.vue")['default']
+  AdminTenantWorkspaceSyncJobsPanel: typeof import("../../components/admin/tenant-workspace/SyncJobsPanel.vue")['default']
   NuxtWelcome: typeof import("../../node_modules/nuxt/dist/app/components/welcome.vue")['default']
   NuxtLayout: typeof import("../../node_modules/nuxt/dist/app/components/nuxt-layout")['default']
   NuxtErrorBoundary: typeof import("../../node_modules/nuxt/dist/app/components/nuxt-error-boundary.vue")['default']
@@ -40,6 +45,11 @@ interface _GlobalComponents {
   Body: typeof import("../../node_modules/nuxt/dist/head/runtime/components")['Body']
   NuxtIsland: typeof import("../../node_modules/nuxt/dist/app/components/nuxt-island")['default']
   LazyAiSupportWidget: LazyComponent<typeof import("../../components/AiSupportWidget.vue")['default']>
+  LazyAdminTenantWorkspaceAgentDocsPanel: LazyComponent<typeof import("../../components/admin/tenant-workspace/AgentDocsPanel.vue")['default']>
+  LazyAdminTenantWorkspaceIndexHealthPanel: LazyComponent<typeof import("../../components/admin/tenant-workspace/IndexHealthPanel.vue")['default']>
+  LazyAdminTenantWorkspaceRagSettingsPanel: LazyComponent<typeof import("../../components/admin/tenant-workspace/RagSettingsPanel.vue")['default']>
+  LazyAdminTenantWorkspaceSourceLibraryPanel: LazyComponent<typeof import("../../components/admin/tenant-workspace/SourceLibraryPanel.vue")['default']>
+  LazyAdminTenantWorkspaceSyncJobsPanel: LazyComponent<typeof import("../../components/admin/tenant-workspace/SyncJobsPanel.vue")['default']>
   LazyNuxtWelcome: LazyComponent<typeof import("../../node_modules/nuxt/dist/app/components/welcome.vue")['default']>
   LazyNuxtLayout: LazyComponent<typeof import("../../node_modules/nuxt/dist/app/components/nuxt-layout")['default']>
   LazyNuxtErrorBoundary: LazyComponent<typeof import("../../node_modules/nuxt/dist/app/components/nuxt-error-boundary.vue")['default']>

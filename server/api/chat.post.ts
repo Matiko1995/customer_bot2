@@ -1,5 +1,7 @@
 import type { MessageAttachment } from '../../types'
-import { processChatMessage, SessionNotFoundError } from '../lib/chat'
+import { createAgentRuntimeGateway } from '../lib/service-gateways/agent-runtime'
+import { SessionNotFoundError } from '../lib/chat'
+import { getRagRepository, getStorage } from '../lib/storage'
 import { TenantNotFoundError } from '../lib/tenants'
 
 export default defineEventHandler(async (event) => {
@@ -22,15 +24,22 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    return await processChatMessage({
+    const gateway = createAgentRuntimeGateway({
+      storage: getStorage(),
+      ragRepository: getRagRepository(),
+      endpoint: runtimeConfig.customerBotLlmEndpoint,
+      apiKey: runtimeConfig.customerBotLlmApiKey,
+      model: runtimeConfig.customerBotLlmModel,
+      platformEndpoint: runtimeConfig.customerBotPlatformLlmEndpoint,
+      platformApiKey: runtimeConfig.customerBotPlatformLlmApiKey,
+      platformModel: runtimeConfig.customerBotPlatformLlmModel
+    })
+
+    return await gateway.chat({
       tenantId,
       message,
       sessionId: body?.sessionId?.trim(),
       attachments: Array.isArray(body?.attachments) ? body.attachments : []
-    }, {
-      endpoint: runtimeConfig.customerBotLlmEndpoint,
-      apiKey: runtimeConfig.customerBotLlmApiKey,
-      model: runtimeConfig.customerBotLlmModel
     })
   } catch (error) {
     if (error instanceof TenantNotFoundError) {
