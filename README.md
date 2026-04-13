@@ -108,6 +108,11 @@ CUSTOMER_BOT_RESEND_API_KEY=re_xxx
 
 - `docs/deployment-bot.factory.website-aapanel.md`
 
+Cloudflare 原生迁移目前已开始第一阶段基础层，设计与计划见：
+
+- `docs/superpowers/specs/2026-04-13-cloudflare-native-migration-design.md`
+- `docs/superpowers/plans/2026-04-13-cloudflare-phase1-foundation.md`
+
 线上多服务启动可参考：
 
 ```bash

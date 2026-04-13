@@ -15,7 +15,7 @@ import { generateGroundedAnswer } from './rag/answer-chain.ts'
 import { buildCitationContext } from './rag/build-context.ts'
 import { classifyQuery } from './rag/query-classifier.ts'
 import { renderRagTemplate } from './rag/render-template.ts'
-import { retrieveForTenant } from './rag/retriever.ts'
+import { retrieveForTenant, type RetrievalResult } from './rag/retriever.ts'
 import { runStructuredFastPath } from './rag/structured-fast-path.ts'
 import type { RagRepository } from './repositories/rag-repository'
 import type { StorageRepository } from './storage/types'
@@ -41,6 +41,13 @@ export interface ProcessChatMessageOptions {
   platformApiKey?: string
   platformModel?: string
   fetcher?: typeof fetch
+  embedQuery?: (query: string) => Promise<number[]>
+  customRetriever?: (input: {
+    tenantId: string
+    query: string
+    topK: number
+    queryEmbedding?: number[]
+  }) => Promise<RetrievalResult>
 }
 
 export class SessionNotFoundError extends Error {
@@ -335,7 +342,9 @@ export async function processChatMessage(
         tenantId: tenant.id,
         query: input.message,
         repository: ragRepository,
-        topK: ragSettings.retrievalTopK
+        topK: ragSettings.retrievalTopK,
+        embedQuery: options.embedQuery,
+        customRetriever: options.customRetriever
       })
 
       retrievalConfidence = retrieval.confidence

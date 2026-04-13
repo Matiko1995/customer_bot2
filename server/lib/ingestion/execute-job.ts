@@ -6,6 +6,7 @@ import { createQueuedIngestionJob, markJobFailed, markJobRunning, markJobSucceed
 import type { IngestionExecutionResult, SourceDocumentLoader } from './types.ts'
 import type { RagRepository } from '../repositories/rag-repository.ts'
 import type { DocumentChunkRecord, SourceDocumentRecord } from '../../../types'
+import type { QueuePublisher } from '../tasks/queue-publisher.ts'
 
 function nextDocumentId(prefix = 'document'): string {
   return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
@@ -67,6 +68,7 @@ export async function executeIngestionJob(input: {
   loadDocuments: SourceDocumentLoader
   embedder?: ChunkEmbedder
   chunking?: ChunkingOptions
+  queuePublisher?: QueuePublisher
   now?: number
 }): Promise<IngestionExecutionResult> {
   const now = input.now ?? Date.now()
@@ -119,6 +121,16 @@ export async function executeIngestionJob(input: {
       documents: normalizedDocuments,
       generatedAt: now
     })
+    await input.queuePublisher?.publish({
+      type: 'ingestion.completed',
+      payload: {
+        tenantId: input.tenantId,
+        dataSourceId: input.dataSourceId,
+        jobId: job.id,
+        documentCount: documentRecords.length,
+        chunkCount: chunkRecords.length
+      }
+    })
 
     return {
       job,
@@ -130,6 +142,15 @@ export async function executeIngestionJob(input: {
   } catch (error) {
     job = markJobFailed(job, now, error instanceof Error ? error.message : 'Ingestion failed')
     await input.repository.saveIngestionJob(job)
+    await input.queuePublisher?.publish({
+      type: 'ingestion.failed',
+      payload: {
+        tenantId: input.tenantId,
+        dataSourceId: input.dataSourceId,
+        jobId: job.id,
+        errorMessage: error instanceof Error ? error.message : 'Ingestion failed'
+      }
+    })
     throw error
   }
 }

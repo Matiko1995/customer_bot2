@@ -1,12 +1,11 @@
-import { createTenantIdentityGateway } from '../../../../lib/service-gateways/tenant-identity'
+import { createTenantIdentityGatewayForEvent } from '../../../../lib/service-gateways/tenant-identity-event'
 import { requireAdminSession } from '../../../../lib/auth'
-import { getStorage } from '../../../../lib/storage'
 
 export default defineEventHandler(async (event) => {
   requireAdminSession(event)
   const tenantId = getRouterParam(event, 'tenantId') || ''
   try {
-    const gateway = createTenantIdentityGateway(getStorage())
+    const gateway = createTenantIdentityGatewayForEvent(event)
     return await gateway.restoreTenant(tenantId)
   } catch {
     throw createError({

@@ -1,9 +1,9 @@
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 
-async function assertUsesHttpAdapter(path: string) {
+async function assertUsesGatewayHelper(path: string) {
   const content = await readFile(path, 'utf8')
-  assert.equal(content.includes('createKnowledgeIndexingGateway'), true, `${path} should use KnowledgeIndexing gateway`)
+  assert.equal(content.includes('createKnowledgeIndexingGatewayForEvent'), true, `${path} should use KnowledgeIndexing gateway helper`)
 }
 
 async function main() {
@@ -18,7 +18,7 @@ async function main() {
     'server/api/admin/tenants/[tenantId]/jobs/[jobId]/retry.post.ts',
     'server/api/admin/tenants/[tenantId]/agent-docs/[fileName].put.ts'
   ]) {
-    await assertUsesHttpAdapter(path)
+    await assertUsesGatewayHelper(path)
   }
 
   console.log('knowledge indexing api adapters verified')

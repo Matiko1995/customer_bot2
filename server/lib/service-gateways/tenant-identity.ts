@@ -18,14 +18,22 @@ import type {
 import type { TenantMeResponse } from '../../../packages/contracts/src/tenant/tenant-user.contract'
 import { getServiceBaseUrl } from '../../../packages/shared-config/src/service-endpoints.ts'
 import { createTenantIdentityHttpAdapter } from '../../../services/tenant-identity-service/src/infrastructure/create-tenant-identity-http-adapter.ts'
+import type { CloudflareRuntimeBindings } from '../cloudflare/bindings.ts'
 import { requestJson, type GatewayHttpOptions } from './http.ts'
 import type { StorageRepository } from '../storage/types.ts'
 
-export function createTenantIdentityGateway(input: StorageRepository | ({ storage: StorageRepository } & GatewayHttpOptions)) {
+export function createTenantIdentityGateway(
+  input:
+    | StorageRepository
+    | ({ storage?: StorageRepository; bindings?: CloudflareRuntimeBindings } & GatewayHttpOptions)
+) {
   const storage = 'saveTenant' in input ? input : input.storage
+  const bindings = 'saveTenant' in input ? undefined : input.bindings
   const baseUrl = 'saveTenant' in input ? getServiceBaseUrl('tenant-identity-service') : input.baseUrl || getServiceBaseUrl('tenant-identity-service')
   const fetcher = 'saveTenant' in input ? undefined : input.fetcher
-  const http = createTenantIdentityHttpAdapter(storage)
+  const http = 'saveTenant' in input
+    ? createTenantIdentityHttpAdapter(input)
+    : createTenantIdentityHttpAdapter({ storage, bindings })
 
   return {
     adminLogin(input: AdminLoginRequest): Promise<AdminLoginResponse> | AdminLoginResponse {

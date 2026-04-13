@@ -1,6 +1,5 @@
-import { createKnowledgeIndexingGateway } from '../../../../../lib/service-gateways/knowledge-indexing'
+import { createKnowledgeIndexingGatewayForEvent } from '../../../../../lib/service-gateways/knowledge-indexing-event'
 import { requireAdminSession } from '../../../../../lib/auth'
-import { getRagRepository } from '../../../../../lib/storage'
 
 export default defineEventHandler(async (event) => {
   requireAdminSession(event)
@@ -15,7 +14,7 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'content is required' })
   }
 
-  const gateway = createKnowledgeIndexingGateway(getRagRepository())
+  const gateway = createKnowledgeIndexingGatewayForEvent(event)
   return gateway.saveAgentDoc({
     tenantId,
     fileName,

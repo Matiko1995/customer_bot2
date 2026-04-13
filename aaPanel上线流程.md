@@ -10,6 +10,11 @@
 - 文件存储：本地磁盘
 - 当前项目结构：前端主应用 + 4 个服务
 
+说明：
+
+- 这份文档对应当前可上线的生产路线
+- Cloudflare 原生迁移已经开始第一阶段基础层，但尚未替代当前 aaPanel 发布流程
+
 相关参考文件：
 
 - 部署细节说明：[docs/deployment-bot.factory.website-aapanel.md](D:/ai/aifactory_website/customer_bot/docs/deployment-bot.factory.website-aapanel.md)

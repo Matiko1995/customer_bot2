@@ -1,7 +1,6 @@
 import type { TenantResetPasswordRequest } from '../../../packages/contracts/src/tenant/auth.contract'
-import { createTenantIdentityGateway } from '../../lib/service-gateways/tenant-identity'
+import { createTenantIdentityGatewayForEvent } from '../../lib/service-gateways/tenant-identity-event'
 import { setTenantSession } from '../../lib/auth'
-import { getStorage } from '../../lib/storage'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody<Partial<TenantResetPasswordRequest>>(event)
@@ -16,7 +15,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const gateway = createTenantIdentityGateway(getStorage())
+  const gateway = createTenantIdentityGatewayForEvent(event)
   const response = await gateway.resetTenantPassword({
     email,
     code,

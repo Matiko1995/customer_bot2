@@ -1,7 +1,5 @@
-import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { basename, extname, join } from 'node:path'
-
-const assetRoot = join(process.cwd(), '.data', 'source-assets')
+import { getObjectStorageProvider, type ObjectStorageProvider } from '../object-storage/object-storage.ts'
 
 function sanitizeSegment(value: string): string {
   const trimmed = value.trim()
@@ -22,25 +20,33 @@ export interface StoredTenantAsset {
   relativePath: string
 }
 
-export async function saveTenantAsset(input: SaveTenantAssetInput): Promise<StoredTenantAsset> {
+function buildAssetKey(input: { tenantId: string; fileName: string }): string {
   const safeTenantId = sanitizeSegment(input.tenantId)
   const extension = extname(input.fileName)
   const baseName = basename(input.fileName, extension)
   const safeFileName = `${sanitizeSegment(baseName)}${extension || ''}`
-  const tenantDir = join(assetRoot, safeTenantId)
+  return join('source-assets', safeTenantId, safeFileName).replace(/\\/g, '/')
+}
 
-  await mkdir(tenantDir, { recursive: true })
-
-  const assetPath = join(tenantDir, safeFileName)
-  await writeFile(assetPath, input.contents)
+export async function saveTenantAsset(
+  input: SaveTenantAssetInput,
+  provider: ObjectStorageProvider = getObjectStorageProvider()
+): Promise<StoredTenantAsset> {
+  const descriptor = await provider.writeBuffer({
+    key: buildAssetKey(input),
+    contents: input.contents
+  })
 
   return {
-    fileName: safeFileName,
-    assetPath,
-    relativePath: join('.data', 'source-assets', safeTenantId, safeFileName)
+    fileName: basename(descriptor.relativePath),
+    assetPath: descriptor.localPath || descriptor.key,
+    relativePath: descriptor.relativePath
   }
 }
 
-export async function readTenantAsset(assetPath: string): Promise<Buffer> {
-  return readFile(assetPath)
+export async function readTenantAsset(
+  assetPath: string,
+  provider: ObjectStorageProvider = getObjectStorageProvider()
+): Promise<Buffer> {
+  return provider.readBuffer(assetPath)
 }

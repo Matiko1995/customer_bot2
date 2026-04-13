@@ -1,0 +1,30 @@
+name = "customer-bot-cloudflare"
+main = "./.output/server/index.mjs"
+compatibility_date = "2026-04-13"
+compatibility_flags = ["nodejs_compat"]
+
+[assets]
+directory = "./.output/public"
+binding = "ASSETS"
+
+[[d1_databases]]
+binding = "TENANT_IDENTITY_DB"
+database_name = "customer-bot-tenant-identity"
+database_id = "replace-with-d1-database-id"
+
+[[r2_buckets]]
+binding = "CUSTOMER_BOT_BUCKET"
+bucket_name = "customer-bot-assets"
+
+[[queues.producers]]
+binding = "INGESTION_QUEUE"
+queue = "customer-bot-ingestion"
+
+[[queues.consumers]]
+queue = "customer-bot-ingestion"
+max_batch_size = 10
+max_batch_timeout = 5
+
+[[vectorize]]
+binding = "CUSTOMER_BOT_VECTOR_INDEX"
+index_name = "customer-bot-index"
