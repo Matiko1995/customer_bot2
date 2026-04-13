@@ -1,5 +1,4 @@
-import { createAgentRuntimeGateway } from '../lib/service-gateways/agent-runtime'
-import { getRagRepository, getStorage } from '../lib/storage'
+import { createAgentRuntimeGatewayForEvent } from '../lib/service-gateways/agent-runtime-event'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody<{
@@ -19,11 +18,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const storage = getStorage()
-  const gateway = createAgentRuntimeGateway({
-    storage,
-    ragRepository: getRagRepository()
-  })
+  const gateway = createAgentRuntimeGatewayForEvent(event)
 
   try {
     return await gateway.contact({

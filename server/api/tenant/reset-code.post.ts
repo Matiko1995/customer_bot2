@@ -1,5 +1,4 @@
-import { createTenantIdentityGateway } from '../../lib/service-gateways/tenant-identity'
-import { getStorage } from '../../lib/storage'
+import { createTenantIdentityGatewayForEvent, createTenantIdentityStorageForEvent } from '../../lib/service-gateways/tenant-identity-event'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody<{ email?: string }>(event)
@@ -12,9 +11,9 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const storage = getStorage()
+  const storage = createTenantIdentityStorageForEvent(event)
   const tenantUser = await storage.getTenantUserByEmail(email)
-  const gateway = createTenantIdentityGateway(storage)
+  const gateway = createTenantIdentityGatewayForEvent(event)
 
   return gateway.issueTenantUserResetCode({
     tenantId: tenantUser?.tenantId || '',

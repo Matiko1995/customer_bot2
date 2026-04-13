@@ -1,7 +1,6 @@
 import type { ChangeTenantPasswordRequest } from '../../../packages/contracts/src/tenant/auth.contract'
-import { createTenantIdentityGateway } from '../../lib/service-gateways/tenant-identity'
+import { createTenantIdentityGatewayForEvent } from '../../lib/service-gateways/tenant-identity-event'
 import { requireTenantSession } from '../../lib/auth'
-import { getStorage } from '../../lib/storage'
 
 export default defineEventHandler(async (event) => {
   const session = requireTenantSession(event)
@@ -10,7 +9,7 @@ export default defineEventHandler(async (event) => {
   const nextPassword = body?.nextPassword || ''
 
   try {
-    const gateway = createTenantIdentityGateway(getStorage())
+    const gateway = createTenantIdentityGatewayForEvent(event)
     return await gateway.changeTenantPassword({
       tenantUserId: session.tenantUserId,
       tenantId: session.tenantId,

@@ -1,5 +1,4 @@
-import { createEmbedDeliveryGateway } from '../../lib/service-gateways/embed-delivery'
-import { getStorage } from '../../lib/storage'
+import { createEmbedDeliveryGatewayForEvent } from '../../lib/service-gateways/embed-delivery-event'
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event)
@@ -13,7 +12,7 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const gateway = createEmbedDeliveryGateway(getStorage())
+    const gateway = createEmbedDeliveryGatewayForEvent(event)
     return await gateway.runtimeConfig(tenantId)
   } catch {
     throw createError({

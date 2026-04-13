@@ -1,9 +1,9 @@
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 
-async function assertUsesHttpAdapter(path: string) {
+async function assertUsesGatewayHelper(path: string) {
   const content = await readFile(path, 'utf8')
-  assert.equal(content.includes('createTenantIdentityHttpAdapter'), true, `${path} should use HTTP adapter`)
+  assert.equal(content.includes('createTenantIdentityGatewayForEvent'), true, `${path} should use tenant identity gateway helper`)
 }
 
 async function main() {
@@ -22,7 +22,7 @@ async function main() {
     'server/api/tenant/reset-code.post.ts',
     'server/api/tenant/reset-password.post.ts'
   ]) {
-    await assertUsesHttpAdapter(path)
+    await assertUsesGatewayHelper(path)
   }
 
   console.log('tenant identity api adapters verified')

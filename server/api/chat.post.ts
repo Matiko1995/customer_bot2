@@ -1,7 +1,6 @@
 import type { MessageAttachment } from '../../types'
-import { createAgentRuntimeGateway } from '../lib/service-gateways/agent-runtime'
+import { createAgentRuntimeGatewayForEvent } from '../lib/service-gateways/agent-runtime-event'
 import { SessionNotFoundError } from '../lib/chat'
-import { getRagRepository, getStorage } from '../lib/storage'
 import { TenantNotFoundError } from '../lib/tenants'
 
 export default defineEventHandler(async (event) => {
@@ -24,9 +23,7 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const gateway = createAgentRuntimeGateway({
-      storage: getStorage(),
-      ragRepository: getRagRepository(),
+    const gateway = createAgentRuntimeGatewayForEvent(event, {
       endpoint: runtimeConfig.customerBotLlmEndpoint,
       apiKey: runtimeConfig.customerBotLlmApiKey,
       model: runtimeConfig.customerBotLlmModel,

@@ -1,7 +1,6 @@
 import type { AdminLoginRequest } from '../../../packages/contracts/src/tenant/auth.contract'
-import { createTenantIdentityGateway } from '../../lib/service-gateways/tenant-identity'
+import { createTenantIdentityGatewayForEvent } from '../../lib/service-gateways/tenant-identity-event'
 import { setAdminSession, validateAdminCredentials } from '../../lib/auth'
-import { getStorage } from '../../lib/storage'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody<Partial<AdminLoginRequest>>(event)
@@ -9,7 +8,7 @@ export default defineEventHandler(async (event) => {
   const password = body?.password || ''
 
   try {
-    const gateway = createTenantIdentityGateway(getStorage())
+    const gateway = createTenantIdentityGatewayForEvent(event)
     const response = gateway.adminLogin({
       email,
       password

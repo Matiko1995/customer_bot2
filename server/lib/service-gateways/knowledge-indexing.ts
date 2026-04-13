@@ -1,14 +1,22 @@
 import type { CreateSourceRequest, UpdateSourceRequest, UpdateSourceResponse, UploadSourceAssetResponse } from '../../../packages/contracts/src/indexing/source.contract.ts'
 import { getServiceBaseUrl } from '../../../packages/shared-config/src/service-endpoints.ts'
 import { createKnowledgeIndexingHttpAdapter } from '../../../services/knowledge-indexing-service/src/infrastructure/create-knowledge-indexing-http-adapter.ts'
+import type { CloudflareRuntimeBindings } from '../cloudflare/bindings.ts'
 import { requestJson, type GatewayHttpOptions } from './http.ts'
 import type { RagRepository } from '../repositories/rag-repository.ts'
 
-export function createKnowledgeIndexingGateway(input: RagRepository | ({ repository: RagRepository } & GatewayHttpOptions)) {
+export function createKnowledgeIndexingGateway(
+  input:
+    | RagRepository
+    | ({ repository?: RagRepository; bindings?: CloudflareRuntimeBindings } & GatewayHttpOptions)
+) {
   const repository = 'saveDataSource' in input ? input : input.repository
+  const bindings = 'saveDataSource' in input ? undefined : input.bindings
   const baseUrl = 'saveDataSource' in input ? getServiceBaseUrl('knowledge-indexing-service') : input.baseUrl || getServiceBaseUrl('knowledge-indexing-service')
   const fetcher = 'saveDataSource' in input ? undefined : input.fetcher
-  const http = createKnowledgeIndexingHttpAdapter(repository)
+  const http = 'saveDataSource' in input
+    ? createKnowledgeIndexingHttpAdapter(input)
+    : createKnowledgeIndexingHttpAdapter({ repository, bindings })
 
   return {
     listSources(tenantId: string) {

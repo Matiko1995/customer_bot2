@@ -2,13 +2,15 @@ import type { ChatRequest } from '../../../packages/contracts/src/agent/chat.con
 import type { ContactRequest } from '../../../packages/contracts/src/agent/contact.contract.ts'
 import { getServiceBaseUrl } from '../../../packages/shared-config/src/service-endpoints.ts'
 import { createAgentRuntimeHttpAdapter } from '../../../services/agent-runtime-service/src/infrastructure/create-agent-runtime-http-adapter.ts'
+import type { CloudflareRuntimeBindings } from '../cloudflare/bindings.ts'
 import { requestJson, type GatewayHttpOptions } from './http.ts'
 import type { RagRepository } from '../repositories/rag-repository.ts'
 import type { StorageRepository } from '../storage/types'
 
 export function createAgentRuntimeGateway(input: {
-  storage: StorageRepository
-  ragRepository: RagRepository
+  storage?: StorageRepository
+  ragRepository?: RagRepository
+  bindings?: CloudflareRuntimeBindings
   baseUrl?: string
   endpoint?: string
   apiKey?: string

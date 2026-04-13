@@ -1,13 +1,12 @@
-import { createTenantIdentityGateway } from '../../../../lib/service-gateways/tenant-identity'
+import { createTenantIdentityGatewayForEvent } from '../../../../lib/service-gateways/tenant-identity-event'
 import { requireAdminSession } from '../../../../lib/auth'
-import { getStorage } from '../../../../lib/storage'
 
 export default defineEventHandler(async (event) => {
   requireAdminSession(event)
 
   const tenantId = getRouterParam(event, 'tenantId')?.trim() || ''
   try {
-    const gateway = createTenantIdentityGateway(getStorage())
+    const gateway = createTenantIdentityGatewayForEvent(event)
     return await gateway.issueTenantResetCode({
       tenantId,
       loginUrl: `${(process.env.CUSTOMER_BOT_PUBLIC_BASE_URL || 'https://bot.aifactory.website').replace(/\/+$/, '')}/tenant/login`

@@ -1,15 +1,13 @@
 import type { TenantUserLoginRequest, TenantUserLoginResponse } from '../../../packages/contracts/src/tenant/auth.contract'
-import { createTenantIdentityGateway } from '../../lib/service-gateways/tenant-identity'
+import { createTenantIdentityGatewayForEvent } from '../../lib/service-gateways/tenant-identity-event'
 import { setTenantSession } from '../../lib/auth'
-import { getStorage } from '../../lib/storage'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody<Partial<TenantUserLoginRequest>>(event)
   const email = body?.email?.trim() || ''
   const password = body?.password || ''
 
-  const storage = getStorage()
-  const gateway = createTenantIdentityGateway(storage)
+  const gateway = createTenantIdentityGatewayForEvent(event)
 
   let response: TenantUserLoginResponse
   try {

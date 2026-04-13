@@ -1,12 +1,11 @@
 import type { TenantMeResponse } from '../../../packages/contracts/src/tenant/tenant-user.contract'
-import { createTenantIdentityGateway } from '../../lib/service-gateways/tenant-identity'
+import { createTenantIdentityGatewayForEvent } from '../../lib/service-gateways/tenant-identity-event'
 import { requireTenantSession } from '../../lib/auth'
-import { getStorage } from '../../lib/storage'
 
 export default defineEventHandler(async (event) => {
   const session = requireTenantSession(event)
   try {
-    const gateway = createTenantIdentityGateway(getStorage())
+    const gateway = createTenantIdentityGatewayForEvent(event)
     return gateway.tenantMe({
       tenantUserId: session.tenantUserId,
       tenantId: session.tenantId

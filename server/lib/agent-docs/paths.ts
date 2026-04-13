@@ -1,5 +1,5 @@
-import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises'
 import { basename, join } from 'node:path'
+import { getObjectStorageProvider, type ObjectStorageProvider } from '../object-storage/object-storage.ts'
 
 export const AGENT_DOC_FILE_NAMES = ['AGENTS.md', 'BOOTSTRAP.md', 'HEARTBEAT.md', 'IDENTITY.md', 'SOUL.md', 'USER.md', 'TOOLS.md'] as const
 
@@ -13,31 +13,42 @@ function ensureAllowedFileName(fileName: string): (typeof AGENT_DOC_FILE_NAMES)[
 }
 
 export function getAgentDocDirectory(tenantId: string): string {
-  return join(process.cwd(), '.data', 'agent-docs', tenantId, 'latest')
+  return join('agent-docs', tenantId, 'latest').replace(/\\/g, '/')
 }
 
-export async function listAgentDocFiles(tenantId: string): Promise<string[]> {
+export async function listAgentDocFiles(
+  tenantId: string,
+  provider: ObjectStorageProvider = getObjectStorageProvider()
+): Promise<string[]> {
   const directory = getAgentDocDirectory(tenantId)
   try {
-    const files = await readdir(directory)
-    return files.filter((fileName) => (AGENT_DOC_FILE_NAMES as readonly string[]).includes(fileName)).sort()
+    const files = await provider.list(directory)
+    return files
+      .map((fileName) => basename(fileName))
+      .filter((fileName) => (AGENT_DOC_FILE_NAMES as readonly string[]).includes(fileName))
+      .sort()
   } catch {
     return []
   }
 }
 
-export async function readAgentDocFile(tenantId: string, fileName: string): Promise<string> {
+export async function readAgentDocFile(
+  tenantId: string,
+  fileName: string,
+  provider: ObjectStorageProvider = getObjectStorageProvider()
+): Promise<string> {
   const allowedFileName = ensureAllowedFileName(fileName)
-  return readFile(join(getAgentDocDirectory(tenantId), allowedFileName), 'utf8')
+  return provider.readText(join(getAgentDocDirectory(tenantId), allowedFileName).replace(/\\/g, '/'))
 }
 
 export async function writeAgentDocFile(input: {
   tenantId: string
   fileName: string
   content: string
-}): Promise<void> {
+}, provider: ObjectStorageProvider = getObjectStorageProvider()): Promise<void> {
   const allowedFileName = ensureAllowedFileName(input.fileName)
-  const directory = getAgentDocDirectory(input.tenantId)
-  await mkdir(directory, { recursive: true })
-  await writeFile(join(directory, allowedFileName), input.content, 'utf8')
+  await provider.writeText({
+    key: join(getAgentDocDirectory(input.tenantId), allowedFileName).replace(/\\/g, '/'),
+    content: input.content
+  })
 }

@@ -1,4 +1,4 @@
-import type { DataSourceRecord, IngestionJobRecord, SourceDocumentRecord } from '../../../../../types'
+import type { DataSourceRecord, DocumentChunkRecord, IngestionJobRecord, SourceDocumentRecord } from '../../../../../types'
 
 export interface KnowledgeIndexingRepository {
   saveDataSource(record: DataSourceRecord): Promise<void>
@@ -7,6 +7,9 @@ export interface KnowledgeIndexingRepository {
   saveIngestionJob(record: IngestionJobRecord): Promise<void>
   getIngestionJobById(jobId: string): Promise<IngestionJobRecord | undefined>
   listIngestionJobsByTenant(tenantId: string): Promise<IngestionJobRecord[]>
+  saveSourceDocument(record: SourceDocumentRecord): Promise<void>
   listSourceDocumentsByTenant(tenantId: string): Promise<SourceDocumentRecord[]>
+  replaceDocumentChunks(documentId: string, chunks: DocumentChunkRecord[]): Promise<void>
+  listDocumentChunksByDocument(documentId: string): Promise<DocumentChunkRecord[]>
   countDocumentChunksByTenant(tenantId: string): Promise<number>
 }

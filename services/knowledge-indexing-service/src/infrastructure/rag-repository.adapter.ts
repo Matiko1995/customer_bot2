@@ -32,8 +32,20 @@ export class RagRepositoryKnowledgeIndexingAdapter implements KnowledgeIndexingR
     return this.repository.listIngestionJobsByTenant(tenantId)
   }
 
+  saveSourceDocument(record: Parameters<RagRepository['saveDocument']>[0]) {
+    return this.repository.saveDocument(record)
+  }
+
   listSourceDocumentsByTenant(tenantId: string) {
     return this.repository.listDocumentsByTenant(tenantId)
+  }
+
+  replaceDocumentChunks(documentId: string, chunks: Parameters<RagRepository['replaceDocumentChunks']>[1]) {
+    return this.repository.replaceDocumentChunks(documentId, chunks)
+  }
+
+  listDocumentChunksByDocument(documentId: string) {
+    return this.repository.listChunksByDocument(documentId)
   }
 
   async countDocumentChunksByTenant(tenantId: string) {

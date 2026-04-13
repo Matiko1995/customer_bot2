@@ -5,7 +5,7 @@ export interface ChunkEmbedder {
   embedDocuments(texts: string[]): Promise<number[][]>
 }
 
-function createDeterministicEmbedding(value: string): number[] {
+export function createDeterministicEmbedding(value: string): number[] {
   const digest = createHash('sha256').update(value).digest()
 
   return Array.from(digest.slice(0, 8)).map((item) => Number((item / 255).toFixed(6)))

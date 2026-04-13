@@ -1,7 +1,6 @@
-import { mkdir, readFile, writeFile } from 'node:fs/promises'
-import { join } from 'node:path'
 import type { NormalizedSourceDocument } from '../ingestion/normalize-document.ts'
 import { renderAgentDoc } from './render-agent-doc.ts'
+import { getAgentDocDirectory, readAgentDocFile, writeAgentDocFile } from './paths.ts'
 
 const defaultDocNames = ['AGENTS.md', 'BOOTSTRAP.md', 'HEARTBEAT.md', 'IDENTITY.md', 'SOUL.md', 'USER.md', 'TOOLS.md'] as const
 
@@ -12,7 +11,9 @@ export interface AgentDocBundleResult {
 
 async function readExistingContent(path: string): Promise<string | undefined> {
   try {
-    return await readFile(path, 'utf8')
+    const tenantId = path.split(/[\\/]/).slice(-3, -2)[0] || ''
+    const fileName = path.split(/[\\/]/).slice(-1)[0] || ''
+    return await readAgentDocFile(tenantId, fileName)
   } catch {
     return undefined
   }
@@ -99,17 +100,15 @@ export async function generateAgentDocBundle(input: {
   generatedAt?: number
 }): Promise<AgentDocBundleResult> {
   const generatedAt = input.generatedAt ?? Date.now()
-  const outputDir = input.outputRoot ?? join(process.cwd(), '.data', 'agent-docs', input.tenantId, 'latest')
+  const outputDir = input.outputRoot ?? getAgentDocDirectory(input.tenantId)
   const sections = buildGeneratedSections({
     tenantId: input.tenantId,
     documents: input.documents,
     generatedAt
   })
 
-  await mkdir(outputDir, { recursive: true })
-
   for (const fileName of defaultDocNames) {
-    const fullPath = join(outputDir, fileName)
+    const fullPath = `${outputDir.replace(/\\/g, '/')}/${fileName}`
     const existingContent = await readExistingContent(fullPath)
     const rendered = renderAgentDoc({
       title: fileName,
@@ -118,7 +117,11 @@ export async function generateAgentDocBundle(input: {
       existingContent
     })
 
-    await writeFile(fullPath, rendered, 'utf8')
+    await writeAgentDocFile({
+      tenantId: input.tenantId,
+      fileName,
+      content: rendered
+    })
   }
 
   return {

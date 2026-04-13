@@ -53,9 +53,23 @@ export async function retrieveForTenant(input: {
   repository: RagRepository
   topK?: number
   embedQuery?: (query: string) => Promise<number[]>
+  customRetriever?: (input: {
+    tenantId: string
+    query: string
+    topK: number
+    queryEmbedding?: number[]
+  }) => Promise<RetrievalResult>
 }): Promise<RetrievalResult> {
   const documents = await input.repository.listDocumentsByTenant(input.tenantId)
   const queryEmbedding = input.embedQuery ? await input.embedQuery(input.query) : undefined
+  if (input.customRetriever) {
+    return input.customRetriever({
+      tenantId: input.tenantId,
+      query: input.query,
+      topK: input.topK ?? 3,
+      queryEmbedding
+    })
+  }
   const scored: Array<{ chunk: DocumentChunkRecord; title: string; sourceUri: string; score: number }> = []
 
   for (const document of documents) {
