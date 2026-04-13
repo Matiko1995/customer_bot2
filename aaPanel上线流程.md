@@ -51,9 +51,14 @@
 - `Node.js 22+`
 - `npm`
 - `pm2`
-- `MySQL`
 - `PostgreSQL`
 - `pgvector`
+
+说明：
+
+- 当前仓库的可运行线上链路，硬依赖是 `PostgreSQL + pgvector`
+- 租户基础信息、资料源配置、Agent 文档和部分运行数据，当前仍可直接落本地共享目录
+- `MySQL` 不是当前上线必需项，如果你后续要把租户域做更彻底的关系型拆分，再单独接入即可
 
 推荐目录结构：
 
@@ -90,13 +95,18 @@ npm install
 
 ## 4. 数据库准备
 
-### MySQL
-
-用于租户身份、登录等相关数据。
-
 ### PostgreSQL + pgvector
 
-用于知识库索引和向量检索。
+用于知识库索引、向量检索，以及当前服务链路中的数据库持久化能力。
+
+### 本地共享存储
+
+当前部署还需要本地共享目录承载以下内容：
+
+- `.data/customer-bot-storage.json`
+- `.data/source-assets/`
+- `.data/agent-docs/`
+- `logs/`
 
 如果还没有启用 `pgvector`，先执行：
 
@@ -120,7 +130,6 @@ npm run db:migrate
 
 你至少需要准备这些真实值：
 
-- MySQL 连接信息
 - PostgreSQL 连接信息
 - LLM 接口地址
 - LLM API Key
@@ -324,3 +333,4 @@ npm run verify:stack-launcher
 - `ecosystem.config.cjs` 中数据库和模型地址是否还是占位值
 - PostgreSQL 是否真的启用了 `pgvector`
 - 主应用的 4 个 `*_SERVICE_URL` 是否指向 `https://bot.factory.website/<prefix>`
+- 共享目录下的 `.data/` 和 `logs/` 是否存在且有写权限

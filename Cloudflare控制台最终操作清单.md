@@ -17,7 +17,7 @@
 1. `D1 Database`
    建议名称：
    - `customer-bot-tenant-identity`
-
+   - `de34244a-fa17-4b11-ac48-2f40b5a15c9c`
 2. `R2 Bucket`
    建议名称：
    - `customer-bot-assets`

@@ -17,13 +17,18 @@ Single domain with path prefixes:
 - Linux server
 - aaPanel for process and reverse-proxy management
 - existing HTTPS certificate already bound to `bot.factory.website`
-- MySQL available
 - PostgreSQL available and `pgvector` enabled
 - local file storage allowed
 
+Note:
+
+- Current runnable production path does not require MySQL
+- The active storage path is `PostgreSQL + local shared files`
+- MySQL can remain a future extension if tenant persistence is split again later
+
 ## Data Ownership
 
-- Tenant Identity: `MySQL` or shared tenant store
+- Tenant Identity: shared tenant store
 - Knowledge Indexing: `PostgreSQL + pgvector`
 - Agent Runtime: shared tenant store + indexing DB access
 - Embed Delivery: shared tenant store
@@ -183,7 +188,6 @@ Before using it online, replace placeholder values in the ecosystem file:
 
 ## Remaining Secrets You Must Fill
 
-- MySQL connection info for tenant identity
 - PostgreSQL connection info for indexing/runtime
 - LLM endpoint and API keys
 - platform fallback LLM endpoint and API keys
