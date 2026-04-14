@@ -1,11 +1,11 @@
 import process from 'node:process';globalThis._importMeta_={url:import.meta.url,env:process.env};import { tmpdir } from 'node:os';
 import { Server } from 'node:http';
-import { resolve, dirname, join, extname, basename } from 'node:path';
+import { resolve, dirname, join, basename, extname } from 'node:path';
 import nodeCrypto, { createHash, randomInt } from 'node:crypto';
 import { parentPort, threadId } from 'node:worker_threads';
 import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, sendRedirect, proxyRequest, getRequestHeader, setResponseHeaders, setResponseStatus, send, getRequestHeaders, setResponseHeader, appendResponseHeader, getRequestURL, getResponseHeader, removeResponseHeader, createError, getHeader, setHeader, getMethod, getQuery as getQuery$1, readBody, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getResponseStatus, getRouterParam, getCookie, setCookie, deleteCookie, getResponseStatusText } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/h3/dist/index.mjs';
 import { escapeHtml } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/@vue/shared/dist/shared.cjs.js';
-import { readFile, mkdir, writeFile, readdir } from 'node:fs/promises';
+import { readFile, mkdir, writeFile, readdir, access } from 'node:fs/promises';
 import { Buffer as Buffer$1 } from 'node:buffer';
 import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/vue-bundle-renderer/dist/runtime.mjs';
 import { parseURL, withoutBase, joinURL, getQuery, withQuery, withTrailingSlash, decodePath, withLeadingSlash, withoutTrailingSlash, joinRelativeURL } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/ufo/dist/index.mjs';
@@ -15,7 +15,7 @@ import { klona } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/
 import defu, { defuFn } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/defu/dist/defu.mjs';
 import { snakeCase } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/scule/dist/index.mjs';
 import { createHead as createHead$1, propsToString, renderSSRHead } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/unhead/dist/server.mjs';
-import { stringify, uneval } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/devalue/index.js';
+import { stringify as stringify$1, uneval } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/devalue/index.js';
 import { isVNode, isRef, toValue } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/vue/index.mjs';
 import { createHooks } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/nitropack/node_modules/hookable/dist/index.mjs';
 import { createFetch, Headers as Headers$1 } from 'file://D:/ai/aifactory_website/customer_bot/node_modules/ofetch/dist/node.mjs';
@@ -649,6 +649,7 @@ const _inlineRuntimeConfig = {
     }
   },
   "public": {
+    "customerBotDeploymentTarget": "node",
     "customerBotPublicBaseUrl": "https://bot.aifactory.website",
     "customerBotStagingBaseUrl": "https://bot.aifactory.website"
   },
@@ -658,7 +659,8 @@ const _inlineRuntimeConfig = {
   "customerBotPlatformLlmEndpoint": "",
   "customerBotPlatformLlmApiKey": "",
   "customerBotPlatformLlmModel": "",
-  "customerBotWidgetVersion": ""
+  "customerBotWidgetVersion": "",
+  "customerBotCloudflareMigrationPhase": ""
 };
 const envOptions = {
   prefix: "NITRO_",
@@ -2107,7 +2109,7 @@ const _8u4YFeAt_fLTgOoFQaol9xdDrwe2aRzgnFZecKUDs7U = (nitroApp) => {
 		}
 		try {
 			const reducers = Object.assign(Object.create(null), devReducers, ctx.event.context["~payloadReducers"]);
-			htmlContext.bodyAppend.unshift(`<script type="application/json" data-nuxt-logs="${appId}">${stringify(ctx.logs, reducers)}<\/script>`);
+			htmlContext.bodyAppend.unshift(`<script type="application/json" data-nuxt-logs="${appId}">${stringify$1(ctx.logs, reducers)}<\/script>`);
 		} catch (e) {
 			const shortError = e instanceof Error && "toString" in e ? ` Received \`${e.toString()}\`.` : "";
 			console.warn(`[nuxt] Failed to stringify dev server logs.${shortError} You can define your own reducer/reviver for rich types following the instructions in https://nuxt.com/docs/4.x/api/composables/use-nuxt-app#payload.`);
@@ -3370,6 +3372,204 @@ function createDemoTenant() {
     };
 }
 
+const cloneRecord$1 = (value) => structuredClone(value);
+const createEmptyState = () => ({
+    tenants: [],
+    sessions: [],
+    messages: [],
+    leads: [],
+    usage: [],
+    tenantUsers: [],
+    tenantPasswordResets: []
+});
+const createFileStore = (options) => {
+    let statePromise;
+    let writeQueue = Promise.resolve();
+    async function persist(state) {
+        const nextState = cloneRecord$1(state);
+        writeQueue = writeQueue.then(async () => {
+            await mkdir(dirname(options.filePath), { recursive: true });
+            await writeFile(options.filePath, JSON.stringify(nextState, null, 2), 'utf8');
+        });
+        await writeQueue;
+    }
+    async function loadState() {
+        try {
+            const raw = await readFile(options.filePath, 'utf8');
+            const parsed = JSON.parse(raw);
+            return {
+                tenants: Array.isArray(parsed.tenants) ? parsed.tenants.map(cloneRecord$1) : [],
+                sessions: Array.isArray(parsed.sessions) ? parsed.sessions.map(cloneRecord$1) : [],
+                messages: Array.isArray(parsed.messages) ? parsed.messages.map(cloneRecord$1) : [],
+                leads: Array.isArray(parsed.leads) ? parsed.leads.map(cloneRecord$1) : [],
+                usage: Array.isArray(parsed.usage) ? parsed.usage.map(cloneRecord$1) : [],
+                tenantUsers: Array.isArray(parsed.tenantUsers) ? parsed.tenantUsers.map(cloneRecord$1) : [],
+                tenantPasswordResets: Array.isArray(parsed.tenantPasswordResets) ? parsed.tenantPasswordResets.map(cloneRecord$1) : []
+            };
+        }
+        catch (error) {
+            const maybeError = error;
+            if ((maybeError === null || maybeError === void 0 ? void 0 : maybeError.code) !== 'ENOENT') {
+                throw error;
+            }
+            return createEmptyState();
+        }
+    }
+    async function ensureState() {
+        if (!statePromise) {
+            statePromise = (async () => {
+                var _a;
+                const state = await loadState();
+                const seedTenants = (_a = options.seedTenants) !== null && _a !== void 0 ? _a : [];
+                let changed = false;
+                for (const tenant of seedTenants) {
+                    if (!state.tenants.some((item) => item.id === tenant.id)) {
+                        state.tenants.push(cloneRecord$1(tenant));
+                        changed = true;
+                    }
+                }
+                if (changed) {
+                    await persist(state);
+                }
+                return state;
+            })();
+        }
+        return statePromise;
+    }
+    async function updateState(mutator) {
+        const state = await ensureState();
+        await mutator(state);
+        await persist(state);
+    }
+    return {
+        async saveTenant(tenant) {
+            await updateState((state) => {
+                const nextTenant = cloneRecord$1(tenant);
+                const index = state.tenants.findIndex((item) => item.id === tenant.id);
+                if (index >= 0) {
+                    state.tenants[index] = nextTenant;
+                    return;
+                }
+                state.tenants.push(nextTenant);
+            });
+        },
+        async getTenantById(tenantId) {
+            const state = await ensureState();
+            const tenant = state.tenants.find((item) => item.id === tenantId);
+            return tenant ? cloneRecord$1(tenant) : undefined;
+        },
+        async getTenantByEmbedKey(embedKey) {
+            const state = await ensureState();
+            const tenant = state.tenants.find((item) => item.embedKey === embedKey);
+            return tenant ? cloneRecord$1(tenant) : undefined;
+        },
+        async listTenants() {
+            const state = await ensureState();
+            return state.tenants.map(cloneRecord$1);
+        },
+        async saveSession(session) {
+            await updateState((state) => {
+                const nextSession = cloneRecord$1(session);
+                const index = state.sessions.findIndex((item) => item.id === session.id);
+                if (index >= 0) {
+                    state.sessions[index] = nextSession;
+                    return;
+                }
+                state.sessions.push(nextSession);
+            });
+        },
+        async getSessionById(sessionId) {
+            const state = await ensureState();
+            const session = state.sessions.find((item) => item.id === sessionId);
+            return session ? cloneRecord$1(session) : undefined;
+        },
+        async listSessionsByTenant(tenantId) {
+            const state = await ensureState();
+            return state.sessions.filter((item) => item.tenantId === tenantId).map(cloneRecord$1);
+        },
+        async saveMessage(message) {
+            await updateState((state) => {
+                state.messages.push(cloneRecord$1(message));
+            });
+        },
+        async listMessagesBySession(sessionId) {
+            const state = await ensureState();
+            return state.messages.filter((item) => item.sessionId === sessionId).map(cloneRecord$1);
+        },
+        async saveLead(lead) {
+            await updateState((state) => {
+                state.leads.push(cloneRecord$1(lead));
+            });
+        },
+        async listLeadsByTenant(tenantId) {
+            const state = await ensureState();
+            return state.leads.filter((item) => item.tenantId === tenantId).map(cloneRecord$1);
+        },
+        async saveUsageRecord(record) {
+            await updateState((state) => {
+                state.usage.push(cloneRecord$1(record));
+            });
+        },
+        async listUsageByTenant(tenantId) {
+            const state = await ensureState();
+            return state.usage.filter((item) => item.tenantId === tenantId).map(cloneRecord$1);
+        },
+        async saveTenantUser(user) {
+            await updateState((state) => {
+                const nextUser = cloneRecord$1(user);
+                const index = state.tenantUsers.findIndex((item) => item.id === user.id);
+                if (index >= 0) {
+                    state.tenantUsers[index] = nextUser;
+                    return;
+                }
+                state.tenantUsers.push(nextUser);
+            });
+        },
+        async getTenantUserByEmail(email) {
+            const state = await ensureState();
+            const normalized = email.trim().toLowerCase();
+            const user = state.tenantUsers.find((item) => item.email.toLowerCase() === normalized);
+            return user ? cloneRecord$1(user) : undefined;
+        },
+        async getTenantUserById(userId) {
+            const state = await ensureState();
+            const user = state.tenantUsers.find((item) => item.id === userId);
+            return user ? cloneRecord$1(user) : undefined;
+        },
+        async listTenantUsersByTenant(tenantId) {
+            const state = await ensureState();
+            return state.tenantUsers.filter((item) => item.tenantId === tenantId).map(cloneRecord$1);
+        },
+        async saveTenantPasswordReset(record) {
+            await updateState((state) => {
+                const nextRecord = cloneRecord$1(record);
+                const index = state.tenantPasswordResets.findIndex((item) => item.id === record.id);
+                if (index >= 0) {
+                    state.tenantPasswordResets[index] = nextRecord;
+                    return;
+                }
+                state.tenantPasswordResets.push(nextRecord);
+            });
+        },
+        async getTenantPasswordResetByCode(email, code) {
+            const state = await ensureState();
+            const normalized = email.trim().toLowerCase();
+            const item = state.tenantPasswordResets.find((reset) => reset.email.toLowerCase() === normalized && reset.code === code);
+            return item ? cloneRecord$1(item) : undefined;
+        }
+    };
+};
+
+function createStorageProvider() {
+    return {
+        kind: 'local-file',
+        repository: createFileStore({
+            filePath: getStorageFilePath(),
+            seedTenants: [createDemoTenant()]
+        })
+    };
+}
+
 function getConnectionString() {
     var _a;
     const value = (_a = process.env.CUSTOMER_BOT_DATABASE_URL) === null || _a === void 0 ? void 0 : _a.trim();
@@ -3590,7 +3790,7 @@ function createPostgresRagRepository(pool) {
     };
 }
 
-function cloneRecord$1(value) {
+function cloneRecord(value) {
     return structuredClone(value);
 }
 function createInMemoryRagRepository() {
@@ -3600,268 +3800,85 @@ function createInMemoryRagRepository() {
     const chunksByDocument = new Map();
     return {
         async saveDataSource(record) {
-            dataSources.set(record.id, cloneRecord$1(record));
+            dataSources.set(record.id, cloneRecord(record));
         },
         async getDataSourceById(dataSourceId) {
             const record = dataSources.get(dataSourceId);
-            return record ? cloneRecord$1(record) : undefined;
+            return record ? cloneRecord(record) : undefined;
         },
         async listDataSourcesByTenant(tenantId) {
             return Array.from(dataSources.values())
                 .filter((record) => record.tenantId === tenantId)
-                .map(cloneRecord$1);
+                .map(cloneRecord);
         },
         async saveIngestionJob(record) {
-            jobs.set(record.id, cloneRecord$1(record));
+            jobs.set(record.id, cloneRecord(record));
         },
         async getIngestionJobById(jobId) {
             const record = jobs.get(jobId);
-            return record ? cloneRecord$1(record) : undefined;
+            return record ? cloneRecord(record) : undefined;
         },
         async listIngestionJobsByTenant(tenantId) {
             return Array.from(jobs.values())
                 .filter((record) => record.tenantId === tenantId)
-                .map(cloneRecord$1);
+                .map(cloneRecord);
         },
         async saveDocument(record) {
-            documents.set(record.id, cloneRecord$1(record));
+            documents.set(record.id, cloneRecord(record));
         },
         async getDocumentById(documentId) {
             const record = documents.get(documentId);
-            return record ? cloneRecord$1(record) : undefined;
+            return record ? cloneRecord(record) : undefined;
         },
         async listDocumentsByTenant(tenantId) {
             return Array.from(documents.values())
                 .filter((record) => record.tenantId === tenantId)
-                .map(cloneRecord$1);
+                .map(cloneRecord);
         },
         async replaceDocumentChunks(documentId, chunks) {
-            chunksByDocument.set(documentId, chunks.map(cloneRecord$1));
+            chunksByDocument.set(documentId, chunks.map(cloneRecord));
         },
         async listChunksByDocument(documentId) {
             var _a;
-            return ((_a = chunksByDocument.get(documentId)) !== null && _a !== void 0 ? _a : []).map(cloneRecord$1);
+            return ((_a = chunksByDocument.get(documentId)) !== null && _a !== void 0 ? _a : []).map(cloneRecord);
         }
     };
 }
 
-const cloneRecord = (value) => structuredClone(value);
-const createEmptyState = () => ({
-    tenants: [],
-    sessions: [],
-    messages: [],
-    leads: [],
-    usage: [],
-    tenantUsers: [],
-    tenantPasswordResets: []
-});
-const createFileStore = (options) => {
-    let statePromise;
-    let writeQueue = Promise.resolve();
-    async function persist(state) {
-        const nextState = cloneRecord(state);
-        writeQueue = writeQueue.then(async () => {
-            await mkdir(dirname(options.filePath), { recursive: true });
-            await writeFile(options.filePath, JSON.stringify(nextState, null, 2), 'utf8');
-        });
-        await writeQueue;
-    }
-    async function loadState() {
-        try {
-            const raw = await readFile(options.filePath, 'utf8');
-            const parsed = JSON.parse(raw);
-            return {
-                tenants: Array.isArray(parsed.tenants) ? parsed.tenants.map(cloneRecord) : [],
-                sessions: Array.isArray(parsed.sessions) ? parsed.sessions.map(cloneRecord) : [],
-                messages: Array.isArray(parsed.messages) ? parsed.messages.map(cloneRecord) : [],
-                leads: Array.isArray(parsed.leads) ? parsed.leads.map(cloneRecord) : [],
-                usage: Array.isArray(parsed.usage) ? parsed.usage.map(cloneRecord) : [],
-                tenantUsers: Array.isArray(parsed.tenantUsers) ? parsed.tenantUsers.map(cloneRecord) : [],
-                tenantPasswordResets: Array.isArray(parsed.tenantPasswordResets) ? parsed.tenantPasswordResets.map(cloneRecord) : []
-            };
-        }
-        catch (error) {
-            const maybeError = error;
-            if ((maybeError === null || maybeError === void 0 ? void 0 : maybeError.code) !== 'ENOENT') {
-                throw error;
-            }
-            return createEmptyState();
-        }
-    }
-    async function ensureState() {
-        if (!statePromise) {
-            statePromise = (async () => {
-                var _a;
-                const state = await loadState();
-                const seedTenants = (_a = options.seedTenants) !== null && _a !== void 0 ? _a : [];
-                let changed = false;
-                for (const tenant of seedTenants) {
-                    if (!state.tenants.some((item) => item.id === tenant.id)) {
-                        state.tenants.push(cloneRecord(tenant));
-                        changed = true;
-                    }
+function createRagProvider() {
+    var _a;
+    if ((_a = process.env.CUSTOMER_BOT_DATABASE_URL) === null || _a === void 0 ? void 0 : _a.trim()) {
+        const deferredPool = createDbPool();
+        return {
+            kind: 'postgres',
+            repository: createPostgresRagRepository({
+                async query(sql, params) {
+                    const pool = await deferredPool;
+                    return pool.query(sql, params);
+                },
+                async end() {
+                    const pool = await deferredPool;
+                    await pool.end();
                 }
-                if (changed) {
-                    await persist(state);
-                }
-                return state;
-            })();
-        }
-        return statePromise;
-    }
-    async function updateState(mutator) {
-        const state = await ensureState();
-        await mutator(state);
-        await persist(state);
+            })
+        };
     }
     return {
-        async saveTenant(tenant) {
-            await updateState((state) => {
-                const nextTenant = cloneRecord(tenant);
-                const index = state.tenants.findIndex((item) => item.id === tenant.id);
-                if (index >= 0) {
-                    state.tenants[index] = nextTenant;
-                    return;
-                }
-                state.tenants.push(nextTenant);
-            });
-        },
-        async getTenantById(tenantId) {
-            const state = await ensureState();
-            const tenant = state.tenants.find((item) => item.id === tenantId);
-            return tenant ? cloneRecord(tenant) : undefined;
-        },
-        async getTenantByEmbedKey(embedKey) {
-            const state = await ensureState();
-            const tenant = state.tenants.find((item) => item.embedKey === embedKey);
-            return tenant ? cloneRecord(tenant) : undefined;
-        },
-        async listTenants() {
-            const state = await ensureState();
-            return state.tenants.map(cloneRecord);
-        },
-        async saveSession(session) {
-            await updateState((state) => {
-                const nextSession = cloneRecord(session);
-                const index = state.sessions.findIndex((item) => item.id === session.id);
-                if (index >= 0) {
-                    state.sessions[index] = nextSession;
-                    return;
-                }
-                state.sessions.push(nextSession);
-            });
-        },
-        async getSessionById(sessionId) {
-            const state = await ensureState();
-            const session = state.sessions.find((item) => item.id === sessionId);
-            return session ? cloneRecord(session) : undefined;
-        },
-        async listSessionsByTenant(tenantId) {
-            const state = await ensureState();
-            return state.sessions.filter((item) => item.tenantId === tenantId).map(cloneRecord);
-        },
-        async saveMessage(message) {
-            await updateState((state) => {
-                state.messages.push(cloneRecord(message));
-            });
-        },
-        async listMessagesBySession(sessionId) {
-            const state = await ensureState();
-            return state.messages.filter((item) => item.sessionId === sessionId).map(cloneRecord);
-        },
-        async saveLead(lead) {
-            await updateState((state) => {
-                state.leads.push(cloneRecord(lead));
-            });
-        },
-        async listLeadsByTenant(tenantId) {
-            const state = await ensureState();
-            return state.leads.filter((item) => item.tenantId === tenantId).map(cloneRecord);
-        },
-        async saveUsageRecord(record) {
-            await updateState((state) => {
-                state.usage.push(cloneRecord(record));
-            });
-        },
-        async listUsageByTenant(tenantId) {
-            const state = await ensureState();
-            return state.usage.filter((item) => item.tenantId === tenantId).map(cloneRecord);
-        },
-        async saveTenantUser(user) {
-            await updateState((state) => {
-                const nextUser = cloneRecord(user);
-                const index = state.tenantUsers.findIndex((item) => item.id === user.id);
-                if (index >= 0) {
-                    state.tenantUsers[index] = nextUser;
-                    return;
-                }
-                state.tenantUsers.push(nextUser);
-            });
-        },
-        async getTenantUserByEmail(email) {
-            const state = await ensureState();
-            const normalized = email.trim().toLowerCase();
-            const user = state.tenantUsers.find((item) => item.email.toLowerCase() === normalized);
-            return user ? cloneRecord(user) : undefined;
-        },
-        async getTenantUserById(userId) {
-            const state = await ensureState();
-            const user = state.tenantUsers.find((item) => item.id === userId);
-            return user ? cloneRecord(user) : undefined;
-        },
-        async listTenantUsersByTenant(tenantId) {
-            const state = await ensureState();
-            return state.tenantUsers.filter((item) => item.tenantId === tenantId).map(cloneRecord);
-        },
-        async saveTenantPasswordReset(record) {
-            await updateState((state) => {
-                const nextRecord = cloneRecord(record);
-                const index = state.tenantPasswordResets.findIndex((item) => item.id === record.id);
-                if (index >= 0) {
-                    state.tenantPasswordResets[index] = nextRecord;
-                    return;
-                }
-                state.tenantPasswordResets.push(nextRecord);
-            });
-        },
-        async getTenantPasswordResetByCode(email, code) {
-            const state = await ensureState();
-            const normalized = email.trim().toLowerCase();
-            const item = state.tenantPasswordResets.find((reset) => reset.email.toLowerCase() === normalized && reset.code === code);
-            return item ? cloneRecord(item) : undefined;
-        }
+        kind: 'memory',
+        repository: createInMemoryRagRepository()
     };
-};
+}
 
 let singletonStore;
 let singletonRagRepository;
-const createStorage = () => createFileStore({
-    filePath: getStorageFilePath(),
-    seedTenants: [createDemoTenant()]
-});
+const createStorage = () => createStorageProvider().repository;
 const getStorage = () => {
     if (!singletonStore) {
         singletonStore = createStorage();
     }
     return singletonStore;
 };
-const createRagRepository = () => {
-    var _a;
-    if ((_a = process.env.CUSTOMER_BOT_DATABASE_URL) === null || _a === void 0 ? void 0 : _a.trim()) {
-        const deferredPool = createDbPool();
-        return createPostgresRagRepository({
-            async query(sql, params) {
-                const pool = await deferredPool;
-                return pool.query(sql, params);
-            },
-            async end() {
-                const pool = await deferredPool;
-                await pool.end();
-            }
-        });
-    }
-    return createInMemoryRagRepository();
-};
+const createRagRepository = () => createRagProvider().repository;
 const getRagRepository = () => {
     if (!singletonRagRepository) {
         singletonRagRepository = createRagRepository();
@@ -4003,6 +4020,17 @@ const leads_get$3 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.definePropert
   __proto__: null,
   default: leads_get$2
 }, Symbol.toStringTag, { value: 'Module' }));
+
+function getCloudflareRuntimeBindings(input) {
+    var _a;
+    if (!input) {
+        return globalThis.__CUSTOMER_BOT_CF_BINDINGS__;
+    }
+    if (typeof input === 'object' && input !== null && 'cloudflare' in input) {
+        return ((_a = input.cloudflare) === null || _a === void 0 ? void 0 : _a.env) || globalThis.__CUSTOMER_BOT_CF_BINDINGS__;
+    }
+    return input;
+}
 
 const ENV_KEYS = {
     'tenant-identity-service': 'TENANT_IDENTITY_SERVICE_URL',
@@ -4609,6 +4637,214 @@ function createTenantIdentityApplication(storage) {
     });
 }
 
+function parseJson$2(value) {
+    if (!value) {
+        return undefined;
+    }
+    return JSON.parse(value);
+}
+function mapTenant(row) {
+    return {
+        id: row.id,
+        name: row.name,
+        status: row.status,
+        brandName: row.brand_name,
+        themeColor: row.theme_color,
+        contactPhone: row.contact_phone,
+        contactEmail: row.contact_email,
+        contactAddress: row.contact_address,
+        systemPrompt: row.system_prompt,
+        llmEndpoint: row.llm_endpoint || '',
+        llmApiKey: row.llm_api_key || '',
+        llmModel: row.llm_model || '',
+        reuseAnsweredQuestions: row.reuse_answered_questions !== 0,
+        deletedAt: row.deleted_at || undefined,
+        embedKey: row.embed_key,
+        ragSettings: normalizeTenantRagSettings(parseJson$2(row.rag_settings_json)),
+        billingSubscription: parseJson$2(row.billing_subscription_json),
+        contentConfig: parseJson$2(row.content_config_json),
+        createdAt: row.created_at,
+        updatedAt: row.updated_at
+    };
+}
+function mapTenantUser(row) {
+    return {
+        id: row.id,
+        tenantId: row.tenant_id,
+        email: row.email,
+        passwordHash: row.password_hash,
+        temporaryPassword: row.temporary_password || '',
+        mustChangePassword: row.must_change_password !== 0,
+        status: row.status,
+        createdAt: row.created_at,
+        updatedAt: row.updated_at
+    };
+}
+function mapTenantPasswordReset(row) {
+    return {
+        id: row.id,
+        tenantUserId: row.tenant_user_id,
+        tenantId: row.tenant_id,
+        email: row.email,
+        code: row.code,
+        expiresAt: row.expires_at,
+        usedAt: row.used_at || undefined,
+        createdAt: row.created_at
+    };
+}
+function stringify(value) {
+    if (value === undefined) {
+        return null;
+    }
+    return JSON.stringify(value);
+}
+function unsupported(name) {
+    throw new Error(`D1 tenant identity storage does not implement ${name} yet`);
+}
+class D1TenantIdentityStorageRepository {
+    constructor(db) {
+        this.db = db;
+    }
+    async saveTenant(tenant) {
+        await this.db
+            .prepare(`
+        INSERT OR REPLACE INTO tenants (
+          id, name, status, brand_name, theme_color, contact_phone, contact_email, contact_address, system_prompt,
+          llm_endpoint, llm_api_key, llm_model, reuse_answered_questions, deleted_at, embed_key,
+          rag_settings_json, billing_subscription_json, content_config_json, created_at, updated_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `)
+            .bind(tenant.id, tenant.name, tenant.status, tenant.brandName, tenant.themeColor, tenant.contactPhone, tenant.contactEmail, tenant.contactAddress, tenant.systemPrompt, tenant.llmEndpoint || null, tenant.llmApiKey || null, tenant.llmModel || null, tenant.reuseAnsweredQuestions === false ? 0 : 1, tenant.deletedAt || null, tenant.embedKey, stringify(tenant.ragSettings), stringify(tenant.billingSubscription), stringify(tenant.contentConfig), tenant.createdAt, tenant.updatedAt)
+            .run();
+    }
+    async getTenantById(tenantId) {
+        const row = await this.db
+            .prepare('SELECT * FROM tenants WHERE id = ? LIMIT 1')
+            .bind(tenantId)
+            .first();
+        return row ? mapTenant(row) : undefined;
+    }
+    async getTenantByEmbedKey(embedKey) {
+        const row = await this.db
+            .prepare('SELECT * FROM tenants WHERE embed_key = ? LIMIT 1')
+            .bind(embedKey)
+            .first();
+        return row ? mapTenant(row) : undefined;
+    }
+    async listTenants() {
+        const result = await this.db
+            .prepare('SELECT * FROM tenants ORDER BY updated_at DESC')
+            .all();
+        return result.results.map(mapTenant);
+    }
+    async saveTenantUser(user) {
+        await this.db
+            .prepare(`
+        INSERT OR REPLACE INTO tenant_users (
+          id, tenant_id, email, password_hash, temporary_password, must_change_password, status, created_at, updated_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `)
+            .bind(user.id, user.tenantId, user.email.trim().toLowerCase(), user.passwordHash, user.temporaryPassword || null, user.mustChangePassword ? 1 : 0, user.status, user.createdAt, user.updatedAt)
+            .run();
+    }
+    async getTenantUserByEmail(email) {
+        const row = await this.db
+            .prepare('SELECT * FROM tenant_users WHERE lower(email) = lower(?) LIMIT 1')
+            .bind(email)
+            .first();
+        return row ? mapTenantUser(row) : undefined;
+    }
+    async getTenantUserById(userId) {
+        const row = await this.db
+            .prepare('SELECT * FROM tenant_users WHERE id = ? LIMIT 1')
+            .bind(userId)
+            .first();
+        return row ? mapTenantUser(row) : undefined;
+    }
+    async listTenantUsersByTenant(tenantId) {
+        const result = await this.db
+            .prepare('SELECT * FROM tenant_users WHERE tenant_id = ? ORDER BY created_at ASC')
+            .bind(tenantId)
+            .all();
+        return result.results.map(mapTenantUser);
+    }
+    async saveTenantPasswordReset(record) {
+        await this.db
+            .prepare(`
+        INSERT OR REPLACE INTO tenant_password_resets (
+          id, tenant_user_id, tenant_id, email, code, expires_at, used_at, created_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      `)
+            .bind(record.id, record.tenantUserId, record.tenantId, record.email.trim().toLowerCase(), record.code, record.expiresAt, record.usedAt || null, record.createdAt)
+            .run();
+    }
+    async getTenantPasswordResetByCode(email, code) {
+        const row = await this.db
+            .prepare('SELECT * FROM tenant_password_resets WHERE lower(email) = lower(?) AND code = ? LIMIT 1')
+            .bind(email, code)
+            .first();
+        return row ? mapTenantPasswordReset(row) : undefined;
+    }
+    async saveSession(_session) {
+        unsupported('saveSession');
+    }
+    async getSessionById(_sessionId) {
+        unsupported('getSessionById');
+    }
+    async listSessionsByTenant(_tenantId) {
+        unsupported('listSessionsByTenant');
+    }
+    async saveMessage(_message) {
+        unsupported('saveMessage');
+    }
+    async listMessagesBySession(_sessionId) {
+        unsupported('listMessagesBySession');
+    }
+    async saveLead(_lead) {
+        unsupported('saveLead');
+    }
+    async listLeadsByTenant(_tenantId) {
+        unsupported('listLeadsByTenant');
+    }
+    async saveUsageRecord(_record) {
+        unsupported('saveUsageRecord');
+    }
+    async listUsageByTenant(_tenantId) {
+        unsupported('listUsageByTenant');
+    }
+}
+
+function createCloudflareTenantIdentityStorage(bindings) {
+    const runtimeBindings = getCloudflareRuntimeBindings(bindings);
+    if (!(runtimeBindings === null || runtimeBindings === void 0 ? void 0 : runtimeBindings.TENANT_IDENTITY_DB)) {
+        throw new Error('TENANT_IDENTITY_DB binding is required');
+    }
+    return new D1TenantIdentityStorageRepository(runtimeBindings.TENANT_IDENTITY_DB);
+}
+function createCloudflareTenantIdentityApplication(bindings) {
+    const storage = createCloudflareTenantIdentityStorage(bindings);
+    const repository = new StorageTenantIdentityRepositoryAdapter(storage);
+    return new TenantIdentityApplication({
+        repository,
+        validateAdminCredentials,
+        createTenantLogin: ({ tenant, now }) => createTenantLoginForTenant({
+            tenant,
+            storage,
+            now
+        }),
+        verifyTenantPassword: (email, password) => verifyTenantPassword(email, password, storage),
+        issueTenantPasswordReset: ({ email }) => issueTenantPasswordReset({
+            email,
+            storage
+        }),
+        resetTenantPassword: (input) => resetTenantPassword({
+            ...input,
+            storage
+        }),
+        sendTenantResetEmail
+    });
+}
+
 class AdminAuthController {
     constructor(application) {
         this.application = application;
@@ -4674,8 +4910,13 @@ function createTenantIdentityHttpLayer(application) {
     };
 }
 
-function createTenantIdentityHttpAdapter(storage) {
-    const application = createTenantIdentityApplication(storage);
+function createTenantIdentityHttpAdapter(input) {
+    var _a;
+    const application = 'saveTenant' in input
+        ? createTenantIdentityApplication(input)
+        : ((_a = input.bindings) === null || _a === void 0 ? void 0 : _a.TENANT_IDENTITY_DB)
+            ? createCloudflareTenantIdentityApplication(input.bindings)
+            : createTenantIdentityApplication(input.storage);
     return createTenantIdentityHttpLayer(application);
 }
 
@@ -4717,9 +4958,12 @@ async function requestText(input) {
 
 function createTenantIdentityGateway(input) {
     const storage = 'saveTenant' in input ? input : input.storage;
+    const bindings = 'saveTenant' in input ? undefined : input.bindings;
     const baseUrl = 'saveTenant' in input ? getServiceBaseUrl('tenant-identity-service') : input.baseUrl || getServiceBaseUrl('tenant-identity-service');
     const fetcher = 'saveTenant' in input ? undefined : input.fetcher;
-    const http = createTenantIdentityHttpAdapter(storage);
+    const http = 'saveTenant' in input
+        ? createTenantIdentityHttpAdapter(input)
+        : createTenantIdentityHttpAdapter({ storage, bindings });
     return {
         adminLogin(input) {
             if (baseUrl) {
@@ -4875,13 +5119,28 @@ function createTenantIdentityGateway(input) {
     };
 }
 
+function createTenantIdentityGatewayForEvent(event) {
+    const bindings = getCloudflareRuntimeBindings(event.context);
+    return createTenantIdentityGateway({
+        storage: getStorage(),
+        bindings
+    });
+}
+function createTenantIdentityStorageForEvent(event) {
+    const bindings = getCloudflareRuntimeBindings(event.context);
+    if (bindings === null || bindings === void 0 ? void 0 : bindings.TENANT_IDENTITY_DB) {
+        return createCloudflareTenantIdentityStorage(bindings);
+    }
+    return getStorage();
+}
+
 const login_post$2 = defineEventHandler(async (event) => {
     var _a;
     const body = await readBody(event);
     const email = ((_a = body === null || body === void 0 ? void 0 : body.email) === null || _a === void 0 ? void 0 : _a.trim()) || '';
     const password = (body === null || body === void 0 ? void 0 : body.password) || '';
     try {
-        const gateway = createTenantIdentityGateway(getStorage());
+        const gateway = createTenantIdentityGatewayForEvent(event);
         const response = gateway.adminLogin({
             email,
             password
@@ -4981,10 +5240,9 @@ const overview_get$3 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProp
 
 const tenants_get = defineEventHandler(async (event) => {
     requireAdminSession(event);
-    const storage = getStorage();
     const query = getQuery$1(event);
     const includeDeleted = String(query.includeDeleted || '') === '1';
-    const gateway = createTenantIdentityGateway(storage);
+    const gateway = createTenantIdentityGatewayForEvent(event);
     return gateway.listTenants({ includeDeleted });
 });
 
@@ -4996,8 +5254,7 @@ const tenants_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.definePrope
 const tenants_post = defineEventHandler(async (event) => {
     requireAdminSession(event);
     const body = await readBody(event);
-    const storage = getStorage();
-    const gateway = createTenantIdentityGateway(storage);
+    const gateway = createTenantIdentityGatewayForEvent(event);
     return gateway.createTenant(body);
 });
 
@@ -5010,7 +5267,7 @@ const _tenantId__delete = defineEventHandler(async (event) => {
     requireAdminSession(event);
     const tenantId = getRouterParam(event, 'tenantId') || '';
     try {
-        const gateway = createTenantIdentityGateway(getStorage());
+        const gateway = createTenantIdentityGatewayForEvent(event);
         return await gateway.deleteTenant(tenantId);
     }
     catch {
@@ -5030,7 +5287,7 @@ const _tenantId__get = defineEventHandler(async (event) => {
     requireAdminSession(event);
     const tenantId = getRouterParam(event, 'tenantId') || '';
     try {
-        const gateway = createTenantIdentityGateway(getStorage());
+        const gateway = createTenantIdentityGatewayForEvent(event);
         return gateway.getTenant(tenantId);
     }
     catch {
@@ -5051,7 +5308,7 @@ const _tenantId__put = defineEventHandler(async (event) => {
     const tenantIdentifier = getRouterParam(event, 'tenantId') || '';
     const body = await readBody(event);
     try {
-        const gateway = createTenantIdentityGateway(getStorage());
+        const gateway = createTenantIdentityGatewayForEvent(event);
         return gateway.updateTenant(tenantIdentifier, body);
     }
     catch {
@@ -5223,10 +5480,175 @@ function renderAgentDoc(input) {
     ].join('\n');
 }
 
+const localObjectStorageRoot = resolve(process.cwd(), '.data');
+function toAbsolutePath(key) {
+    if (/^[a-zA-Z]:\\/.test(key) || key.startsWith('/')) {
+        return key;
+    }
+    return join(localObjectStorageRoot, key);
+}
+function toRelativePath(absolutePath) {
+    const normalizedRoot = localObjectStorageRoot.replace(/\\/g, '/').replace(/\/+$/, '');
+    const normalizedTarget = absolutePath.replace(/\\/g, '/');
+    if (normalizedTarget.startsWith(normalizedRoot)) {
+        return `.data/${normalizedTarget.slice(normalizedRoot.length + 1)}`;
+    }
+    return normalizedTarget;
+}
+async function ensureParent(path) {
+    await mkdir(dirname(path), { recursive: true });
+}
+async function exists(path) {
+    try {
+        await access(path);
+        return true;
+    }
+    catch {
+        return false;
+    }
+}
+function descriptorFromPath(path) {
+    return {
+        key: path,
+        relativePath: toRelativePath(path),
+        localPath: path
+    };
+}
+function createLocalObjectStorageProvider() {
+    return {
+        kind: 'local',
+        async writeBuffer(input) {
+            const path = toAbsolutePath(input.key);
+            await ensureParent(path);
+            await writeFile(path, input.contents);
+            return descriptorFromPath(path);
+        },
+        async writeText(input) {
+            const path = toAbsolutePath(input.key);
+            await ensureParent(path);
+            await writeFile(path, input.content, 'utf8');
+            return descriptorFromPath(path);
+        },
+        async readBuffer(key) {
+            return readFile(toAbsolutePath(key));
+        },
+        async readText(key) {
+            return readFile(toAbsolutePath(key), 'utf8');
+        },
+        async list(prefix) {
+            const directory = toAbsolutePath(prefix);
+            try {
+                const files = await readdir(directory);
+                return files.map((fileName) => join(prefix, fileName).replace(/\\/g, '/'));
+            }
+            catch {
+                return [];
+            }
+        },
+        async exists(key) {
+            return exists(toAbsolutePath(key));
+        }
+    };
+}
+
+function createR2ObjectStorageProvider(bucket) {
+    return {
+        kind: 'r2',
+        async writeBuffer(input) {
+            await bucket.put(input.key, input.contents);
+            return {
+                key: input.key,
+                relativePath: input.key
+            };
+        },
+        async writeText(input) {
+            await bucket.put(input.key, input.content);
+            return {
+                key: input.key,
+                relativePath: input.key
+            };
+        },
+        async readBuffer(key) {
+            const object = await bucket.get(key);
+            if (!object) {
+                throw new Error(`R2 object not found: ${key}`);
+            }
+            return Buffer.from(await object.arrayBuffer());
+        },
+        async readText(key) {
+            const object = await bucket.get(key);
+            if (!object) {
+                throw new Error(`R2 object not found: ${key}`);
+            }
+            return object.text();
+        },
+        async list(prefix) {
+            const result = await bucket.list({ prefix });
+            return result.objects.map((item) => item.key);
+        },
+        async exists(key) {
+            return (await bucket.get(key)) !== null;
+        }
+    };
+}
+
+let sharedProvider;
+function createObjectStorageProvider(bindings) {
+    const runtimeBindings = getCloudflareRuntimeBindings(bindings);
+    if (runtimeBindings === null || runtimeBindings === void 0 ? void 0 : runtimeBindings.CUSTOMER_BOT_BUCKET) {
+        return createR2ObjectStorageProvider(runtimeBindings.CUSTOMER_BOT_BUCKET);
+    }
+    return createLocalObjectStorageProvider();
+}
+function getObjectStorageProvider() {
+    if (!sharedProvider) {
+        sharedProvider = createObjectStorageProvider();
+    }
+    return sharedProvider;
+}
+
+const AGENT_DOC_FILE_NAMES = ['AGENTS.md', 'BOOTSTRAP.md', 'HEARTBEAT.md', 'IDENTITY.md', 'SOUL.md', 'USER.md', 'TOOLS.md'];
+function ensureAllowedFileName(fileName) {
+    const normalized = basename(fileName);
+    if (AGENT_DOC_FILE_NAMES.includes(normalized)) {
+        return normalized;
+    }
+    throw new Error('Unsupported agent doc file name');
+}
+function getAgentDocDirectory(tenantId) {
+    return join('agent-docs', tenantId, 'latest').replace(/\\/g, '/');
+}
+async function listAgentDocFiles(tenantId, provider = getObjectStorageProvider()) {
+    const directory = getAgentDocDirectory(tenantId);
+    try {
+        const files = await provider.list(directory);
+        return files
+            .map((fileName) => basename(fileName))
+            .filter((fileName) => AGENT_DOC_FILE_NAMES.includes(fileName))
+            .sort();
+    }
+    catch {
+        return [];
+    }
+}
+async function readAgentDocFile(tenantId, fileName, provider = getObjectStorageProvider()) {
+    const allowedFileName = ensureAllowedFileName(fileName);
+    return provider.readText(join(getAgentDocDirectory(tenantId), allowedFileName).replace(/\\/g, '/'));
+}
+async function writeAgentDocFile(input, provider = getObjectStorageProvider()) {
+    const allowedFileName = ensureAllowedFileName(input.fileName);
+    await provider.writeText({
+        key: join(getAgentDocDirectory(input.tenantId), allowedFileName).replace(/\\/g, '/'),
+        content: input.content
+    });
+}
+
 const defaultDocNames = ['AGENTS.md', 'BOOTSTRAP.md', 'HEARTBEAT.md', 'IDENTITY.md', 'SOUL.md', 'USER.md', 'TOOLS.md'];
 async function readExistingContent(path) {
     try {
-        return await readFile(path, 'utf8');
+        const tenantId = path.split(/[\\/]/).slice(-3, -2)[0] || '';
+        const fileName = path.split(/[\\/]/).slice(-1)[0] || '';
+        return await readAgentDocFile(tenantId, fileName);
     }
     catch {
         return undefined;
@@ -5302,15 +5724,14 @@ function buildGeneratedSections(input) {
 async function generateAgentDocBundle(input) {
     var _a, _b;
     const generatedAt = (_a = input.generatedAt) !== null && _a !== void 0 ? _a : Date.now();
-    const outputDir = (_b = input.outputRoot) !== null && _b !== void 0 ? _b : join(process.cwd(), '.data', 'agent-docs', input.tenantId, 'latest');
+    const outputDir = (_b = input.outputRoot) !== null && _b !== void 0 ? _b : getAgentDocDirectory(input.tenantId);
     const sections = buildGeneratedSections({
         tenantId: input.tenantId,
         documents: input.documents,
         generatedAt
     });
-    await mkdir(outputDir, { recursive: true });
     for (const fileName of defaultDocNames) {
-        const fullPath = join(outputDir, fileName);
+        const fullPath = `${outputDir.replace(/\\/g, '/')}/${fileName}`;
         const existingContent = await readExistingContent(fullPath);
         const rendered = renderAgentDoc({
             title: fileName,
@@ -5318,7 +5739,11 @@ async function generateAgentDocBundle(input) {
             generatedBody: sections[fileName],
             existingContent
         });
-        await writeFile(fullPath, rendered, 'utf8');
+        await writeAgentDocFile({
+            tenantId: input.tenantId,
+            fileName,
+            content: rendered
+        });
     }
     return {
         outputDir,
@@ -5401,7 +5826,7 @@ function toChunkRecords(input) {
     }));
 }
 async function executeIngestionJob(input) {
-    var _a;
+    var _a, _b, _c;
     const now = (_a = input.now) !== null && _a !== void 0 ? _a : Date.now();
     let job = createQueuedIngestionJob({
         tenantId: input.tenantId,
@@ -5444,6 +5869,16 @@ async function executeIngestionJob(input) {
             documents: normalizedDocuments,
             generatedAt: now
         });
+        await ((_b = input.queuePublisher) === null || _b === void 0 ? void 0 : _b.publish({
+            type: 'ingestion.completed',
+            payload: {
+                tenantId: input.tenantId,
+                dataSourceId: input.dataSourceId,
+                jobId: job.id,
+                documentCount: documentRecords.length,
+                chunkCount: chunkRecords.length
+            }
+        }));
         return {
             job,
             documents: documentRecords,
@@ -5455,33 +5890,44 @@ async function executeIngestionJob(input) {
     catch (error) {
         job = markJobFailed(job, now, error instanceof Error ? error.message : 'Ingestion failed');
         await input.repository.saveIngestionJob(job);
+        await ((_c = input.queuePublisher) === null || _c === void 0 ? void 0 : _c.publish({
+            type: 'ingestion.failed',
+            payload: {
+                tenantId: input.tenantId,
+                dataSourceId: input.dataSourceId,
+                jobId: job.id,
+                errorMessage: error instanceof Error ? error.message : 'Ingestion failed'
+            }
+        }));
         throw error;
     }
 }
 
-const assetRoot = join(process.cwd(), '.data', 'source-assets');
 function sanitizeSegment(value) {
     const trimmed = value.trim();
     const fallback = trimmed || 'asset';
     return fallback.replace(/[^a-zA-Z0-9._-]+/g, '-');
 }
-async function saveTenantAsset(input) {
+function buildAssetKey(input) {
     const safeTenantId = sanitizeSegment(input.tenantId);
     const extension = extname(input.fileName);
     const baseName = basename(input.fileName, extension);
     const safeFileName = `${sanitizeSegment(baseName)}${extension || ''}`;
-    const tenantDir = join(assetRoot, safeTenantId);
-    await mkdir(tenantDir, { recursive: true });
-    const assetPath = join(tenantDir, safeFileName);
-    await writeFile(assetPath, input.contents);
+    return join('source-assets', safeTenantId, safeFileName).replace(/\\/g, '/');
+}
+async function saveTenantAsset(input, provider = getObjectStorageProvider()) {
+    const descriptor = await provider.writeBuffer({
+        key: buildAssetKey(input),
+        contents: input.contents
+    });
     return {
-        fileName: safeFileName,
-        assetPath,
-        relativePath: join('.data', 'source-assets', safeTenantId, safeFileName)
+        fileName: basename(descriptor.relativePath),
+        assetPath: descriptor.localPath || descriptor.key,
+        relativePath: descriptor.relativePath
     };
 }
-async function readTenantAsset(assetPath) {
-    return readFile(assetPath);
+async function readTenantAsset(assetPath, provider = getObjectStorageProvider()) {
+    return provider.readBuffer(assetPath);
 }
 
 function getFileStem(fileName) {
@@ -5715,48 +6161,19 @@ function createSourceDocumentLoader(source) {
     });
 }
 
-const AGENT_DOC_FILE_NAMES = ['AGENTS.md', 'BOOTSTRAP.md', 'HEARTBEAT.md', 'IDENTITY.md', 'SOUL.md', 'USER.md', 'TOOLS.md'];
-function ensureAllowedFileName(fileName) {
-    const normalized = basename(fileName);
-    if (AGENT_DOC_FILE_NAMES.includes(normalized)) {
-        return normalized;
-    }
-    throw new Error('Unsupported agent doc file name');
-}
-function getAgentDocDirectory(tenantId) {
-    return join(process.cwd(), '.data', 'agent-docs', tenantId, 'latest');
-}
-async function listAgentDocFiles(tenantId) {
-    const directory = getAgentDocDirectory(tenantId);
-    try {
-        const files = await readdir(directory);
-        return files.filter((fileName) => AGENT_DOC_FILE_NAMES.includes(fileName)).sort();
-    }
-    catch {
-        return [];
-    }
-}
-async function readAgentDocFile(tenantId, fileName) {
-    const allowedFileName = ensureAllowedFileName(fileName);
-    return readFile(join(getAgentDocDirectory(tenantId), allowedFileName), 'utf8');
-}
-async function writeAgentDocFile(input) {
-    const allowedFileName = ensureAllowedFileName(input.fileName);
-    const directory = getAgentDocDirectory(input.tenantId);
-    await mkdir(directory, { recursive: true });
-    await writeFile(join(directory, allowedFileName), input.content, 'utf8');
-}
-
 class LocalAgentDocsGateway {
+    constructor(provider) {
+        this.provider = provider;
+    }
     async list(tenantId) {
-        const files = await listAgentDocFiles(tenantId);
+        const files = await listAgentDocFiles(tenantId, this.provider);
         return Promise.all(files.map(async (fileName) => ({
             fileName,
-            content: await readAgentDocFile(tenantId, fileName)
+            content: await readAgentDocFile(tenantId, fileName, this.provider)
         })));
     }
     save(input) {
-        return writeAgentDocFile(input);
+        return writeAgentDocFile(input, this.provider);
     }
 }
 
@@ -5782,8 +6199,17 @@ class RagRepositoryKnowledgeIndexingAdapter {
     listIngestionJobsByTenant(tenantId) {
         return this.repository.listIngestionJobsByTenant(tenantId);
     }
+    saveSourceDocument(record) {
+        return this.repository.saveDocument(record);
+    }
     listSourceDocumentsByTenant(tenantId) {
         return this.repository.listDocumentsByTenant(tenantId);
+    }
+    replaceDocumentChunks(documentId, chunks) {
+        return this.repository.replaceDocumentChunks(documentId, chunks);
+    }
+    listDocumentChunksByDocument(documentId) {
+        return this.repository.listChunksByDocument(documentId);
     }
     async countDocumentChunksByTenant(tenantId) {
         const documents = await this.repository.listDocumentsByTenant(tenantId);
@@ -6110,6 +6536,231 @@ function createKnowledgeIndexingApplication(repository) {
     });
 }
 
+function createCloudflareQueuePublisher(bindings) {
+    const runtimeBindings = getCloudflareRuntimeBindings(bindings);
+    return {
+        kind: 'cloudflare',
+        async publish(message) {
+            if (!(runtimeBindings === null || runtimeBindings === void 0 ? void 0 : runtimeBindings.INGESTION_QUEUE)) {
+                throw new Error('Cloudflare queue binding is unavailable');
+            }
+            await runtimeBindings.INGESTION_QUEUE.send(message);
+        }
+    };
+}
+
+function parseJson$1(value) {
+    return JSON.parse(value);
+}
+function mapDataSource(row) {
+    return {
+        id: row.id,
+        tenantId: row.tenant_id,
+        type: row.type,
+        status: row.status,
+        syncMode: row.sync_mode,
+        scheduleCron: row.schedule_cron || undefined,
+        config: parseJson$1(row.config_json || '{}'),
+        lastSyncedAt: row.last_synced_at || undefined,
+        createdAt: row.created_at,
+        updatedAt: row.updated_at
+    };
+}
+function mapJob(row) {
+    return {
+        id: row.id,
+        tenantId: row.tenant_id,
+        dataSourceId: row.data_source_id,
+        triggerMode: row.trigger_mode,
+        status: row.status,
+        startedAt: row.started_at || undefined,
+        finishedAt: row.finished_at || undefined,
+        errorMessage: row.error_message || undefined,
+        stats: parseJson$1(row.stats_json || '{}')
+    };
+}
+function mapSourceDocument(row) {
+    return {
+        id: row.id,
+        tenantId: row.tenant_id,
+        dataSourceId: row.data_source_id,
+        externalId: row.external_id || undefined,
+        title: row.title,
+        mimeType: row.mime_type,
+        sourceUri: row.source_uri,
+        contentText: '',
+        metadata: parseJson$1(row.metadata_json || '{}'),
+        contentHash: row.content_hash,
+        versionHash: row.version_hash,
+        createdAt: row.created_at,
+        updatedAt: row.updated_at
+    };
+}
+function mapDocumentChunk(row) {
+    return {
+        id: row.id,
+        tenantId: row.tenant_id,
+        documentId: row.document_id,
+        chunkIndex: row.chunk_index,
+        content: row.content,
+        tokenCount: row.token_count,
+        metadata: parseJson$1(row.metadata_json || '{}'),
+        createdAt: row.created_at
+    };
+}
+class D1KnowledgeIndexingRepository {
+    constructor(db) {
+        this.db = db;
+    }
+    async saveDataSource(record) {
+        var _a;
+        await this.db
+            .prepare(`
+        INSERT OR REPLACE INTO data_sources (
+          id, tenant_id, type, status, sync_mode, schedule_cron, config_json, last_synced_at, created_at, updated_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `)
+            .bind(record.id, record.tenantId, record.type, record.status, record.syncMode, record.scheduleCron || null, JSON.stringify((_a = record.config) !== null && _a !== void 0 ? _a : {}), record.lastSyncedAt || null, record.createdAt, record.updatedAt)
+            .run();
+    }
+    async getDataSourceById(dataSourceId) {
+        const row = await this.db
+            .prepare('SELECT * FROM data_sources WHERE id = ? LIMIT 1')
+            .bind(dataSourceId)
+            .first();
+        return row ? mapDataSource(row) : undefined;
+    }
+    async listDataSourcesByTenant(tenantId) {
+        const result = await this.db
+            .prepare('SELECT * FROM data_sources WHERE tenant_id = ? ORDER BY updated_at DESC')
+            .bind(tenantId)
+            .all();
+        return result.results.map(mapDataSource);
+    }
+    async saveIngestionJob(record) {
+        var _a;
+        await this.db
+            .prepare(`
+        INSERT OR REPLACE INTO ingestion_jobs (
+          id, tenant_id, data_source_id, trigger_mode, status, started_at, finished_at, error_message, stats_json
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `)
+            .bind(record.id, record.tenantId, record.dataSourceId, record.triggerMode, record.status, record.startedAt || null, record.finishedAt || null, record.errorMessage || null, JSON.stringify((_a = record.stats) !== null && _a !== void 0 ? _a : {}))
+            .run();
+    }
+    async getIngestionJobById(jobId) {
+        const row = await this.db
+            .prepare('SELECT * FROM ingestion_jobs WHERE id = ? LIMIT 1')
+            .bind(jobId)
+            .first();
+        return row ? mapJob(row) : undefined;
+    }
+    async listIngestionJobsByTenant(tenantId) {
+        const result = await this.db
+            .prepare('SELECT * FROM ingestion_jobs WHERE tenant_id = ? ORDER BY COALESCE(finished_at, started_at, 0) DESC')
+            .bind(tenantId)
+            .all();
+        return result.results.map(mapJob);
+    }
+    async saveSourceDocument(record) {
+        var _a, _b;
+        await this.db
+            .prepare(`
+        INSERT OR REPLACE INTO source_documents (
+          id, tenant_id, data_source_id, external_id, title, mime_type, source_uri, content_hash, version_hash,
+          metadata_json, chunk_count, created_at, updated_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `)
+            .bind(record.id, record.tenantId, record.dataSourceId, record.externalId || null, record.title, record.mimeType, record.sourceUri, record.contentHash, record.versionHash, JSON.stringify((_a = record.metadata) !== null && _a !== void 0 ? _a : {}), Number(((_b = record.metadata) === null || _b === void 0 ? void 0 : _b.chunkCount) || 0), record.createdAt, record.updatedAt)
+            .run();
+    }
+    async listSourceDocumentsByTenant(tenantId) {
+        const result = await this.db
+            .prepare('SELECT * FROM source_documents WHERE tenant_id = ? ORDER BY updated_at DESC')
+            .bind(tenantId)
+            .all();
+        return result.results.map(mapSourceDocument);
+    }
+    async replaceDocumentChunks(documentId, chunks) {
+        var _a;
+        const existing = await this.listDocumentChunksByDocument(documentId);
+        for (const chunk of existing) {
+            await this.db
+                .prepare('DELETE FROM document_chunks_meta WHERE id = ?')
+                .bind(chunk.id)
+                .run();
+        }
+        for (const chunk of chunks) {
+            await this.db
+                .prepare(`
+          INSERT OR REPLACE INTO document_chunks_meta (
+            id, tenant_id, document_id, chunk_index, content, token_count, metadata_json, created_at
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        `)
+                .bind(chunk.id, chunk.tenantId, chunk.documentId, chunk.chunkIndex, chunk.content, chunk.tokenCount, JSON.stringify((_a = chunk.metadata) !== null && _a !== void 0 ? _a : {}), chunk.createdAt)
+                .run();
+        }
+    }
+    async listDocumentChunksByDocument(documentId) {
+        const result = await this.db
+            .prepare('SELECT * FROM document_chunks_meta WHERE document_id = ? ORDER BY chunk_index ASC')
+            .bind(documentId)
+            .all();
+        return result.results.map(mapDocumentChunk);
+    }
+    async countDocumentChunksByTenant(tenantId) {
+        const documents = await this.listSourceDocumentsByTenant(tenantId);
+        return documents.reduce((sum, item) => { var _a; return sum + Number(((_a = item.metadata) === null || _a === void 0 ? void 0 : _a.chunkCount) || 0); }, 0);
+    }
+}
+
+function createCloudflareKnowledgeIndexingApplication(bindings) {
+    const runtimeBindings = getCloudflareRuntimeBindings(bindings);
+    if (!(runtimeBindings === null || runtimeBindings === void 0 ? void 0 : runtimeBindings.TENANT_IDENTITY_DB)) {
+        throw new Error('TENANT_IDENTITY_DB binding is required');
+    }
+    const repository = new D1KnowledgeIndexingRepository(runtimeBindings.TENANT_IDENTITY_DB);
+    const objectStorage = createObjectStorageProvider(runtimeBindings);
+    const queuePublisher = createCloudflareQueuePublisher(runtimeBindings);
+    const agentDocsGateway = new LocalAgentDocsGateway(objectStorage);
+    return new KnowledgeIndexingApplication({
+        repository,
+        agentDocsGateway,
+        sourceAssetStore: {
+            save: (input) => saveTenantAsset(input, objectStorage)
+        },
+        triggerSync: async ({ tenantId, sourceId, triggerMode }) => {
+            const source = await repository.getDataSourceById(sourceId);
+            if (!source || source.tenantId !== tenantId) {
+                throw new Error('Source not found');
+            }
+            if (source.status === 'disabled') {
+                throw new Error('Source is disabled');
+            }
+            const job = createQueuedIngestionJob({
+                tenantId,
+                dataSourceId: source.id,
+                triggerMode
+            });
+            await repository.saveIngestionJob(job);
+            await queuePublisher.publish({
+                type: 'knowledge-indexing.sync',
+                payload: {
+                    tenantId,
+                    sourceId: source.id,
+                    jobId: job.id,
+                    triggerMode
+                }
+            });
+            return {
+                item: job,
+                documentCount: 0,
+                chunkCount: 0
+            };
+        }
+    });
+}
+
 class SourcesController {
     constructor(application) {
         this.application = application;
@@ -6172,16 +6823,24 @@ function createKnowledgeIndexingHttpLayer(application) {
     };
 }
 
-function createKnowledgeIndexingHttpAdapter(repository) {
-    const application = createKnowledgeIndexingApplication(repository);
+function createKnowledgeIndexingHttpAdapter(input) {
+    var _a;
+    const application = 'saveDataSource' in input
+        ? createKnowledgeIndexingApplication(input)
+        : ((_a = input.bindings) === null || _a === void 0 ? void 0 : _a.TENANT_IDENTITY_DB)
+            ? createCloudflareKnowledgeIndexingApplication(input.bindings)
+            : createKnowledgeIndexingApplication(input.repository);
     return createKnowledgeIndexingHttpLayer(application);
 }
 
 function createKnowledgeIndexingGateway(input) {
     const repository = 'saveDataSource' in input ? input : input.repository;
+    const bindings = 'saveDataSource' in input ? undefined : input.bindings;
     const baseUrl = 'saveDataSource' in input ? getServiceBaseUrl('knowledge-indexing-service') : input.baseUrl || getServiceBaseUrl('knowledge-indexing-service');
     const fetcher = 'saveDataSource' in input ? undefined : input.fetcher;
-    const http = createKnowledgeIndexingHttpAdapter(repository);
+    const http = 'saveDataSource' in input
+        ? createKnowledgeIndexingHttpAdapter(input)
+        : createKnowledgeIndexingHttpAdapter({ repository, bindings });
     return {
         listSources(tenantId) {
             if (baseUrl) {
@@ -6321,6 +6980,13 @@ function createKnowledgeIndexingGateway(input) {
     };
 }
 
+function createKnowledgeIndexingGatewayForEvent(event) {
+    return createKnowledgeIndexingGateway({
+        repository: getRagRepository(),
+        bindings: getCloudflareRuntimeBindings(event.context)
+    });
+}
+
 const agentDocs_get = defineEventHandler(async (event) => {
     var _a;
     requireAdminSession(event);
@@ -6328,7 +6994,7 @@ const agentDocs_get = defineEventHandler(async (event) => {
     if (!tenantId) {
         throw createError({ statusCode: 400, statusMessage: 'tenantId is required' });
     }
-    const gateway = createKnowledgeIndexingGateway(getRagRepository());
+    const gateway = createKnowledgeIndexingGatewayForEvent(event);
     return gateway.listAgentDocs(tenantId);
 });
 
@@ -6349,7 +7015,7 @@ const _fileName__put = defineEventHandler(async (event) => {
     if (typeof body.content !== 'string') {
         throw createError({ statusCode: 400, statusMessage: 'content is required' });
     }
-    const gateway = createKnowledgeIndexingGateway(getRagRepository());
+    const gateway = createKnowledgeIndexingGatewayForEvent(event);
     return gateway.saveAgentDoc({
         tenantId,
         fileName,
@@ -6369,7 +7035,7 @@ const indexStats_get = defineEventHandler(async (event) => {
     if (!tenantId) {
         throw createError({ statusCode: 400, statusMessage: 'tenantId is required' });
     }
-    const gateway = createKnowledgeIndexingGateway(getRagRepository());
+    const gateway = createKnowledgeIndexingGatewayForEvent(event);
     return gateway.getIndexStats(tenantId);
 });
 
@@ -6385,7 +7051,7 @@ const jobs_get = defineEventHandler(async (event) => {
     if (!tenantId) {
         throw createError({ statusCode: 400, statusMessage: 'tenantId is required' });
     }
-    const gateway = createKnowledgeIndexingGateway(getRagRepository());
+    const gateway = createKnowledgeIndexingGatewayForEvent(event);
     return gateway.listJobs(tenantId);
 });
 
@@ -6402,7 +7068,7 @@ const retry_post = defineEventHandler(async (event) => {
     if (!tenantId || !jobId) {
         throw createError({ statusCode: 400, statusMessage: 'tenantId and jobId are required' });
     }
-    const gateway = createKnowledgeIndexingGateway(getRagRepository());
+    const gateway = createKnowledgeIndexingGatewayForEvent(event);
     return gateway.retryJob({
         tenantId,
         jobId
@@ -6421,7 +7087,7 @@ const reindex_post = defineEventHandler(async (event) => {
     if (!tenantId) {
         throw createError({ statusCode: 400, statusMessage: 'tenantId is required' });
     }
-    const gateway = createKnowledgeIndexingGateway(getRagRepository());
+    const gateway = createKnowledgeIndexingGatewayForEvent(event);
     return gateway.reindexAll({ tenantId });
 });
 
@@ -6435,7 +7101,7 @@ const resetCode_post$2 = defineEventHandler(async (event) => {
     requireAdminSession(event);
     const tenantId = ((_a = getRouterParam(event, 'tenantId')) === null || _a === void 0 ? void 0 : _a.trim()) || '';
     try {
-        const gateway = createTenantIdentityGateway(getStorage());
+        const gateway = createTenantIdentityGatewayForEvent(event);
         return await gateway.issueTenantResetCode({
             tenantId,
             loginUrl: `${(process.env.CUSTOMER_BOT_PUBLIC_BASE_URL || 'https://bot.aifactory.website').replace(/\/+$/, '')}/tenant/login`
@@ -6459,7 +7125,7 @@ const restore_post = defineEventHandler(async (event) => {
     requireAdminSession(event);
     const tenantId = getRouterParam(event, 'tenantId') || '';
     try {
-        const gateway = createTenantIdentityGateway(getStorage());
+        const gateway = createTenantIdentityGatewayForEvent(event);
         return await gateway.restoreTenant(tenantId);
     }
     catch {
@@ -6482,7 +7148,7 @@ const sources_get = defineEventHandler(async (event) => {
     if (!tenantId) {
         throw createError({ statusCode: 400, statusMessage: 'tenantId is required' });
     }
-    const gateway = createKnowledgeIndexingGateway(getRagRepository());
+    const gateway = createKnowledgeIndexingGatewayForEvent(event);
     return gateway.listSources(tenantId);
 });
 
@@ -6499,7 +7165,7 @@ const sources_post = defineEventHandler(async (event) => {
         throw createError({ statusCode: 400, statusMessage: 'tenantId is required' });
     }
     const body = await readBody(event);
-    const gateway = createKnowledgeIndexingGateway(getRagRepository());
+    const gateway = createKnowledgeIndexingGatewayForEvent(event);
     return gateway.createSource({
         tenantId,
         type: body.type || 'file',
@@ -6522,7 +7188,7 @@ const _sourceId__delete = defineEventHandler(async (event) => {
     if (!tenantId || !sourceId) {
         throw createError({ statusCode: 400, statusMessage: 'tenantId and sourceId are required' });
     }
-    const gateway = createKnowledgeIndexingGateway(getRagRepository());
+    const gateway = createKnowledgeIndexingGatewayForEvent(event);
     return gateway.disableSource({
         tenantId,
         sourceId
@@ -6543,7 +7209,7 @@ const _sourceId__put = defineEventHandler(async (event) => {
         throw createError({ statusCode: 400, statusMessage: 'tenantId and sourceId are required' });
     }
     const body = await readBody(event);
-    const gateway = createKnowledgeIndexingGateway(getRagRepository());
+    const gateway = createKnowledgeIndexingGatewayForEvent(event);
     return gateway.updateSource({
         tenantId,
         sourceId,
@@ -6569,7 +7235,7 @@ const sync_post = defineEventHandler(async (event) => {
         throw createError({ statusCode: 400, statusMessage: 'tenantId and sourceId are required' });
     }
     try {
-        const gateway = createKnowledgeIndexingGateway(getRagRepository());
+        const gateway = createKnowledgeIndexingGatewayForEvent(event);
         return await gateway.syncSource({
             tenantId,
             sourceId
@@ -6600,7 +7266,7 @@ const upload_post = defineEventHandler(async (event) => {
     if (!fileName || !base64Data) {
         throw createError({ statusCode: 400, statusMessage: 'fileName and base64Data are required' });
     }
-    const gateway = createKnowledgeIndexingGateway(getRagRepository());
+    const gateway = createKnowledgeIndexingGatewayForEvent(event);
     return gateway.uploadSourceAsset({
         tenantId,
         sourceId,
@@ -7418,19 +8084,27 @@ function scoreByKeywords(content, query) {
     }
     return score;
 }
-function dotProduct(left, right) {
+function dotProduct$1(left, right) {
     return left.reduce((sum, value, index) => { var _a; return sum + value * ((_a = right[index]) !== null && _a !== void 0 ? _a : 0); }, 0);
 }
 async function retrieveForTenant(input) {
-    var _a, _b, _c, _d;
+    var _a, _b, _c, _d, _e;
     const documents = await input.repository.listDocumentsByTenant(input.tenantId);
     const queryEmbedding = input.embedQuery ? await input.embedQuery(input.query) : undefined;
+    if (input.customRetriever) {
+        return input.customRetriever({
+            tenantId: input.tenantId,
+            query: input.query,
+            topK: (_a = input.topK) !== null && _a !== void 0 ? _a : 3,
+            queryEmbedding
+        });
+    }
     const scored = [];
     for (const document of documents) {
         const chunks = await input.repository.listChunksByDocument(document.id);
         for (const chunk of chunks) {
             const keywordScore = scoreByKeywords(chunk.content, input.query);
-            const vectorScore = queryEmbedding && ((_a = chunk.embedding) === null || _a === void 0 ? void 0 : _a.length) ? dotProduct(queryEmbedding, chunk.embedding) : 0;
+            const vectorScore = queryEmbedding && ((_b = chunk.embedding) === null || _b === void 0 ? void 0 : _b.length) ? dotProduct$1(queryEmbedding, chunk.embedding) : 0;
             const score = keywordScore + vectorScore;
             if (score <= 0) {
                 continue;
@@ -7444,8 +8118,8 @@ async function retrieveForTenant(input) {
         }
     }
     scored.sort((left, right) => right.score - left.score);
-    const hits = scored.slice(0, (_b = input.topK) !== null && _b !== void 0 ? _b : 3);
-    const confidence = hits.length === 0 ? 'miss' : ((_d = (_c = hits[0]) === null || _c === void 0 ? void 0 : _c.score) !== null && _d !== void 0 ? _d : 0) >= 10 ? 'high' : 'low';
+    const hits = scored.slice(0, (_c = input.topK) !== null && _c !== void 0 ? _c : 3);
+    const confidence = hits.length === 0 ? 'miss' : ((_e = (_d = hits[0]) === null || _d === void 0 ? void 0 : _d.score) !== null && _e !== void 0 ? _e : 0) >= 10 ? 'high' : 'low';
     return {
         confidence,
         chunks: hits.map((item) => item.chunk),
@@ -7765,7 +8439,9 @@ async function processChatMessage(input, options = {}) {
                 tenantId: tenant.id,
                 query: input.message,
                 repository: ragRepository,
-                topK: ragSettings.retrievalTopK
+                topK: ragSettings.retrievalTopK,
+                embedQuery: options.embedQuery,
+                customRetriever: options.customRetriever
             });
             retrievalConfidence = retrieval.confidence;
             citations = retrieval.citations;
@@ -7909,7 +8585,7 @@ class AgentRuntimeApplication {
     }
 }
 
-async function submitLead(input, storage) {
+async function submitLead$1(input, storage) {
     const tenant = await resolveTenant(input.tenantId, storage);
     if (!tenant) {
         throw new Error('Tenant not found');
@@ -7945,7 +8621,339 @@ function createAgentRuntimeApplication(input) {
             platformModel: input.platformModel,
             fetcher: input.fetcher
         }),
-        submitLead: (request) => submitLead(request, input.storage)
+        submitLead: (request) => submitLead$1(request, input.storage)
+    });
+}
+
+function buildCitation(chunk, document, score) {
+    return {
+        documentId: chunk.documentId,
+        chunkId: chunk.id,
+        title: String(chunk.metadata.title || (document === null || document === void 0 ? void 0 : document.title) || 'Untitled Chunk'),
+        snippet: chunk.content.slice(0, 160),
+        score,
+        sourceUri: String(chunk.metadata.sourceUri || (document === null || document === void 0 ? void 0 : document.sourceUri) || ''),
+        metadata: chunk.metadata
+    };
+}
+async function retrieveForTenantWithVectorIndex(input) {
+    var _a, _b, _c;
+    const documents = await input.repository.listSourceDocumentsByTenant(input.tenantId);
+    const documentMap = new Map(documents.map((item) => [item.id, item]));
+    const chunkPool = [];
+    for (const document of documents) {
+        const chunks = await input.repository.listDocumentChunksByDocument(document.id);
+        chunkPool.push(...chunks);
+    }
+    const chunkMap = new Map(chunkPool.map((item) => [item.id, item]));
+    const matches = await input.vectorIndex.query({
+        vector: input.queryVector,
+        topK: (_a = input.topK) !== null && _a !== void 0 ? _a : 5,
+        filter: {
+            tenantId: input.tenantId
+        },
+        returnMetadata: true
+    });
+    const chunks = matches.matches
+        .map((match) => ({
+        chunk: chunkMap.get(match.id),
+        score: match.score
+    }))
+        .filter((item) => Boolean(item.chunk));
+    const confidence = chunks.length === 0 ? 'miss' : ((_c = (_b = chunks[0]) === null || _b === void 0 ? void 0 : _b.score) !== null && _c !== void 0 ? _c : 0) >= 0.5 ? 'high' : 'low';
+    return {
+        confidence,
+        chunks: chunks.map((item) => item.chunk),
+        citations: chunks.map((item) => buildCitation(item.chunk, documentMap.get(item.chunk.documentId), item.score))
+    };
+}
+
+function dotProduct(left, right) {
+    return left.reduce((sum, value, index) => { var _a; return sum + value * ((_a = right[index]) !== null && _a !== void 0 ? _a : 0); }, 0);
+}
+function createMemoryVectorIndexProvider() {
+    const vectors = new Map();
+    return {
+        kind: 'memory',
+        async upsert(items) {
+            for (const item of items) {
+                vectors.set(item.id, {
+                    values: [...item.values],
+                    metadata: item.metadata ? structuredClone(item.metadata) : undefined
+                });
+            }
+        },
+        async query(input) {
+            var _a;
+            const matches = Array.from(vectors.entries())
+                .map(([id, item]) => ({
+                id,
+                score: dotProduct(input.vector, item.values),
+                metadata: input.returnMetadata ? item.metadata : undefined
+            }))
+                .sort((left, right) => right.score - left.score)
+                .slice(0, (_a = input.topK) !== null && _a !== void 0 ? _a : 5);
+            return { matches };
+        }
+    };
+}
+
+function createCloudflareVectorIndexProvider(index) {
+    return {
+        kind: 'vectorize',
+        async upsert(vectors) {
+            await index.upsert(vectors);
+        },
+        async query(input) {
+            return index.query(input.vector, {
+                topK: input.topK,
+                filter: input.filter,
+                returnMetadata: input.returnMetadata
+            });
+        }
+    };
+}
+
+function createVectorIndexProvider(bindings) {
+    const runtimeBindings = getCloudflareRuntimeBindings(bindings);
+    if (runtimeBindings === null || runtimeBindings === void 0 ? void 0 : runtimeBindings.CUSTOMER_BOT_VECTOR_INDEX) {
+        return createCloudflareVectorIndexProvider(runtimeBindings.CUSTOMER_BOT_VECTOR_INDEX);
+    }
+    return createMemoryVectorIndexProvider();
+}
+
+function parseJson(value) {
+    if (!value) {
+        return undefined;
+    }
+    return JSON.parse(value);
+}
+function mapSession(row) {
+    return {
+        id: row.id,
+        tenantId: row.tenant_id,
+        visitorId: row.visitor_id,
+        startedAt: row.started_at,
+        lastMessageAt: row.last_message_at
+    };
+}
+function mapMessage(row) {
+    return {
+        id: row.id,
+        sessionId: row.session_id,
+        tenantId: row.tenant_id,
+        role: row.role,
+        content: row.content,
+        createdAt: row.created_at,
+        attachments: parseJson(row.attachments_json),
+        matchedContentSources: parseJson(row.matched_content_sources_json),
+        citations: parseJson(row.citations_json),
+        answerSource: row.answer_source || undefined,
+        credentialSource: row.credential_source || undefined,
+        retrievalConfidence: row.retrieval_confidence || undefined
+    };
+}
+function mapLead(row) {
+    return {
+        id: row.id,
+        tenantId: row.tenant_id,
+        sessionId: row.session_id,
+        name: row.name,
+        company: row.company,
+        contact: row.contact,
+        demandType: row.demand_type,
+        message: row.message,
+        createdAt: row.created_at
+    };
+}
+function mapUsage(row) {
+    return {
+        id: row.id,
+        tenantId: row.tenant_id,
+        sessionId: row.session_id,
+        provider: row.provider,
+        model: row.model,
+        inputTokens: row.input_tokens,
+        outputTokens: row.output_tokens,
+        totalTokens: row.total_tokens,
+        amount: row.amount,
+        status: row.status,
+        credentialSource: row.credential_source || undefined,
+        answerSource: row.answer_source || undefined,
+        createdAt: row.created_at
+    };
+}
+class D1AgentRuntimeStorageRepository {
+    constructor(db) {
+        this.db = db;
+        this.tenantStorage = new D1TenantIdentityStorageRepository(db);
+    }
+    saveTenant(tenant) {
+        return this.tenantStorage.saveTenant(tenant);
+    }
+    getTenantById(tenantId) {
+        return this.tenantStorage.getTenantById(tenantId);
+    }
+    getTenantByEmbedKey(embedKey) {
+        return this.tenantStorage.getTenantByEmbedKey(embedKey);
+    }
+    listTenants() {
+        return this.tenantStorage.listTenants();
+    }
+    saveTenantUser(user) {
+        return this.tenantStorage.saveTenantUser(user);
+    }
+    getTenantUserByEmail(email) {
+        return this.tenantStorage.getTenantUserByEmail(email);
+    }
+    getTenantUserById(userId) {
+        return this.tenantStorage.getTenantUserById(userId);
+    }
+    listTenantUsersByTenant(tenantId) {
+        return this.tenantStorage.listTenantUsersByTenant(tenantId);
+    }
+    saveTenantPasswordReset(record) {
+        return this.tenantStorage.saveTenantPasswordReset(record);
+    }
+    getTenantPasswordResetByCode(email, code) {
+        return this.tenantStorage.getTenantPasswordResetByCode(email, code);
+    }
+    async saveSession(session) {
+        await this.db
+            .prepare(`
+        INSERT OR REPLACE INTO chat_sessions (
+          id, tenant_id, visitor_id, started_at, last_message_at
+        ) VALUES (?, ?, ?, ?, ?)
+      `)
+            .bind(session.id, session.tenantId, session.visitorId, session.startedAt, session.lastMessageAt)
+            .run();
+    }
+    async getSessionById(sessionId) {
+        const row = await this.db
+            .prepare('SELECT * FROM chat_sessions WHERE id = ? LIMIT 1')
+            .bind(sessionId)
+            .first();
+        return row ? mapSession(row) : undefined;
+    }
+    async listSessionsByTenant(tenantId) {
+        const result = await this.db
+            .prepare('SELECT * FROM chat_sessions WHERE tenant_id = ? ORDER BY last_message_at DESC')
+            .bind(tenantId)
+            .all();
+        return result.results.map(mapSession);
+    }
+    async saveMessage(message) {
+        await this.db
+            .prepare(`
+        INSERT OR REPLACE INTO chat_messages (
+          id, session_id, tenant_id, role, content, created_at, attachments_json, matched_content_sources_json,
+          citations_json, answer_source, credential_source, retrieval_confidence
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `)
+            .bind(message.id, message.sessionId, message.tenantId, message.role, message.content, message.createdAt, message.attachments ? JSON.stringify(message.attachments) : null, message.matchedContentSources ? JSON.stringify(message.matchedContentSources) : null, message.citations ? JSON.stringify(message.citations) : null, message.answerSource || null, message.credentialSource || null, message.retrievalConfidence || null)
+            .run();
+    }
+    async listMessagesBySession(sessionId) {
+        const result = await this.db
+            .prepare('SELECT * FROM chat_messages WHERE session_id = ? ORDER BY created_at ASC')
+            .bind(sessionId)
+            .all();
+        return result.results.map(mapMessage);
+    }
+    async saveLead(lead) {
+        await this.db
+            .prepare(`
+        INSERT OR REPLACE INTO leads (
+          id, tenant_id, session_id, name, company, contact, demand_type, message, created_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `)
+            .bind(lead.id, lead.tenantId, lead.sessionId, lead.name, lead.company, lead.contact, lead.demandType, lead.message, lead.createdAt)
+            .run();
+    }
+    async listLeadsByTenant(tenantId) {
+        const result = await this.db
+            .prepare('SELECT * FROM leads WHERE tenant_id = ? ORDER BY created_at DESC')
+            .bind(tenantId)
+            .all();
+        return result.results.map(mapLead);
+    }
+    async saveUsageRecord(record) {
+        await this.db
+            .prepare(`
+        INSERT OR REPLACE INTO usage_records (
+          id, tenant_id, session_id, provider, model, input_tokens, output_tokens, total_tokens, amount, status,
+          credential_source, answer_source, created_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `)
+            .bind(record.id, record.tenantId, record.sessionId, record.provider, record.model, record.inputTokens, record.outputTokens, record.totalTokens, record.amount, record.status, record.credentialSource || null, record.answerSource || null, record.createdAt)
+            .run();
+    }
+    async listUsageByTenant(tenantId) {
+        const result = await this.db
+            .prepare('SELECT * FROM usage_records WHERE tenant_id = ? ORDER BY created_at DESC')
+            .bind(tenantId)
+            .all();
+        return result.results.map(mapUsage);
+    }
+}
+
+async function submitLead(input, storage) {
+    const tenant = await resolveTenant(input.tenantId, storage);
+    if (!tenant) {
+        throw new Error('Tenant not found');
+    }
+    const leadId = `lead-${Date.now()}`;
+    await storage.saveLead({
+        id: leadId,
+        tenantId: tenant.id,
+        sessionId: input.sessionId || '',
+        name: input.name,
+        company: input.company,
+        contact: input.contact,
+        demandType: input.demandType,
+        message: input.message || '',
+        createdAt: Date.now()
+    });
+    return {
+        ok: true,
+        id: leadId,
+        message: '提交成功，我们会在 1 个工作日内联系你。'
+    };
+}
+function createCloudflareAgentRuntimeApplication(bindings) {
+    const runtimeBindings = getCloudflareRuntimeBindings(bindings);
+    if (!(runtimeBindings === null || runtimeBindings === void 0 ? void 0 : runtimeBindings.TENANT_IDENTITY_DB)) {
+        throw new Error('TENANT_IDENTITY_DB binding is required');
+    }
+    const storage = new D1AgentRuntimeStorageRepository(runtimeBindings.TENANT_IDENTITY_DB);
+    const indexingRepository = new D1KnowledgeIndexingRepository(runtimeBindings.TENANT_IDENTITY_DB);
+    const vectorIndex = createVectorIndexProvider(runtimeBindings);
+    return new AgentRuntimeApplication({
+        processChatMessage: (request) => processChatMessage(request, {
+            storage,
+            ragRepository: {
+                saveDataSource: async () => { },
+                getDataSourceById: async () => undefined,
+                listDataSourcesByTenant: async () => [],
+                saveIngestionJob: async () => { },
+                getIngestionJobById: async () => undefined,
+                listIngestionJobsByTenant: async () => [],
+                saveDocument: async () => { },
+                getDocumentById: async () => undefined,
+                listDocumentsByTenant: (tenantId) => indexingRepository.listSourceDocumentsByTenant(tenantId),
+                replaceDocumentChunks: async () => { },
+                listChunksByDocument: (documentId) => indexingRepository.listDocumentChunksByDocument(documentId)
+            },
+            embedQuery: async (query) => createDeterministicEmbedding(query),
+            customRetriever: ({ tenantId, queryEmbedding, topK }) => retrieveForTenantWithVectorIndex({
+                tenantId,
+                queryVector: queryEmbedding || [],
+                topK,
+                repository: indexingRepository,
+                vectorIndex
+            })
+        }),
+        submitLead: (request) => submitLead(request, storage)
     });
 }
 
@@ -7975,7 +8983,10 @@ function createAgentRuntimeHttpLayer(application) {
 }
 
 function createAgentRuntimeHttpAdapter(input) {
-    const application = createAgentRuntimeApplication(input);
+    var _a;
+    const application = ((_a = input.bindings) === null || _a === void 0 ? void 0 : _a.TENANT_IDENTITY_DB)
+        ? createCloudflareAgentRuntimeApplication(input.bindings)
+        : createAgentRuntimeApplication(input);
     return createAgentRuntimeHttpLayer(application);
 }
 
@@ -8010,6 +9021,20 @@ function createAgentRuntimeGateway(input) {
     };
 }
 
+function createAgentRuntimeGatewayForEvent(event, options) {
+    return createAgentRuntimeGateway({
+        storage: getStorage(),
+        ragRepository: getRagRepository(),
+        bindings: getCloudflareRuntimeBindings(event.context),
+        endpoint: options === null || options === void 0 ? void 0 : options.endpoint,
+        apiKey: options === null || options === void 0 ? void 0 : options.apiKey,
+        model: options === null || options === void 0 ? void 0 : options.model,
+        platformEndpoint: options === null || options === void 0 ? void 0 : options.platformEndpoint,
+        platformApiKey: options === null || options === void 0 ? void 0 : options.platformApiKey,
+        platformModel: options === null || options === void 0 ? void 0 : options.platformModel
+    });
+}
+
 const chat_post = defineEventHandler(async (event) => {
     var _a, _b, _c;
     const runtimeConfig = useRuntimeConfig();
@@ -8023,9 +9048,7 @@ const chat_post = defineEventHandler(async (event) => {
         });
     }
     try {
-        const gateway = createAgentRuntimeGateway({
-            storage: getStorage(),
-            ragRepository: getRagRepository(),
+        const gateway = createAgentRuntimeGatewayForEvent(event, {
             endpoint: runtimeConfig.customerBotLlmEndpoint,
             apiKey: runtimeConfig.customerBotLlmApiKey,
             model: runtimeConfig.customerBotLlmModel,
@@ -8070,11 +9093,7 @@ const contact_post = defineEventHandler(async (event) => {
             statusMessage: '缺少必填字段'
         });
     }
-    const storage = getStorage();
-    const gateway = createAgentRuntimeGateway({
-        storage,
-        ragRepository: getRagRepository()
-    });
+    const gateway = createAgentRuntimeGatewayForEvent(event);
     try {
         return await gateway.contact({
             tenantId: body.tenantId,
@@ -8153,6 +9172,48 @@ function createEmbedDeliveryApplication(storage) {
     });
 }
 
+async function loadCloudflareRuntimeConfig(bindings, tenantId) {
+    const storage = createCloudflareTenantIdentityStorage(bindings);
+    const tenant = await storage.getTenantById(tenantId);
+    if (!tenant) {
+        throw new Error('Tenant not found');
+    }
+    return {
+        tenantId: tenant.id,
+        status: tenant.status,
+        brandName: tenant.brandName,
+        themeColor: tenant.themeColor,
+        contactPhone: tenant.contactPhone,
+        contactEmail: tenant.contactEmail,
+        contactAddress: tenant.contactAddress,
+        systemPrompt: tenant.systemPrompt
+    };
+}
+async function loadCloudflareWidgetScript(bindings) {
+    if (!bindings.ASSETS) {
+        throw new Error('ASSETS binding is unavailable');
+    }
+    const response = await bindings.ASSETS.fetch('https://assets.local/customer-bot.js');
+    if (!response.ok) {
+        throw new Error('customer-bot.js not found in Cloudflare assets');
+    }
+    return {
+        code: await response.text(),
+        contentType: response.headers.get('content-type') || 'application/javascript; charset=utf-8',
+        cacheControl: response.headers.get('cache-control') || 'public, max-age=60, stale-while-revalidate=300'
+    };
+}
+function createCloudflareEmbedDeliveryApplication(bindings) {
+    const runtimeBindings = getCloudflareRuntimeBindings(bindings);
+    if (!(runtimeBindings === null || runtimeBindings === void 0 ? void 0 : runtimeBindings.TENANT_IDENTITY_DB)) {
+        throw new Error('TENANT_IDENTITY_DB binding is required');
+    }
+    return new EmbedDeliveryApplication({
+        getRuntimeConfig: (tenantId) => loadCloudflareRuntimeConfig(runtimeBindings, tenantId),
+        getWidgetScript: () => loadCloudflareWidgetScript(runtimeBindings)
+    });
+}
+
 class EmbedConfigController {
     constructor(application) {
         this.application = application;
@@ -8178,16 +9239,24 @@ function createEmbedDeliveryHttpLayer(application) {
     };
 }
 
-function createEmbedDeliveryHttpAdapter(storage) {
-    const application = createEmbedDeliveryApplication(storage);
+function createEmbedDeliveryHttpAdapter(input) {
+    var _a;
+    const application = 'saveTenant' in input
+        ? createEmbedDeliveryApplication(input)
+        : ((_a = input.bindings) === null || _a === void 0 ? void 0 : _a.TENANT_IDENTITY_DB)
+            ? createCloudflareEmbedDeliveryApplication(input.bindings)
+            : createEmbedDeliveryApplication(input.storage);
     return createEmbedDeliveryHttpLayer(application);
 }
 
 function createEmbedDeliveryGateway(input) {
     const storage = 'saveTenant' in input ? input : input.storage;
+    const bindings = 'saveTenant' in input ? undefined : input.bindings;
     const baseUrl = 'saveTenant' in input ? getServiceBaseUrl('embed-delivery-service') : input.baseUrl || getServiceBaseUrl('embed-delivery-service');
     const fetcher = 'saveTenant' in input ? undefined : input.fetcher;
-    const http = createEmbedDeliveryHttpAdapter(storage);
+    const http = 'saveTenant' in input
+        ? createEmbedDeliveryHttpAdapter(input)
+        : createEmbedDeliveryHttpAdapter({ storage, bindings });
     return {
         runtimeConfig(tenantId) {
             if (baseUrl) {
@@ -8216,6 +9285,13 @@ function createEmbedDeliveryGateway(input) {
     };
 }
 
+function createEmbedDeliveryGatewayForEvent(event) {
+    return createEmbedDeliveryGateway({
+        storage: getStorage(),
+        bindings: getCloudflareRuntimeBindings(event.context)
+    });
+}
+
 const config_get = defineEventHandler(async (event) => {
     const query = getQuery$1(event);
     const tenantId = typeof query.tenantId === 'string' ? query.tenantId.trim() : '';
@@ -8226,7 +9302,7 @@ const config_get = defineEventHandler(async (event) => {
         });
     }
     try {
-        const gateway = createEmbedDeliveryGateway(getStorage());
+        const gateway = createEmbedDeliveryGatewayForEvent(event);
         return await gateway.runtimeConfig(tenantId);
     }
     catch {
@@ -8248,7 +9324,7 @@ const changePassword_post = defineEventHandler(async (event) => {
     const currentPassword = (body === null || body === void 0 ? void 0 : body.currentPassword) || '';
     const nextPassword = (body === null || body === void 0 ? void 0 : body.nextPassword) || '';
     try {
-        const gateway = createTenantIdentityGateway(getStorage());
+        const gateway = createTenantIdentityGatewayForEvent(event);
         return await gateway.changeTenantPassword({
             tenantUserId: session.tenantUserId,
             tenantId: session.tenantId,
@@ -8333,8 +9409,7 @@ const login_post = defineEventHandler(async (event) => {
     const body = await readBody(event);
     const email = ((_a = body === null || body === void 0 ? void 0 : body.email) === null || _a === void 0 ? void 0 : _a.trim()) || '';
     const password = (body === null || body === void 0 ? void 0 : body.password) || '';
-    const storage = getStorage();
-    const gateway = createTenantIdentityGateway(storage);
+    const gateway = createTenantIdentityGatewayForEvent(event);
     let response;
     try {
         response = await gateway.tenantUserLogin({
@@ -8376,7 +9451,7 @@ const logout_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.definePrope
 const me_get = defineEventHandler(async (event) => {
     const session = requireTenantSession(event);
     try {
-        const gateway = createTenantIdentityGateway(getStorage());
+        const gateway = createTenantIdentityGatewayForEvent(event);
         return gateway.tenantMe({
             tenantUserId: session.tenantUserId,
             tenantId: session.tenantId
@@ -8450,9 +9525,9 @@ const resetCode_post = defineEventHandler(async (event) => {
             statusMessage: 'email is required'
         });
     }
-    const storage = getStorage();
+    const storage = createTenantIdentityStorageForEvent(event);
     const tenantUser = await storage.getTenantUserByEmail(email);
-    const gateway = createTenantIdentityGateway(storage);
+    const gateway = createTenantIdentityGatewayForEvent(event);
     return gateway.issueTenantUserResetCode({
         tenantId: (tenantUser === null || tenantUser === void 0 ? void 0 : tenantUser.tenantId) || '',
         email,
@@ -8477,7 +9552,7 @@ const resetPassword_post = defineEventHandler(async (event) => {
             statusMessage: 'email, code and nextPassword are required'
         });
     }
-    const gateway = createTenantIdentityGateway(getStorage());
+    const gateway = createTenantIdentityGatewayForEvent(event);
     const response = await gateway.resetTenantPassword({
         email,
         code,
@@ -8498,7 +9573,7 @@ const resetPassword_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defi
 
 const customerBot_js_get = defineEventHandler(async (event) => {
     try {
-        const gateway = createEmbedDeliveryGateway(getStorage());
+        const gateway = createEmbedDeliveryGatewayForEvent(event);
         const result = await gateway.widgetScript();
         setHeader(event, 'Content-Type', result.contentType);
         setHeader(event, 'Cache-Control', result.cacheControl);
@@ -8516,7 +9591,7 @@ const customerBot_js_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defi
 
 function renderPayloadResponse(ssrContext) {
 	return {
-		body: encodeForwardSlashes(stringify(splitPayload(ssrContext).payload, ssrContext["~payloadReducers"])) ,
+		body: encodeForwardSlashes(stringify$1(splitPayload(ssrContext).payload, ssrContext["~payloadReducers"])) ,
 		statusCode: getResponseStatus(ssrContext.event),
 		statusMessage: getResponseStatusText(ssrContext.event),
 		headers: {
@@ -8526,7 +9601,7 @@ function renderPayloadResponse(ssrContext) {
 	};
 }
 function renderPayloadJsonScript(opts) {
-	const contents = opts.data ? encodeForwardSlashes(stringify(opts.data, opts.ssrContext["~payloadReducers"])) : "";
+	const contents = opts.data ? encodeForwardSlashes(stringify$1(opts.data, opts.ssrContext["~payloadReducers"])) : "";
 	const payload = {
 		"type": "application/json",
 		"innerHTML": contents,

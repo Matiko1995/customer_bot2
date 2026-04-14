@@ -24,11 +24,15 @@ import { RuntimeConfig as UserRuntimeConfig, PublicRuntimeConfig as UserPublicRu
 
    customerBotWidgetVersion: string,
 
+   customerBotCloudflareMigrationPhase: string,
+
    nitro: {
       envPrefix: string,
    },
   }
   interface SharedPublicRuntimeConfig {
+   customerBotDeploymentTarget: string,
+
    customerBotPublicBaseUrl: string,
 
    customerBotStagingBaseUrl: string,
