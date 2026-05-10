@@ -12,9 +12,9 @@
       <article v-for="job in jobs" :key="job.id" class="job-card">
         <div>
           <strong>{{ job.id }}</strong>
-          <p>{{ job.triggerMode }} / {{ job.status }}</p>
+          <p>{{ formatTriggerMode(job.triggerMode) }} / {{ formatJobStatus(job.status) }}</p>
         </div>
-        <p class="panel-hint">source={{ job.dataSourceId }} / 开始={{ job.startedAt ? new Date(job.startedAt).toLocaleString() : '-' }} / 结束={{ job.finishedAt ? new Date(job.finishedAt).toLocaleString() : '-' }}</p>
+        <p class="panel-hint">资料源={{ job.dataSourceId }} / 开始={{ job.startedAt ? new Date(job.startedAt).toLocaleString() : '-' }} / 结束={{ job.finishedAt ? new Date(job.finishedAt).toLocaleString() : '-' }}</p>
         <pre>{{ JSON.stringify(job.stats, null, 2) }}</pre>
         <p v-if="job.errorMessage" class="error-text">{{ job.errorMessage }}</p>
         <div class="job-actions">
@@ -38,6 +38,27 @@ defineEmits<{
   refresh: []
   retry: [jobId: string]
 }>()
+
+function formatTriggerMode(mode: string) {
+  const labels: Record<string, string> = {
+    manual: '手动触发',
+    scheduled: '定时触发',
+    upload: '上传触发'
+  }
+
+  return labels[mode] || mode
+}
+
+function formatJobStatus(status: string) {
+  const labels: Record<string, string> = {
+    pending: '等待中',
+    running: '执行中',
+    succeeded: '成功',
+    failed: '失败'
+  }
+
+  return labels[status] || status
+}
 </script>
 
 <style scoped>

@@ -2,12 +2,12 @@
   <section class="panel index-health-panel">
     <header>
       <h2>索引健康度</h2>
-      <p class="panel-hint">快速查看当前资料源、任务和 agent 文档输出状态。</p>
+      <p class="panel-hint">快速查看当前资料源、任务和助手文档输出状态。</p>
     </header>
 
     <div class="health-grid">
       <article class="health-card">
-        <p class="health-label">RAG 检索</p>
+        <p class="health-label">检索增强</p>
         <code>{{ ragEnabled ? '已启用' : '已关闭' }}</code>
       </article>
       <article class="health-card">
@@ -31,7 +31,7 @@
         <code>{{ stats?.documentCount ?? 0 }}</code>
       </article>
       <article class="health-card">
-        <p class="health-label">Chunk 数量</p>
+        <p class="health-label">分块数量</p>
         <code>{{ stats?.chunkCount ?? 0 }}</code>
       </article>
     </div>
@@ -45,7 +45,7 @@
       </p>
     </div>
 
-    <p class="panel-hint">Agent 文档目录：<code>{{ agentDocPath }}</code></p>
+    <p class="panel-hint">助手文档目录：<code>{{ agentDocPath }}</code></p>
   </section>
 </template>
 

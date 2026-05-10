@@ -2,8 +2,8 @@
   <section class="panel rag-settings-panel">
     <header class="panel-head">
       <div>
-        <h2>RAG 设置</h2>
-        <p class="panel-hint">管理员可按租户控制是否启用 RAG 检索，并维护行业模板、chunk 参数和提示词模板。</p>
+        <h2>检索增强设置</h2>
+        <p class="panel-hint">管理员可按租户控制是否启用检索增强，并维护行业模板、分块参数和提示词模板。</p>
       </div>
       <div class="panel-actions">
         <button type="button" class="ghost-btn" :disabled="busy" @click="$emit('applyPreset', settings.industryPreset)">应用当前行业默认模板</button>
@@ -13,7 +13,7 @@
 
     <div class="settings-grid">
       <label class="toggle-card">
-        <span>启用 RAG 检索</span>
+        <span>启用检索增强</span>
         <input v-model="settings.enabled" type="checkbox" />
       </label>
 
@@ -28,17 +28,17 @@
       </label>
 
       <label>
-        <span>Chunk 大小</span>
+        <span>分块大小</span>
         <input v-model.number="settings.chunkSize" type="number" min="200" max="2000" step="10" />
       </label>
 
       <label>
-        <span>Chunk 重叠</span>
+        <span>分块重叠</span>
         <input v-model.number="settings.chunkOverlap" type="number" min="0" max="500" step="10" />
       </label>
 
       <label>
-        <span>检索 TopK</span>
+        <span>检索返回数量</span>
         <input v-model.number="settings.retrievalTopK" type="number" min="1" max="10" step="1" />
       </label>
     </div>
@@ -57,13 +57,13 @@
       </label>
 
       <label class="template-block">
-        <span>检索回答 Prompt 模板</span>
+        <span>检索回答提示词模板</span>
         <textarea v-model.trim="settings.retrievalPromptTemplate" rows="8" spellcheck="false" />
-        <small>支持占位符：<code>{{ '{{query}}' }}</code>、<code>{{ '{{brandName}}' }}</code>、<code>{{ '{{answerStructureTemplate}}' }}</code></small>
+        <small>支持系统占位符：用户问题、品牌名称、回答结构模板。</small>
       </label>
 
       <label class="template-block">
-        <span>未命中 Fallback Prompt 模板</span>
+        <span>未命中提示词模板</span>
         <textarea v-model.trim="settings.fallbackPromptTemplate" rows="8" spellcheck="false" />
         <small>用于资料未命中时的通用谨慎回答模板。</small>
       </label>

@@ -1,9 +1,16 @@
 <template>
-  <main class="workspace-page">
+  <AdminShell
+    :title="form.name || '租户工作区'"
+    subtitle="单租户执行中心：内容、会话、商业化和安装配置都在这里完成。"
+    eyebrow="租户工作区"
+    :status-label="form.status === 'active' ? '租户运行中' : '租户已停用'"
+    :status-tone="form.status === 'active' ? 'normal' : 'danger'"
+  >
+  <div class="workspace-page">
     <header class="workspace-hero">
       <div>
         <NuxtLink class="inline-link" to="/admin">返回指挥台</NuxtLink>
-        <p class="workspace-kicker">Tenant Workspace</p>
+        <p class="workspace-kicker">租户工作区</p>
         <h1>{{ form.name || '租户详情' }}</h1>
         <p class="workspace-copy">这里是单租户执行中心。先看摘要，再按任务进入内容运营、会话追踪、商业化或安装配置。</p>
       </div>
@@ -29,7 +36,7 @@
         <article class="install-card">
           <p class="install-label">当前套餐</p>
           <code>{{ currentBillingPlan?.name || '未设置' }}</code>
-          <p v-if="currentBillingPlan" class="install-hint">月费 {{ currentBillingPlan.monthlyFee }} / 含 {{ currentBillingPlan.includedTokens }} tokens</p>
+          <p v-if="currentBillingPlan" class="install-hint">月费 {{ currentBillingPlan.monthlyFee }} / 含 {{ currentBillingPlan.includedTokens }} 个令牌</p>
         </article>
         <article class="install-card">
           <p class="install-label">最高频资料</p>
@@ -42,7 +49,7 @@
           <p class="install-hint">相同问题{{ form.reuseAnsweredQuestions === false ? '每次重新生成' : '优先复用历史回答' }}</p>
         </article>
         <article class="install-card">
-          <p class="install-label">RAG 检索</p>
+          <p class="install-label">检索增强</p>
           <code>{{ form.ragSettings?.enabled ? '开启' : '关闭' }}</code>
           <p class="install-hint">{{ form.ragSettings?.industryPreset === 'fastener' ? '紧固件行业模板' : '通用行业模板' }}</p>
         </article>
@@ -161,7 +168,7 @@
         <article class="faq-editor-panel">
           <header class="faq-editor-head">
             <div>
-              <p class="install-label">FAQ 沉淀编辑</p>
+              <p class="install-label">常见问答沉淀编辑</p>
               <h3>{{ faqEditor.mode === 'standard' ? '设为标准回复' : '加入知识库' }}</h3>
             </div>
             <button type="button" class="ghost-btn" @click="closeFaqEditor">关闭</button>
@@ -260,7 +267,7 @@
       <header class="install-head">
         <div>
           <h2>安装代码</h2>
-          <p>为客户站点生成可直接粘贴的接入代码。脚本地址和 API 地址会指向当前选择的发布环境。</p>
+          <p>为客户站点生成可直接粘贴的接入代码。脚本地址和接口地址会指向当前选择的发布环境。</p>
         </div>
         <div class="env-switch">
           <button
@@ -284,15 +291,15 @@
 
       <div class="install-grid">
         <article class="install-card">
-          <p class="install-label">Tenant ID</p>
+          <p class="install-label">租户 ID</p>
           <code>{{ form.id || tenantId }}</code>
           <button type="button" class="ghost-btn" @click="copyText(form.id || tenantId, '租户 ID 已复制')">复制</button>
         </article>
 
         <article class="install-card">
-          <p class="install-label">Embed Key</p>
+          <p class="install-label">嵌入密钥</p>
           <code>{{ form.embedKey || '-' }}</code>
-          <button type="button" class="ghost-btn" :disabled="!form.embedKey" @click="copyText(form.embedKey, 'Embed Key 已复制')">复制</button>
+          <button type="button" class="ghost-btn" :disabled="!form.embedKey" @click="copyText(form.embedKey, '嵌入密钥已复制')">复制</button>
         </article>
 
         <article class="install-card">
@@ -302,9 +309,9 @@
         </article>
 
         <article class="install-card">
-          <p class="install-label">API 地址</p>
+          <p class="install-label">接口地址</p>
           <code>{{ activeBaseUrl }}</code>
-          <button type="button" class="ghost-btn" @click="copyText(activeBaseUrl, 'API 地址已复制')">复制</button>
+          <button type="button" class="ghost-btn" @click="copyText(activeBaseUrl, '接口地址已复制')">复制</button>
         </article>
       </div>
 
@@ -317,7 +324,7 @@
       </article>
 
       <p class="install-hint">
-        客户站点若启用了 CSP，请放行 <code>{{ activeBaseUrl }}</code> 的脚本和接口请求。
+        客户站点若启用了内容安全策略，请放行 <code>{{ activeBaseUrl }}</code> 的脚本和接口请求。
       </p>
       <p v-if="copyNotice" class="copy-notice">{{ copyNotice }}</p>
       </section>
@@ -333,12 +340,12 @@
         <article class="install-card">
           <p class="install-label">当前套餐</p>
           <code>{{ currentBillingPlan?.name || '未设置' }}</code>
-          <p v-if="currentBillingPlan" class="install-hint">月费 {{ currentBillingPlan.monthlyFee }} / 含 {{ currentBillingPlan.includedTokens }} tokens</p>
+          <p v-if="currentBillingPlan" class="install-hint">月费 {{ currentBillingPlan.monthlyFee }} / 含 {{ currentBillingPlan.includedTokens }} 个令牌</p>
         </article>
         <article class="install-card">
           <p class="install-label">最近账单</p>
           <code>{{ latestBillingSummary?.month || '-' }}</code>
-          <p v-if="latestBillingSummary" class="install-hint">应收 {{ latestBillingSummary.amount }}，超额 {{ latestBillingSummary.billableTokens }} tokens</p>
+          <p v-if="latestBillingSummary" class="install-hint">应收 {{ latestBillingSummary.amount }}，超额 {{ latestBillingSummary.billableTokens }} 个令牌</p>
           <p v-else class="install-hint">暂无可计费记录</p>
         </article>
       </div>
@@ -348,7 +355,7 @@
       <header class="content-head">
         <div>
           <h2>训练模拟</h2>
-          <p class="install-hint">用于演示租户资料进入训练后，如何产生 token 消耗并进入现有账单体系。</p>
+          <p class="install-hint">用于演示租户资料进入训练后，如何产生令牌消耗并进入现有账单体系。</p>
         </div>
         <button type="button" class="ghost-btn" :disabled="saving || trainingBusy" @click="saveTenantAndSimulateTraining">
           {{ trainingBusy ? '训练中...' : '保存当前内容并模拟训练' }}
@@ -359,11 +366,11 @@
         <article class="install-card">
           <p class="install-label">最近训练时间</p>
           <code>{{ latestTrainingRun ? new Date(latestTrainingRun.createdAt).toLocaleString() : '-' }}</code>
-          <p class="install-hint">训练记录会写入账单明细，来源为 training-simulator。</p>
+          <p class="install-hint">训练记录会写入账单明细，来源标记为训练模拟器。</p>
         </article>
         <article class="install-card">
           <p class="install-label">最近训练消耗</p>
-          <code>{{ latestTrainingRun?.totalTokens ?? 0 }} tokens</code>
+          <code>{{ latestTrainingRun?.totalTokens ?? 0 }} 个令牌</code>
           <p class="install-hint">输入 {{ latestTrainingRun?.inputTokens ?? 0 }} / 输出 {{ latestTrainingRun?.outputTokens ?? 0 }}</p>
         </article>
         <article class="install-card">
@@ -394,7 +401,7 @@
             :to="`/admin/billing?tenantId=${encodeURIComponent(tenantId)}&provider=${encodeURIComponent('training-simulator')}`"
           >
             <p class="install-label">{{ new Date(run.createdAt).toLocaleString() }}</p>
-            <code>{{ run.totalTokens }} tokens / {{ run.amount }}</code>
+            <code>{{ run.totalTokens }} 个令牌 / {{ run.amount }}</code>
             <p class="install-hint">输入 {{ run.inputTokens }} / 输出 {{ run.outputTokens }} / {{ run.sessionId }}</p>
           </NuxtLink>
         </div>
@@ -453,41 +460,158 @@
         <p v-if="sourceOpsError" class="content-error">{{ sourceOpsError }}</p>
       </section>
 
-      <form class="panel form-grid" @submit.prevent="saveTenant">
-      <input v-model.trim="form.name" type="text" placeholder="租户名称" required />
-      <input v-model.trim="form.brandName" type="text" placeholder="品牌名称" required />
-      <input v-model.trim="form.themeColor" type="text" placeholder="主题色" />
-      <input v-model.trim="form.contactPhone" type="text" placeholder="联系电话" />
-      <input v-model.trim="form.contactEmail" type="email" placeholder="联系邮箱" />
-      <input v-model.trim="form.contactAddress" type="text" placeholder="联系地址" />
-      <select v-model="selectedBillingPlanId">
-        <option v-for="plan in activeBillingPlans" :key="plan.id" :value="plan.id">
-          {{ plan.name }} / 月费 {{ plan.monthlyFee }} / 含 {{ plan.includedTokens }} tokens
-        </option>
-      </select>
-      <select v-model="form.status">
-        <option value="active">active</option>
-        <option value="disabled">disabled</option>
-      </select>
-      <textarea v-model.trim="form.systemPrompt" rows="5" placeholder="系统提示词" />
-      <input v-model.trim="form.llmEndpoint" type="text" placeholder="租户模型接口地址（可选）" />
-      <input v-model.trim="form.llmModel" type="text" placeholder="租户模型名称（可选）" />
-      <input v-model.trim="form.llmApiKey" type="password" placeholder="租户模型 API Key（可选）" />
-      <label class="toggle-row form-toggle">
-        <input v-model="form.reuseAnsweredQuestions" type="checkbox" />
-        <span>启用相同问题直接复用历史回答</span>
-      </label>
-      <textarea v-model.trim="billingNotes" rows="3" placeholder="套餐备注" />
-      <button type="submit" :disabled="saving">{{ saving ? '保存中...' : '保存租户' }}</button>
+      <form class="panel tenant-form" @submit.prevent="saveTenant">
+        <header class="tenant-form-head">
+          <div class="tenant-form-intro">
+            <h2>租户设置</h2>
+            <p>按模块维护租户资料、联系信息、运营状态与模型配置，适合后台持续更新。</p>
+          </div>
+          <div class="tenant-form-meta">
+            <article class="tenant-form-status" :class="{ off: form.status !== 'active' }">
+              <span class="install-label">当前状态</span>
+              <strong>{{ form.status === 'active' ? '运行中' : '已停用' }}</strong>
+            </article>
+            <article class="tenant-form-status">
+              <span class="install-label">当前套餐</span>
+              <strong>{{ currentBillingPlan?.name || '未设置' }}</strong>
+            </article>
+            <article class="tenant-form-status">
+              <span class="install-label">回答复用</span>
+              <strong>{{ form.reuseAnsweredQuestions === false ? '关闭' : '开启' }}</strong>
+            </article>
+          </div>
+        </header>
+
+        <section class="tenant-form-section">
+          <div class="tenant-form-section-head">
+            <h3>基础信息</h3>
+            <p>用于识别租户身份与品牌展示，是交付和日常维护时最常查看的部分。</p>
+          </div>
+          <div class="tenant-form-grid tenant-form-grid--basic">
+            <label class="field-block">
+              <span>租户名称</span>
+              <input v-model.trim="form.name" type="text" placeholder="例如：华东制造事业部" required />
+            </label>
+            <label class="field-block">
+              <span>品牌名称</span>
+              <input v-model.trim="form.brandName" type="text" placeholder="例如：智服工业" required />
+            </label>
+            <label class="field-block">
+              <span>主题色</span>
+              <input v-model.trim="form.themeColor" type="text" placeholder="例如：#118ab2" />
+            </label>
+          </div>
+        </section>
+
+        <section class="tenant-form-section">
+          <div class="tenant-form-section-head">
+            <h3>联系方式</h3>
+            <p>保留对外联系窗口，便于运营交接、售后回访和人工跟进。</p>
+          </div>
+          <div class="tenant-form-grid tenant-form-grid--contact">
+            <label class="field-block">
+              <span>联系电话</span>
+              <input v-model.trim="form.contactPhone" type="text" placeholder="填写可直接联系的电话" />
+            </label>
+            <label class="field-block">
+              <span>联系邮箱</span>
+              <input v-model.trim="form.contactEmail" type="email" placeholder="填写租户联系邮箱" />
+            </label>
+            <label class="field-block field-block--full">
+              <span>联系地址</span>
+              <input v-model.trim="form.contactAddress" type="text" placeholder="填写公司地址、园区或办公地点" />
+            </label>
+          </div>
+        </section>
+
+        <section class="tenant-form-section">
+          <div class="tenant-form-section-head">
+            <h3>运营与计费</h3>
+            <p>集中管理套餐、启停状态和重复问答复用策略，减少运营配置散落。</p>
+          </div>
+          <div class="tenant-form-grid tenant-form-grid--ops">
+            <label class="field-block field-block--wide">
+              <span>套餐方案</span>
+              <select v-model="selectedBillingPlanId">
+                <option v-for="plan in activeBillingPlans" :key="plan.id" :value="plan.id">
+                  {{ plan.name }} / 月费 {{ plan.monthlyFee }} / 含 {{ plan.includedTokens }} 个令牌
+                </option>
+              </select>
+            </label>
+            <label class="field-block">
+              <span>租户状态</span>
+              <select v-model="form.status">
+                <option value="active">运行中</option>
+                <option value="disabled">已停用</option>
+              </select>
+            </label>
+            <div class="field-block field-block--full field-toggle-card">
+              <span>回答复用策略</span>
+              <label class="toggle-row form-toggle">
+                <input v-model="form.reuseAnsweredQuestions" type="checkbox" />
+                <span>启用相同问题直接复用历史回答</span>
+              </label>
+              <small>关闭后，相同问题每次都会重新生成回答，更适合需要强实时性的场景。</small>
+            </div>
+            <label class="field-block field-block--full">
+              <span>套餐备注</span>
+              <textarea v-model.trim="billingNotes" rows="3" placeholder="补充当前套餐约定、赠送额度或商务说明" />
+            </label>
+          </div>
+        </section>
+
+        <section class="tenant-form-section">
+          <div class="tenant-form-section-head">
+            <h3>模型配置</h3>
+            <p>高级模型能力单独归档，避免和基础运营信息混排，便于排查运行配置。</p>
+          </div>
+          <div class="tenant-form-grid tenant-form-grid--llm">
+            <label class="field-block field-block--full">
+              <span>系统提示词</span>
+              <textarea v-model.trim="form.systemPrompt" rows="5" placeholder="填写租户专属系统提示词，用于约束回答口径与风格" />
+            </label>
+            <label class="field-block field-block--wide">
+              <span>模型接口地址</span>
+              <input v-model.trim="form.llmEndpoint" type="text" placeholder="租户模型接口地址（可选）" />
+            </label>
+            <label class="field-block">
+              <span>模型名称</span>
+              <input v-model.trim="form.llmModel" type="text" placeholder="租户模型名称（可选）" />
+            </label>
+            <label class="field-block field-block--wide">
+              <span>接口密钥</span>
+              <input v-model.trim="form.llmApiKey" type="password" placeholder="租户模型接口密钥（可选）" />
+            </label>
+          </div>
+        </section>
+
+        <div class="tenant-form-actions">
+          <p class="install-hint">保存后会同步更新租户基础配置和当前内容配置。</p>
+          <button type="submit" :disabled="saving">{{ saving ? '保存中...' : '保存租户' }}</button>
+        </div>
       </form>
 
       <section class="panel content-panel">
-      <header class="content-head">
-        <div>
+      <header class="content-panel-head">
+        <div class="content-panel-intro">
           <h2>租户内容配置</h2>
           <p>支持按租户维护知识条目、文档摘要、产品参数表、咨询服务，以及网页、邮件、文档、表格等资料源。</p>
         </div>
-        <div class="source-actions">
+        <div class="content-panel-meta">
+          <article class="content-summary-card">
+            <span class="install-label">资料源</span>
+            <strong>{{ contentDraft.contentSources.length }}</strong>
+          </article>
+          <article class="content-summary-card">
+            <span class="install-label">知识资产</span>
+            <strong>{{ contentDraft.knowledgeEntries.length + contentDraft.articles.length + contentDraft.products.length + contentDraft.consultingServices.length }}</strong>
+          </article>
+          <article class="content-summary-card">
+            <span class="install-label">当前状态</span>
+            <strong>{{ hasUnsavedContentChanges ? '有未保存修改' : '已保存' }}</strong>
+          </article>
+        </div>
+        <div class="content-panel-actions">
           <button type="button" class="ghost-btn" @click="resetToDemo">恢复默认示例</button>
           <button type="button" class="ghost-btn" :disabled="saving || trainingBusy" @click="saveTenantAndSimulateTraining">
             {{ trainingBusy ? '训练中...' : '保存并模拟训练' }}
@@ -499,7 +623,7 @@
         <div class="content-block-head">
           <div>
             <h3>资料源</h3>
-            <p class="content-meta">可作为问答检索资料使用。Excel 建议上传 CSV/TSV，网页可填写 URL 并粘贴摘录内容。</p>
+            <p class="content-meta">可作为问答检索资料使用。表格建议上传逗号或制表符分隔文本，网页可填写链接并粘贴摘录内容。</p>
           </div>
           <div class="source-actions">
             <select v-model="sourceDraftType">
@@ -558,7 +682,7 @@
             <textarea
               :value="formatLineList(source.faqQuestions)"
               rows="4"
-              placeholder="常见问法，每行一条。例如：WMS 是怎样一回事？&#10;支持私有化部署吗？"
+              placeholder="常见问法，每行一条。例如：仓储系统是怎样一回事？&#10;支持私有化部署吗？"
               @input="updateSourceLineListById(source.id, 'faqQuestions', $event)"
             />
             <textarea
@@ -567,7 +691,7 @@
               placeholder="回答要点，每行一条。例如：先解释定义&#10;再说明适用场景&#10;最后给出落地方式"
               @input="updateSourceLineListById(source.id, 'answerHints', $event)"
             />
-            <textarea v-model.trim="source.content" rows="8" placeholder="正文内容 / 摘录 / 邮件全文 / 文档片段 / CSV 文本" />
+            <textarea v-model.trim="source.content" rows="8" placeholder="正文内容 / 摘录 / 邮件全文 / 文档片段 / 表格文本" />
           </article>
         </div>
 
@@ -579,7 +703,7 @@
           <div class="content-block-head">
             <h3>知识条目</h3>
             <label class="import-btn">
-              导入 JSON
+              导入数据文件
               <input type="file" accept=".json,application/json" @change="importJsonFile($event, 'knowledgeEntries')" />
             </label>
           </div>
@@ -591,7 +715,7 @@
           <div class="content-block-head">
             <h3>文档摘要</h3>
             <label class="import-btn">
-              导入 JSON
+              导入数据文件
               <input type="file" accept=".json,application/json" @change="importJsonFile($event, 'articles')" />
             </label>
           </div>
@@ -603,7 +727,7 @@
           <div class="content-block-head">
             <h3>产品参数表</h3>
             <label class="import-btn">
-              导入 JSON
+              导入数据文件
               <input type="file" accept=".json,application/json" @change="importJsonFile($event, 'products')" />
             </label>
           </div>
@@ -615,7 +739,7 @@
           <div class="content-block-head">
             <h3>咨询服务</h3>
             <label class="import-btn">
-              导入 JSON
+              导入数据文件
               <input type="file" accept=".json,application/json" @change="importJsonFile($event, 'consultingServices')" />
             </label>
           </div>
@@ -660,11 +784,17 @@
         </div>
       </section>
     </section>
-  </main>
+  </div>
+  </AdminShell>
 </template>
 
 <script setup lang="ts">
 import { assistantKnowledgeEntries } from '../../../config/ai-assistant-knowledge'
+import AgentDocsPanel from '../../../components/admin/tenant-workspace/AgentDocsPanel.vue'
+import IndexHealthPanel from '../../../components/admin/tenant-workspace/IndexHealthPanel.vue'
+import RagSettingsPanel from '../../../components/admin/tenant-workspace/RagSettingsPanel.vue'
+import SourceLibraryPanel from '../../../components/admin/tenant-workspace/SourceLibraryPanel.vue'
+import SyncJobsPanel from '../../../components/admin/tenant-workspace/SyncJobsPanel.vue'
 import { listContentSourceCategories } from '../../../lib/content-ops'
 import { listTrainingRuns } from '../../../lib/training-runs'
 import { demoArticles, demoConsultingServices, demoProducts } from '../../../config/customer-bot-data'
@@ -882,7 +1012,7 @@ const workspaceTabs = [
   { id: 'content', label: '内容运营', description: '资料源 / 配置 / 维护' },
   { id: 'trace', label: '会话追踪', description: '聊天 / 留资 / 排查' },
   { id: 'commercial', label: '商业化', description: '套餐 / 账单 / 消耗' },
-  { id: 'install', label: '安装配置', description: '脚本 / API / 嵌入' }
+  { id: 'install', label: '安装配置', description: '脚本 / 接口 / 嵌入' }
 ] as const
 
 const defaultOrigin = computed(() => requestUrl.origin.replace(/\/+$/, ''))
@@ -1140,7 +1270,7 @@ async function saveTenantAndSimulateTraining() {
       model: response.record.model,
       sessionId: response.record.sessionId
     }
-    trainingNotice.value = `已模拟训练：消耗 ${response.totalTokens} tokens，费用 ${response.amount}`
+    trainingNotice.value = `已模拟训练：消耗 ${response.totalTokens} 个令牌，费用 ${response.amount}`
     await loadLatestBillingSummary()
   } catch (error) {
     trainingError.value = error instanceof Error ? error.message : '训练模拟失败'
@@ -1285,7 +1415,7 @@ async function saveAgentDoc(payload: { fileName: string; content: string }) {
     activeAgentDoc.value = payload.fileName
     sourceOpsNotice.value = `${payload.fileName} 已保存`
   } catch (error) {
-    sourceOpsError.value = error instanceof Error ? error.message : '保存 agent 文档失败'
+    sourceOpsError.value = error instanceof Error ? error.message : '保存助手文档失败'
   } finally {
     sourceOpsBusy.value = false
   }
@@ -1452,7 +1582,7 @@ async function submitFaqEditor() {
 
     const saved = await saveTenant()
     if (!saved) {
-      throw new Error(contentError.value || 'FAQ 沉淀保存失败')
+      throw new Error(contentError.value || '常见问答沉淀保存失败')
     }
 
     faqActionNotice.value = faqEditor.mode === 'standard'
@@ -1460,7 +1590,7 @@ async function submitFaqEditor() {
       : `已将「${faqEditor.originalQuestion}」加入知识库`
     closeFaqEditor()
   } catch (error) {
-    faqActionError.value = error instanceof Error ? error.message : 'FAQ 沉淀保存失败'
+    faqActionError.value = error instanceof Error ? error.message : '常见问答沉淀保存失败'
   }
 }
 
@@ -1536,7 +1666,7 @@ function parseJsonArray<T>(value: string, label: string): T[] {
   try {
     const parsed = JSON.parse(value || '[]') as unknown
     if (!Array.isArray(parsed)) {
-      throw new Error(`${label} 必须是 JSON 数组`)
+      throw new Error(`${label} 必须是有效数组格式`)
     }
     return parsed as T[]
   } catch (error) {
@@ -1696,7 +1826,7 @@ try {
 </script>
 
 <style scoped>
-.workspace-page { padding: 24px; min-height: 100vh; display: grid; gap: 20px; background: linear-gradient(180deg, #f4f8fb 0%, #edf3f7 100%); }
+.workspace-page { max-width: 1600px; margin: 0 auto; display: grid; gap: 20px; }
 .workspace-hero, .panel { background: white; border-radius: 24px; padding: 22px; border: 1px solid #d9e7ee; box-shadow: 0 14px 40px rgba(30, 72, 98, 0.08); }
 .workspace-kicker { margin: 10px 0 6px; text-transform: uppercase; font-size: 12px; letter-spacing: 0.16em; color: #0b789b; }
 .workspace-hero h1 { margin: 0; color: #15384d; }
@@ -1725,11 +1855,38 @@ try {
 .install-code-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 .install-code-block pre { margin: 0; overflow: auto; }
 .ghost-btn.active { border-color: #0a7ea4; background: #eaf6fb; color: #0a6181; }
-.form-grid { display: grid; gap: 12px; }
-.form-toggle { min-height: 48px; }
+.tenant-form { display: grid; gap: 18px; }
+.tenant-form-head { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; }
+.tenant-form-intro { max-width: 720px; }
+.tenant-form-head h2, .tenant-form-section h3 { margin: 0; color: #15384d; }
+.tenant-form-head p, .tenant-form-section-head p { margin: 6px 0 0; color: #5f7888; line-height: 1.6; }
+.tenant-form-meta { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; min-width: min(100%, 520px); }
+.tenant-form-status { min-width: 0; display: grid; gap: 6px; padding: 14px 16px; border-radius: 16px; background: #f8fbfd; border: 1px solid #e5edf3; }
+.tenant-form-status.off { background: #fdf7f7; border-color: #edd6d6; }
+.tenant-form-status strong { color: #14384a; font-size: 18px; }
+.tenant-form-section { display: grid; gap: 14px; padding: 18px; border-radius: 18px; background: #f8fbfd; border: 1px solid #e5edf3; }
+.tenant-form-section-head { display: grid; gap: 2px; }
+.tenant-form-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.tenant-form-grid--contact, .tenant-form-grid--ops, .tenant-form-grid--llm { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.field-block { display: grid; gap: 8px; align-content: start; }
+.field-block > span { font-size: 13px; font-weight: 700; color: #35576a; }
+.field-block small { color: #67808f; line-height: 1.6; }
+.field-block--full { grid-column: 1 / -1; }
+.field-block--wide { grid-column: span 2; }
+.field-block input, .field-block textarea, .field-block select { background: #ffffff; }
+.form-toggle { min-height: 48px; display: flex; gap: 10px; align-items: center; padding: 14px 16px; border-radius: 14px; border: 1px solid #d7e3eb; background: #ffffff; }
+.form-toggle input { width: 16px; height: 16px; margin: 0; padding: 0; }
+.field-toggle-card { gap: 10px; }
+.tenant-form-actions { display: flex; justify-content: space-between; gap: 12px; align-items: center; padding-top: 4px; }
 input, textarea, select, button { padding: 12px; border-radius: 12px; border: 1px solid #cfd9e2; font: inherit; }
 button { background: #0a7ea4; color: white; border: 0; font-weight: 700; }
 .content-panel { display: grid; gap: 20px; }
+.content-panel-head { display: grid; gap: 16px; padding-bottom: 2px; border-bottom: 1px solid #e4edf2; }
+.content-panel-intro { max-width: 760px; }
+.content-panel-meta { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.content-summary-card { display: grid; gap: 6px; padding: 14px 16px; border-radius: 16px; background: #f8fbfd; border: 1px solid #e5edf3; }
+.content-summary-card strong { color: #14384a; font-size: 18px; }
+.content-panel-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
 .content-head { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; }
 .content-head h2, .content-block h3 { margin: 0; }
 .content-head p, .content-meta, .content-error { margin: 6px 0 0; }
@@ -1773,9 +1930,10 @@ button { background: #0a7ea4; color: white; border: 0; font-weight: 700; }
 .danger-btn { color: #b42318; }
 .content-error { color: #b42318; }
 @media (max-width: 980px) {
-  .install-grid, .stats-grid, .workspace-summary, .content-grid, .source-form-grid, .faq-grid, .faq-editor-grid { grid-template-columns: 1fr; }
+  .install-grid, .stats-grid, .workspace-summary, .content-grid, .source-form-grid, .faq-grid, .faq-editor-grid, .tenant-form-grid, .tenant-form-grid--contact, .tenant-form-grid--ops, .tenant-form-grid--llm, .tenant-form-meta, .content-panel-meta { grid-template-columns: 1fr; }
   .content-footer-actions { bottom: 10px; padding: 12px; }
-  .install-head, .content-head, .source-card-head { display: grid; }
+  .install-head, .content-head, .source-card-head, .tenant-form-head, .tenant-form-actions, .content-panel-actions { display: grid; }
   .workspace-actions, .workspace-tabs { display: grid; }
+  .field-block--wide { grid-column: auto; }
 }
 </style>

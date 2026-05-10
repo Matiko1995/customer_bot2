@@ -31,3 +31,18 @@ declare module 'imapflow' {
     constructor(config: Record<string, unknown>)
   }
 }
+
+declare module 'lucide-vue-next/dist/esm/icons/*.js' {
+  import type { FunctionalComponent, SVGAttributes } from 'vue'
+
+  const icon: FunctionalComponent<
+    SVGAttributes & {
+      absoluteStrokeWidth?: boolean
+      color?: string
+      size?: number | string
+      strokeWidth?: number | string
+    }
+  >
+
+  export default icon
+}

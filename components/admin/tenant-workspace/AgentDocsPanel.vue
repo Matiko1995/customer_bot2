@@ -2,8 +2,8 @@
   <section class="panel agent-docs-panel">
     <header class="panel-head">
       <div>
-        <h2>Agent 文档</h2>
-        <p class="panel-hint">查看并修改导入后生成的中文 agent 文档包。</p>
+        <h2>助手文档</h2>
+        <p class="panel-hint">查看并修改导入后生成的中文助手文档包。</p>
       </div>
       <button type="button" class="ghost-btn" :disabled="busy" @click="$emit('refresh')">刷新</button>
     </header>
@@ -38,7 +38,7 @@
       </div>
     </div>
 
-    <p v-else class="panel-hint">当前还没有生成 agent 文档。请先执行一次资料同步。</p>
+    <p v-else class="panel-hint">当前还没有生成助手文档。请先执行一次资料同步。</p>
   </section>
 </template>
 
