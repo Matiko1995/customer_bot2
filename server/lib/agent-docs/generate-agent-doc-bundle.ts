@@ -1,3 +1,5 @@
+import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import { dirname, join } from 'node:path'
 import type { NormalizedSourceDocument } from '../ingestion/normalize-document.ts'
 import { renderAgentDoc } from './render-agent-doc.ts'
 import { getAgentDocDirectory, readAgentDocFile, writeAgentDocFile } from './paths.ts'
@@ -9,14 +11,42 @@ export interface AgentDocBundleResult {
   files: string[]
 }
 
-async function readExistingContent(path: string): Promise<string | undefined> {
+async function readExistingContent(input: {
+  tenantId: string
+  outputDir: string
+  outputRoot?: string
+  fileName: string
+}): Promise<string | undefined> {
   try {
-    const tenantId = path.split(/[\\/]/).slice(-3, -2)[0] || ''
-    const fileName = path.split(/[\\/]/).slice(-1)[0] || ''
-    return await readAgentDocFile(tenantId, fileName)
+    if (input.outputRoot) {
+      return await readFile(join(input.outputDir, input.fileName), 'utf8')
+    }
+
+    return await readAgentDocFile(input.tenantId, input.fileName)
   } catch {
     return undefined
   }
+}
+
+async function writeAgentDocContent(input: {
+  tenantId: string
+  outputDir: string
+  outputRoot?: string
+  fileName: string
+  content: string
+}) {
+  if (input.outputRoot) {
+    const targetPath = join(input.outputDir, input.fileName)
+    await mkdir(dirname(targetPath), { recursive: true })
+    await writeFile(targetPath, input.content, 'utf8')
+    return
+  }
+
+  await writeAgentDocFile({
+    tenantId: input.tenantId,
+    fileName: input.fileName,
+    content: input.content
+  })
 }
 
 function summarizeDocuments(documents: NormalizedSourceDocument[]): string[] {
@@ -108,8 +138,12 @@ export async function generateAgentDocBundle(input: {
   })
 
   for (const fileName of defaultDocNames) {
-    const fullPath = `${outputDir.replace(/\\/g, '/')}/${fileName}`
-    const existingContent = await readExistingContent(fullPath)
+    const existingContent = await readExistingContent({
+      tenantId: input.tenantId,
+      outputDir,
+      outputRoot: input.outputRoot,
+      fileName
+    })
     const rendered = renderAgentDoc({
       title: fileName,
       description: `该文件面向租户 ${input.tenantId} 的 agent 运行说明。`,
@@ -117,8 +151,10 @@ export async function generateAgentDocBundle(input: {
       existingContent
     })
 
-    await writeAgentDocFile({
+    await writeAgentDocContent({
       tenantId: input.tenantId,
+      outputDir,
+      outputRoot: input.outputRoot,
       fileName,
       content: rendered
     })

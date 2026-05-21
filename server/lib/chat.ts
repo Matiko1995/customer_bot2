@@ -302,7 +302,8 @@ export async function processChatMessage(
     products,
     consultingServices,
     contentSources: activeContentSources,
-    siteConfig
+    siteConfig,
+    allowGenericFaq: !ragSettings.enabled
   })
 
   let replyContent = ''

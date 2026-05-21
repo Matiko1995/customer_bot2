@@ -1,4 +1,4 @@
-import { mkdtemp, readFile } from 'node:fs/promises'
+import { mkdtemp, readFile, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
@@ -80,5 +80,26 @@ describe('file store', () => {
     expect(storedFile.tenants.some((item) => item.id === demoTenant.id)).toBe(true)
     expect(storedFile.sessions.some((item) => item.id === 'session-1')).toBe(true)
     expect(storedFile.messages.some((item) => item.id === 'message-1')).toBe(true)
+  })
+
+  it('treats an empty existing data file as a fresh store', async () => {
+    const dir = await mkdtemp(join(tmpdir(), 'customer-bot-empty-store-'))
+    const filePath = join(dir, 'storage.json')
+    const demoTenant = createDemoTenant()
+
+    await writeFile(filePath, '', 'utf8')
+
+    const store = createFileStore({
+      filePath,
+      seedTenants: [demoTenant]
+    })
+
+    const seededTenant = await store.getTenantById(demoTenant.id)
+    expect(seededTenant?.id).toBe(demoTenant.id)
+
+    const storedFile = JSON.parse(await readFile(filePath, 'utf8')) as {
+      tenants: Array<{ id: string }>
+    }
+    expect(storedFile.tenants.some((item) => item.id === demoTenant.id)).toBe(true)
   })
 })

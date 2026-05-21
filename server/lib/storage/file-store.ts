@@ -54,6 +54,10 @@ export const createFileStore = (options: FileStoreOptions): StorageRepository =>
   async function loadState(): Promise<FileStoreState> {
     try {
       const raw = await readFile(options.filePath, 'utf8')
+      if (!raw.trim()) {
+        return createEmptyState()
+      }
+
       const parsed = JSON.parse(raw) as Partial<FileStoreState>
 
       return {

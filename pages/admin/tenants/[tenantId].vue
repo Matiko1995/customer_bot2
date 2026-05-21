@@ -416,9 +416,15 @@
       <RagSettingsPanel
         :settings="form.ragSettings!"
         :busy="saving || sourceOpsBusy"
+        @save="saveRagSettings"
         @apply-preset="applyRagPreset"
         @reset-preset="resetRagSettings"
       />
+
+      <section v-if="ragSettingsNotice || ragSettingsError" class="panel install-panel">
+        <p v-if="ragSettingsNotice" class="copy-notice">{{ ragSettingsNotice }}</p>
+        <p v-if="ragSettingsError" class="content-error">{{ ragSettingsError }}</p>
+      </section>
 
       <SourceLibraryPanel
         :sources="ragSources"
@@ -854,6 +860,8 @@ const trainingError = ref('')
 const trainingNotice = ref('')
 const faqActionNotice = ref('')
 const faqActionError = ref('')
+const ragSettingsNotice = ref('')
+const ragSettingsError = ref('')
 const faqEditor = reactive({
   open: false,
   mode: 'standard' as 'standard' | 'knowledge',
@@ -1201,6 +1209,30 @@ async function loadOverviewData() {
   sessionMessages.value = chatResponse.items
   sessionRecords.value = chatResponse.items.map((item) => item.session)
   leadRecords.value = leadResponse.items
+}
+
+async function saveRagSettings() {
+  if (saving.value) return
+  saving.value = true
+  ragSettingsNotice.value = ''
+  ragSettingsError.value = ''
+
+  try {
+    await request(`/api/admin/tenants/${tenantId}`, {
+      method: 'PUT',
+      body: {
+        ragSettings: normalizeTenantRagSettings(form.ragSettings)
+      }
+    })
+    await loadTenant()
+    ragSettingsNotice.value = '回答模板已保存'
+    return true
+  } catch (error) {
+    ragSettingsError.value = error instanceof Error ? error.message : '回答模板保存失败'
+    return false
+  } finally {
+    saving.value = false
+  }
 }
 
 async function saveTenant() {

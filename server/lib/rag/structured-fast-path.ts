@@ -26,6 +26,7 @@ export function runStructuredFastPath(input: {
   consultingServices: ConsultingServiceListItem[]
   contentSources: TenantContentSource[]
   siteConfig: SiteConfig
+  allowGenericFaq?: boolean
 }): StructuredFastPathResult {
   if (input.route === 'price') {
     return {
@@ -54,7 +55,8 @@ export function runStructuredFastPath(input: {
     }
   }
 
-  if (input.route === 'faq' && pickKnowledgeEntry(input.query, input.knowledgeEntries)) {
+  const matchedKnowledgeEntry = input.route === 'faq' ? pickKnowledgeEntry(input.query, input.knowledgeEntries) : null
+  if (input.route === 'faq' && (matchedKnowledgeEntry || input.allowGenericFaq)) {
     return {
       handled: true,
       answerSource: 'structured',

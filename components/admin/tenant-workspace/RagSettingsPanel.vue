@@ -6,6 +6,7 @@
         <p class="panel-hint">管理员可按租户控制是否启用检索增强，并维护行业模板、分块参数和提示词模板。</p>
       </div>
       <div class="panel-actions">
+        <button type="button" class="primary-btn" :disabled="busy" @click="$emit('save')">{{ busy ? '保存中...' : '保存回答模板' }}</button>
         <button type="button" class="ghost-btn" :disabled="busy" @click="$emit('applyPreset', settings.industryPreset)">应用当前行业默认模板</button>
         <button type="button" class="ghost-btn" :disabled="busy" @click="$emit('resetPreset')">恢复默认值</button>
       </div>
@@ -84,6 +85,7 @@ const props = defineProps<{
 }>()
 
 defineEmits<{
+  save: []
   applyPreset: [preset: RagIndustryPreset]
   resetPreset: []
 }>()
@@ -109,6 +111,8 @@ const activePresetDescription = computed(() => {
 .toggle-card input { width: 18px; height: 18px; margin: 0; }
 .template-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .template-block textarea { min-height: 180px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.primary-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 12px; border-radius: 12px; border: 1px solid #0f7cad; background: #0f7cad; color: white; cursor: pointer; font-weight: 700; }
+.primary-btn:disabled { opacity: 0.58; cursor: not-allowed; }
 .ghost-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 12px; border-radius: 12px; border: 1px solid #cfd9e2; background: white; color: #21425b; cursor: pointer; font-weight: 600; }
 code { white-space: nowrap; }
 @media (max-width: 1100px) {

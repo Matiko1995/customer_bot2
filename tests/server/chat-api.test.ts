@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import { createMemoryStore } from '../../server/lib/storage/memory-store'
 import { processChatMessage } from '../../server/lib/chat'
+import { createDefaultTenantRagSettings } from '../../packages/shared-config/src/rag-settings'
 
 describe('chat service', () => {
   it('creates a session, stores messages, and records usage', async () => {
@@ -158,9 +159,9 @@ describe('chat service', () => {
       },
       {
         storage: store,
-        endpoint: 'https://example.com/chat',
-        apiKey: 'test-key',
-        model: 'gpt-test',
+        platformEndpoint: 'https://example.com/chat',
+        platformApiKey: 'test-key',
+        platformModel: 'gpt-test',
         fetcher
       }
     )
@@ -172,7 +173,7 @@ describe('chat service', () => {
 
     expect(body.messages[0]?.role).toBe('system')
     expect(body.messages[0]?.content).toContain('You are the tenant bot.')
-    expect(body.messages[0]?.content).toContain('你必须优先依据已提供的命中资料回答')
+    expect(body.messages[0]?.content).toContain('当前租户资料未直接命中')
     expect(body.messages[1]).toEqual({ role: 'user', content: '前一条消息' })
     expect(body.messages[2]).toEqual({ role: 'assistant', content: '前一条回复' })
     expect(body.messages[3]?.role).toBe('user')
@@ -193,6 +194,10 @@ describe('chat service', () => {
       contactAddress: 'Shanghai',
       systemPrompt: 'You are the tenant bot.',
       embedKey: 'embed-tenant-1',
+      ragSettings: {
+        ...createDefaultTenantRagSettings(),
+        enabled: true
+      },
       createdAt: 1760000000000,
       updatedAt: 1760000000000
     })
@@ -241,7 +246,7 @@ describe('chat service', () => {
     await processChatMessage(
       {
         tenantId: 'tenant-1',
-        message: '六角头螺栓多少钱？',
+        message: '六角头螺栓 支持 标准参数吗？',
         attachments: [
           {
             id: 'attachment-1',
@@ -264,8 +269,8 @@ describe('chat service', () => {
 
     const request = fetcher.mock.calls[0]?.[1]
     const body = JSON.parse(String(request?.body))
-    expect(body.messages[1]?.content).toContain('六角头螺栓多少钱？')
-    expect(body.messages[1]?.content).toContain('已收到附件')
+    expect(body.messages[1]?.content).toContain('六角头螺栓 支持 标准参数吗？')
+    expect(body.messages[1]?.content).toContain('用户本轮上传了附件')
     expect(body.messages[1]?.content).toContain('命中资料')
     expect(body.messages[0]?.content).toContain('你必须优先依据已提供的命中资料回答')
     expect(body.messages[0]?.content).toContain('优先引用资料摘要')
@@ -384,6 +389,10 @@ describe('chat service', () => {
       contactAddress: 'Shanghai',
       systemPrompt: 'You are the tenant bot.',
       embedKey: 'embed-tenant-trace',
+      ragSettings: {
+        ...createDefaultTenantRagSettings(),
+        enabled: true
+      },
       contentConfig: {
         knowledgeEntries: [],
         articles: [],
@@ -500,13 +509,13 @@ describe('chat service', () => {
     await processChatMessage(
       {
         tenantId: 'tenant-no-reuse',
-        message: '价格多少？'
+        message: '请帮我生成采购建议'
       },
       {
         storage: store,
-        endpoint: 'https://example.com/chat',
-        apiKey: 'test-key',
-        model: 'gpt-test',
+        platformEndpoint: 'https://example.com/chat',
+        platformApiKey: 'test-key',
+        platformModel: 'gpt-test',
         fetcher: vi.fn().mockResolvedValue({
           ok: true,
           json: async () => ({
@@ -528,13 +537,13 @@ describe('chat service', () => {
     const result = await processChatMessage(
       {
         tenantId: 'tenant-no-reuse',
-        message: '价格多少？'
+        message: '请帮我生成采购建议'
       },
       {
         storage: store,
-        endpoint: 'https://example.com/chat',
-        apiKey: 'test-key',
-        model: 'gpt-test',
+        platformEndpoint: 'https://example.com/chat',
+        platformApiKey: 'test-key',
+        platformModel: 'gpt-test',
         fetcher: secondFetcher
       }
     )
