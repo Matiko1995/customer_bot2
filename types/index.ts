@@ -222,6 +222,8 @@ export interface TenantUserRecord {
   id: string
   tenantId: string
   email: string
+  displayName?: string
+  seatRole?: 'owner' | 'agent'
   passwordHash: string
   temporaryPassword?: string
   mustChangePassword: boolean
@@ -247,6 +249,13 @@ export interface ChatSessionRecord {
   visitorId: string
   startedAt: number
   lastMessageAt: number
+  conversationMode?: 'ai_active' | 'handover_requested' | 'human_active'
+  handoverRequestedAt?: number
+  handoverReason?: string
+  assignedTenantUserId?: string
+  assignedTenantUserName?: string
+  humanActivatedAt?: number
+  humanReleasedAt?: number
 }
 
 export interface ChatMessageRecord {
@@ -254,6 +263,9 @@ export interface ChatMessageRecord {
   sessionId: string
   tenantId: string
   role: ConversationRole
+  senderType?: 'customer' | 'ai' | 'agent' | 'system'
+  senderTenantUserId?: string
+  senderName?: string
   content: string
   createdAt: number
   attachments?: MessageAttachment[]

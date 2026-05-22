@@ -48,8 +48,17 @@ describe('chat service', () => {
 
     expect(result.reply).toContain('当前资料未直接命中')
     expect(result.sessionId).toBeTruthy()
+    expect(result.conversationMode).toBe('ai_active')
     expect(result.answerSource).toBe('general_fallback')
     expect(result.credentialSource).toBe('platform_shared')
+
+    const session = await store.getSessionById(result.sessionId)
+    const messages = await store.listMessagesBySession(result.sessionId)
+
+    expect(session?.conversationMode).toBe('ai_active')
+    expect(messages[0]?.senderType).toBe('customer')
+    expect(messages[1]?.senderType).toBe('ai')
+    expect(messages[1]?.senderName).toBe('AI 客服')
   })
 
   it('stores uploaded attachments with the user message', async () => {
@@ -550,5 +559,122 @@ describe('chat service', () => {
 
     expect(result.reply).toBe('第二次重新生成的回复')
     expect(secondFetcher).toHaveBeenCalledTimes(1)
+  })
+
+  it('does not generate an assistant reply when the session is already human_active', async () => {
+    const store = createMemoryStore()
+
+    await store.saveTenant({
+      id: 'tenant-1',
+      name: 'Tenant 1',
+      status: 'active',
+      brandName: 'Tenant 1 Bot',
+      themeColor: '#118ab2',
+      contactPhone: '+86 138-0000-0000',
+      contactEmail: 'tenant1@example.com',
+      contactAddress: 'Shanghai',
+      systemPrompt: 'You are the tenant bot.',
+      embedKey: 'embed-tenant-1',
+      createdAt: 1760000000000,
+      updatedAt: 1760000000000
+    })
+
+    await store.saveSession({
+      id: 'session-human',
+      tenantId: 'tenant-1',
+      visitorId: 'visitor-1',
+      startedAt: 1760000000000,
+      lastMessageAt: 1760000000000,
+      conversationMode: 'human_active',
+      humanActivatedAt: 1760000000000,
+      assignedTenantUserId: 'tenant-user-1',
+      assignedTenantUserName: '客服张三'
+    })
+
+    const fetcher = vi.fn()
+    const result = await processChatMessage(
+      {
+        tenantId: 'tenant-1',
+        sessionId: 'session-human',
+        message: '请人工继续处理'
+      },
+      {
+        storage: store,
+        fetcher
+      }
+    )
+
+    const messages = await store.listMessagesBySession('session-human')
+
+    expect(result.reply).toBe('')
+    expect(result.conversationMode).toBe('human_active')
+    expect(result.usage.totalTokens).toBe(0)
+    expect(messages).toHaveLength(1)
+    expect(messages[0]?.role).toBe('user')
+    expect(messages[0]?.senderType).toBe('customer')
+    expect(fetcher).not.toHaveBeenCalled()
+  })
+
+  it('keeps AI replying while handover is requested and returns handover_requested mode', async () => {
+    const store = createMemoryStore()
+
+    await store.saveTenant({
+      id: 'tenant-1',
+      name: 'Tenant 1',
+      status: 'active',
+      brandName: 'Tenant 1 Bot',
+      themeColor: '#118ab2',
+      contactPhone: '+86 138-0000-0000',
+      contactEmail: 'tenant1@example.com',
+      contactAddress: 'Shanghai',
+      systemPrompt: 'You are the tenant bot.',
+      embedKey: 'embed-tenant-1',
+      createdAt: 1760000000000,
+      updatedAt: 1760000000000
+    })
+
+    await store.saveSession({
+      id: 'session-waiting',
+      tenantId: 'tenant-1',
+      visitorId: 'visitor-1',
+      startedAt: 1760000000000,
+      lastMessageAt: 1760000000000,
+      conversationMode: 'handover_requested',
+      handoverRequestedAt: 1760000000000,
+      handoverReason: '客户要求人工'
+    })
+
+    const result = await processChatMessage(
+      {
+        tenantId: 'tenant-1',
+        sessionId: 'session-waiting',
+        message: '有人吗？'
+      },
+      {
+        storage: store,
+        endpoint: 'https://example.com/chat',
+        apiKey: 'test-key',
+        model: 'gpt-test',
+        fetcher: vi.fn().mockResolvedValue({
+          ok: true,
+          json: async () => ({
+            choices: [{ message: { content: 'AI 先继续协助您。' } }],
+            usage: {
+              prompt_tokens: 5,
+              completion_tokens: 3,
+              total_tokens: 8
+            }
+          })
+        })
+      }
+    )
+
+    const messages = await store.listMessagesBySession('session-waiting')
+
+    expect(result.reply).toContain('当前资料未直接命中')
+    expect(result.conversationMode).toBe('handover_requested')
+    expect(messages).toHaveLength(2)
+    expect(messages[0]?.senderType).toBe('customer')
+    expect(messages[1]?.senderType).toBe('ai')
   })
 })

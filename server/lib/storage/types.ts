@@ -12,6 +12,10 @@ import type {
   TenantUserRecord
 } from '../../../types'
 
+export type ConversationMode = NonNullable<ChatSessionRecord['conversationMode']>
+export type ChatMessageSenderType = NonNullable<ChatMessageRecord['senderType']>
+export type TenantSeatRole = NonNullable<TenantUserRecord['seatRole']>
+
 export interface TenantStorage {
   saveTenant(tenant: TenantRecord): Promise<void>
   getTenantById(tenantId: string): Promise<TenantRecord | undefined>

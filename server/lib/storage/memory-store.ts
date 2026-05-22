@@ -11,6 +11,14 @@ import type { StorageRepository } from './types'
 
 const cloneRecord = <T>(value: T): T => structuredClone(value)
 
+function normalizeSessionRecord(session: ChatSessionRecord): ChatSessionRecord {
+  return cloneRecord(session)
+}
+
+function normalizeMessageRecord(message: ChatMessageRecord): ChatMessageRecord {
+  return cloneRecord(message)
+}
+
 export const createMemoryStore = (): StorageRepository => {
   const tenants = new Map<string, TenantRecord>()
   const sessions = new Map<string, ChatSessionRecord>()
@@ -36,24 +44,24 @@ export const createMemoryStore = (): StorageRepository => {
       return Array.from(tenants.values(), cloneRecord)
     },
     async saveSession(session) {
-      sessions.set(session.id, cloneRecord(session))
+      sessions.set(session.id, normalizeSessionRecord(session))
     },
     async getSessionById(sessionId) {
       const session = sessions.get(sessionId)
-      return session ? cloneRecord(session) : undefined
+      return session ? normalizeSessionRecord(session) : undefined
     },
     async listSessionsByTenant(tenantId) {
       return Array.from(sessions.values())
         .filter((session) => session.tenantId === tenantId)
-        .map(cloneRecord)
+        .map(normalizeSessionRecord)
     },
     async saveMessage(message) {
       const bucket = messages.get(message.sessionId) ?? []
-      bucket.push(cloneRecord(message))
+      bucket.push(normalizeMessageRecord(message))
       messages.set(message.sessionId, bucket)
     },
     async listMessagesBySession(sessionId) {
-      return (messages.get(sessionId) ?? []).map(cloneRecord)
+      return (messages.get(sessionId) ?? []).map(normalizeMessageRecord)
     },
     async saveLead(lead) {
       const bucket = leads.get(lead.tenantId) ?? []

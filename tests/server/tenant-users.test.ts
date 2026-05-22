@@ -34,6 +34,8 @@ describe('tenant user service', () => {
 
     expect(result.user.tenantId).toBe('tenant-1')
     expect(result.user.email).toBe('tenant1@example.com')
+    expect(result.user.displayName).toBe('Tenant 1 Bot')
+    expect(result.user.seatRole).toBe('owner')
     expect(result.user.mustChangePassword).toBe(true)
     expect(result.initialPassword).toHaveLength(10)
     expect(await verifyTenantPassword(result.user.email, result.initialPassword, store)).toBeTruthy()

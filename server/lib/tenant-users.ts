@@ -27,6 +27,11 @@ function buildFallbackEmail(tenant: TenantRecord) {
   return `${tenant.id}@tenant.local`
 }
 
+function deriveTenantUserDisplayName(tenant: TenantRecord) {
+  const candidate = tenant.brandName?.trim() || tenant.name?.trim() || `Tenant ${tenant.id}`
+  return candidate
+}
+
 export async function createTenantLoginForTenant(input: {
   tenant: TenantRecord
   storage: StorageRepository
@@ -48,6 +53,8 @@ export async function createTenantLoginForTenant(input: {
     id: `tenant-user-${input.tenant.id}`,
     tenantId: input.tenant.id,
     email,
+    displayName: deriveTenantUserDisplayName(input.tenant),
+    seatRole: 'owner',
     passwordHash: hashPassword(initialPassword),
     temporaryPassword: initialPassword,
     mustChangePassword: true,

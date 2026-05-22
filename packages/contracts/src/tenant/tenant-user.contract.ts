@@ -2,6 +2,8 @@ export interface TenantUserRecordContract {
   id: string
   tenantId: string
   email: string
+  displayName?: string
+  seatRole?: 'owner' | 'agent'
   mustChangePassword: boolean
   status: 'active' | 'disabled'
   createdAt: number

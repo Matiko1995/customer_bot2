@@ -1,27 +1,33 @@
-import { buildTenantChatItems } from '../../../lib/tenant-readonly'
+import { createError, defineEventHandler, getQuery } from 'h3'
+import { listTenantChatSummaries } from '../../lib/tenant-chat-workbench'
 import { requireTenantSession } from '../../lib/auth'
 import { getStorage } from '../../lib/storage'
 
 export default defineEventHandler(async (event) => {
-  const session = requireTenantSession(event)
+  const tenantSession = requireTenantSession(event)
   const storage = getStorage()
-  const user = await storage.getTenantUserById(session.tenantUserId)
+  const user = await storage.getTenantUserById(tenantSession.tenantUserId)
 
-  if (!user || user.status !== 'active' || user.tenantId !== session.tenantId) {
+  if (!user || user.status !== 'active' || user.tenantId !== tenantSession.tenantId) {
     throw createError({
       statusCode: 401,
       statusMessage: 'Unauthorized'
     })
   }
 
-  const sessions = await storage.listSessionsByTenant(session.tenantId)
-  const messagesBySession = new Map(
-    await Promise.all(
-      sessions.map(async (chatSession) => [chatSession.id, await storage.listMessagesBySession(chatSession.id)] as const)
-    )
-  )
+  const query = getQuery(event)
+  const conversationMode =
+    query.conversationMode === 'ai_active' || query.conversationMode === 'handover_requested' || query.conversationMode === 'human_active'
+      ? query.conversationMode
+      : undefined
+  const assignedTenantUserId = typeof query.assignedTenantUserId === 'string' ? query.assignedTenantUserId.trim() : undefined
+  const sort = query.sort === 'lastMessageAt:asc' ? 'lastMessageAt:asc' : 'lastMessageAt:desc'
 
   return {
-    items: buildTenantChatItems(sessions, messagesBySession)
+    items: await listTenantChatSummaries(storage, tenantSession.tenantId, {
+      conversationMode,
+      assignedTenantUserId,
+      sort
+    })
   }
 })

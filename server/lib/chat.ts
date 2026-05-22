@@ -167,6 +167,10 @@ function buildAttachmentNotice(attachments: MessageAttachment[]): string {
   return lines.join('\n')
 }
 
+function resolveConversationMode(mode: 'ai_active' | 'handover_requested' | 'human_active' | undefined) {
+  return mode || 'ai_active'
+}
+
 export async function processChatMessage(
   input: ProcessChatMessageInput,
   options: ProcessChatMessageOptions = {}
@@ -184,6 +188,7 @@ export async function processChatMessage(
   const now = Date.now()
   let sessionId = input.sessionId
   let history: Array<{ role: 'user' | 'assistant'; content: string }> = []
+  let conversationMode: 'ai_active' | 'handover_requested' | 'human_active' = 'ai_active'
   const attachments = input.attachments?.map((item) => structuredClone(item)) ?? []
 
   if (sessionId) {
@@ -191,6 +196,8 @@ export async function processChatMessage(
     if (!existingSession || existingSession.tenantId !== tenant.id) {
       throw new SessionNotFoundError(sessionId)
     }
+
+    conversationMode = resolveConversationMode(existingSession.conversationMode)
 
     const previousMessages = await storage.listMessagesBySession(sessionId)
     history = previousMessages.map((message) => ({
@@ -203,14 +210,17 @@ export async function processChatMessage(
 
     await storage.saveSession({
       ...existingSession,
+      conversationMode,
       lastMessageAt: now
     })
   } else {
     sessionId = nextId('session')
+    conversationMode = 'ai_active'
     await storage.saveSession({
       id: sessionId,
       tenantId: tenant.id,
       visitorId: 'anonymous',
+      conversationMode,
       startedAt: now,
       lastMessageAt: now
     })
@@ -236,6 +246,7 @@ export async function processChatMessage(
             sessionId: sessionId,
             tenantId: tenant.id,
             role: 'user',
+            senderType: 'customer',
             content: input.message,
             createdAt: now,
             attachments
@@ -246,6 +257,8 @@ export async function processChatMessage(
             sessionId: sessionId,
             tenantId: tenant.id,
             role: 'assistant',
+            senderType: 'ai',
+            senderName: 'AI 客服',
             content: next.content,
             createdAt: Date.now(),
             matchedContentSources: next.matchedContentSources,
@@ -258,6 +271,7 @@ export async function processChatMessage(
           return {
             reply: next.content,
             sessionId: sessionId,
+            conversationMode,
             answerSource: next.answerSource || 'structured',
             credentialSource: next.credentialSource || 'tenant',
             citations: next.citations || [],
@@ -278,10 +292,28 @@ export async function processChatMessage(
     sessionId: sessionId,
     tenantId: tenant.id,
     role: 'user',
+    senderType: 'customer',
     content: input.message,
     createdAt: now,
     attachments
   })
+
+  if (conversationMode === 'human_active') {
+    return {
+      reply: '',
+      sessionId,
+      conversationMode,
+      answerSource: 'structured' as const,
+      credentialSource: 'tenant' as const,
+      citations: [],
+      retrievalConfidence: 'miss' as const,
+      usage: {
+        inputTokens: 0,
+        outputTokens: 0,
+        totalTokens: 0
+      }
+    }
+  }
 
   const attachmentContext = attachments.length
     ? `用户本轮上传了附件：${attachments.map((item) => `${item.name}(${item.mimeType}, ${Math.max(1, Math.round(item.size / 1024))}KB)`).join('；')}`
@@ -454,6 +486,8 @@ export async function processChatMessage(
     sessionId: sessionId,
     tenantId: tenant.id,
     role: 'assistant',
+    senderType: 'ai',
+    senderName: 'AI 客服',
     content: replyContent,
     createdAt: Date.now(),
     matchedContentSources,
@@ -484,6 +518,7 @@ export async function processChatMessage(
   return {
     reply: replyContent,
     sessionId: sessionId,
+    conversationMode,
     answerSource,
     credentialSource,
     citations,

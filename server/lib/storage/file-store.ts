@@ -23,6 +23,14 @@ interface FileStoreState {
 
 const cloneRecord = <T>(value: T): T => structuredClone(value)
 
+function normalizeSessionRecord(session: ChatSessionRecord): ChatSessionRecord {
+  return cloneRecord(session)
+}
+
+function normalizeMessageRecord(message: ChatMessageRecord): ChatMessageRecord {
+  return cloneRecord(message)
+}
+
 const createEmptyState = (): FileStoreState => ({
   tenants: [],
   sessions: [],
@@ -62,8 +70,8 @@ export const createFileStore = (options: FileStoreOptions): StorageRepository =>
 
       return {
         tenants: Array.isArray(parsed.tenants) ? parsed.tenants.map(cloneRecord) : [],
-        sessions: Array.isArray(parsed.sessions) ? parsed.sessions.map(cloneRecord) : [],
-        messages: Array.isArray(parsed.messages) ? parsed.messages.map(cloneRecord) : [],
+        sessions: Array.isArray(parsed.sessions) ? parsed.sessions.map(normalizeSessionRecord) : [],
+        messages: Array.isArray(parsed.messages) ? parsed.messages.map(normalizeMessageRecord) : [],
         leads: Array.isArray(parsed.leads) ? parsed.leads.map(cloneRecord) : [],
         usage: Array.isArray(parsed.usage) ? parsed.usage.map(cloneRecord) : [],
         tenantUsers: Array.isArray(parsed.tenantUsers) ? parsed.tenantUsers.map(cloneRecord) : [],
@@ -139,7 +147,7 @@ export const createFileStore = (options: FileStoreOptions): StorageRepository =>
     },
     async saveSession(session) {
       await updateState((state) => {
-        const nextSession = cloneRecord(session)
+        const nextSession = normalizeSessionRecord(session)
         const index = state.sessions.findIndex((item) => item.id === session.id)
         if (index >= 0) {
           state.sessions[index] = nextSession
@@ -152,20 +160,20 @@ export const createFileStore = (options: FileStoreOptions): StorageRepository =>
     async getSessionById(sessionId) {
       const state = await ensureState()
       const session = state.sessions.find((item) => item.id === sessionId)
-      return session ? cloneRecord(session) : undefined
+      return session ? normalizeSessionRecord(session) : undefined
     },
     async listSessionsByTenant(tenantId) {
       const state = await ensureState()
-      return state.sessions.filter((item) => item.tenantId === tenantId).map(cloneRecord)
+      return state.sessions.filter((item) => item.tenantId === tenantId).map(normalizeSessionRecord)
     },
     async saveMessage(message) {
       await updateState((state) => {
-        state.messages.push(cloneRecord(message))
+        state.messages.push(normalizeMessageRecord(message))
       })
     },
     async listMessagesBySession(sessionId) {
       const state = await ensureState()
-      return state.messages.filter((item) => item.sessionId === sessionId).map(cloneRecord)
+      return state.messages.filter((item) => item.sessionId === sessionId).map(normalizeMessageRecord)
     },
     async saveLead(lead) {
       await updateState((state) => {
